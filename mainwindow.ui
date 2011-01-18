@@ -35,8 +35,8 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionXML_Datei_laden"/>
-    <addaction name="actionSchliessen"/>
+    <addaction name="actionOpen_object_file"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -61,14 +61,14 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionSchliessen">
+  <action name="actionOpen_object_file">
    <property name="text">
-    <string>Close</string>
+    <string>open object file</string>
    </property>
   </action>
-  <action name="actionXML_Datei_laden">
+  <action name="actionClose">
    <property name="text">
-    <string>Open Object File</string>
+    <string>Close</string>
    </property>
   </action>
  </widget>
@@ -76,7 +76,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>actionSchliessen</sender>
+   <sender>actionClose</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>

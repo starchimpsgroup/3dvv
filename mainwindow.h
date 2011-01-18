@@ -21,7 +21,7 @@ private:
     GLWidget * _view;
 
 private slots:
-    void on_actionXML_Datei_laden_triggered();
+    void on_actionOpen_object_file_triggered();
 };
 
 #endif // MAINWINDOW_H
