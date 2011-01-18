@@ -42,15 +42,11 @@
     <property name="title">
      <string>Help</string>
     </property>
-   </widget>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
+    <addaction name="actionAbout_3DVV"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuHelp"/>
-   <addaction name="menuAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -63,12 +59,22 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_object_file">
    <property name="text">
-    <string>open object file</string>
+    <string>Open Object File</string>
    </property>
   </action>
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+  </action>
+  <action name="actionAbout_3DVV">
+   <property name="text">
+    <string>About 3DVV</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="text">
+    <string>AboutQt</string>
    </property>
   </action>
  </widget>

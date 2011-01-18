@@ -21,6 +21,8 @@ private:
     GLWidget * _view;
 
 private slots:
+    void on_actionAboutQt_triggered();
+    void on_actionAbout_3DVV_triggered();
     void on_actionOpen_object_file_triggered();
 };
 
