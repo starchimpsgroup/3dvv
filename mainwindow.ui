@@ -68,7 +68,7 @@
   </action>
   <action name="actionXML_Datei_laden">
    <property name="text">
-    <string>Load XML FIle</string>
+    <string>Open Object File</string>
    </property>
   </action>
  </widget>
