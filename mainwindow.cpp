@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    _view = new GLWidget(this);
+    ui->gridLayout->addWidget(_view,0,0);
 }
 
 MainWindow::~MainWindow()
