@@ -19,6 +19,9 @@ public:
 private:
     Ui::MainWindow *ui;
     GLWidget * _view;
+
+private slots:
+    void on_actionXML_Datei_laden_triggered();
 };
 
 #endif // MAINWINDOW_H

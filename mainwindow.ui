@@ -35,6 +35,7 @@
     <property name="title">
      <string>Datei</string>
     </property>
+    <addaction name="actionXML_Datei_laden"/>
     <addaction name="actionSchliessen"/>
    </widget>
    <addaction name="menuDatei"/>
@@ -51,6 +52,11 @@
   <action name="actionSchliessen">
    <property name="text">
     <string>Schliessen</string>
+   </property>
+  </action>
+  <action name="actionXML_Datei_laden">
+   <property name="text">
+    <string>XML Datei laden</string>
    </property>
   </action>
  </widget>
