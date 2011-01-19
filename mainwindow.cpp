@@ -27,7 +27,7 @@ void MainWindow::on_actionAbout_3DVV_triggered()
 {
     QMessageBox::about(this, tr("About 3DVV"),
             tr("<b>3DVectorViewer</b><br/>"
-               "Trademark &trade; 2011 Fachhochschule Suedwestfalen<br/>"
+               "Trademark &trade; 2011 Fachhochschule S&uuml;dwestfalen<br/>"
                "Written by Christian Ernst and Kai Wellmann"));
 }
 
