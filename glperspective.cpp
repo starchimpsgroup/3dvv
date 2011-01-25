@@ -30,7 +30,6 @@ GLPerspective::GLPerspective()
   _Far = 100.0;
 }
 
-
 GLPerspective::~GLPerspective()
 {
 }
@@ -53,9 +52,9 @@ void GLPerspective::apply(){
             _Up.x(), _Up.y(), _Up.z()); //up
 }
 
-/**Moves the camera on a meridian without modifying the distance to _Center
- * Maximum angle is +90 (north), minimum is -90 (south)
- */
+/** Moves the camera on a meridian without modifying the distance to _Center
+  * Maximum angle is +90 (north), minimum is -90 (south)
+  */
 void GLPerspective::turnCameraUpDown( double angleIncrement)  {
   double radius, longitude, latitude;
   GLVector dist = _Camera - _Center;
@@ -69,9 +68,9 @@ void GLPerspective::turnCameraUpDown( double angleIncrement)  {
   dist.setRadiusLongitudeLatitude(radius, longitude,latitude);
   setCamera(_Center + dist); //add dist to get new cam,era position
 }
-/**Moves the camera on a latitude without modifying the distance to _Center
- * Maximum angle is +180 (east), minimum is -180 (west)
- */
+/** Moves the camera on a latitude without modifying the distance to _Center
+  * Maximum angle is +180 (east), minimum is -180 (west)
+  */
 void GLPerspective::turnCameraLeftRight( double angleIncrement){
   double radius, longitude, latitude;
   GLVector dist = _Camera - _Center;
@@ -86,9 +85,9 @@ void GLPerspective::turnCameraLeftRight( double angleIncrement){
   setCamera(_Center + dist);
 }
 
-
-/**Setters
-*/
+/**
+  * Setters
+  */
 void GLPerspective::setCamera(const GLVector & newValue){
    _Camera = newValue;
 }
@@ -118,8 +117,9 @@ void GLPerspective::setViewport(int width, int height){
   glViewport(0,0, _Width, _Height);
   _Aspect = (double)_Width / (double)_Height;
 }
-/**Multiply camera vector by factor
-*/
+/**
+  * Multiply camera vector by factor
+  */
 void GLPerspective::stretchCameraDistance(double factor)
 {
   GLVector dist = _Camera - _Center;
@@ -134,16 +134,18 @@ void GLPerspective::shiftSceneUpDown(double distance)
  _Center = _Center + vShift;
  _Camera = _Camera + vShift;
 }
-/**Shift the whole scene in x-z plane orthogonal to camera vector
-*/
+/**
+  *Shift the whole scene in x-z plane orthogonal to camera vector
+  */
 void GLPerspective::shiftSceneLeftRight(double distance)
 {
  GLVector vShift = (_Center - _Camera).normalVector(_Up) * distance;
  _Center = _Center + vShift;
  _Camera = _Camera + vShift;
 }
-/**Shift the whole scene in x-z plane parallel to camera vector projection in xz plane
-*/
+/**
+  * Shift the whole scene in x-z plane parallel to camera vector projection in xz plane
+  */
 void GLPerspective::shiftSceneForwardBackward(double distance)
 {
  GLVector vShift = GLVector(_Center.x() -_Camera.x(), _Center.y() -_Camera.y(), 0).unitVector() * distance;
