@@ -2,6 +2,7 @@
 #define GLWIDGET_H
 
 #include <QGLWidget>
+#include "glperspective.h"
 
 class GLWidget : public QGLWidget
 {
@@ -14,6 +15,9 @@ protected:
     void initializeGL();
     void paintGL();
     void resizeGL(int width, int height);
+
+private:
+    GLPerspective * _perspective;
 };
 
 #endif // GLWIDGET_H
