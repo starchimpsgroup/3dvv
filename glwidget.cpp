@@ -56,20 +56,20 @@ void GLWidget::paintGL()
                    1.0,
                    100.0);*/
 
+    _perspective->apply();
+
     /**
       * clear both the color buffer and the depth buffer
       **/
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    _perspective->apply();
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glTranslatef(0, 0, -5);
+    //glTranslatef(0, 0, -5);
 
     glColor3f (0.0, 1.0, 0.0);
-    glPushMatrix(); // Legen die aktuelle Matrix auf den Stack
+    //glPushMatrix(); // Legen die aktuelle Matrix auf den Stack
     //glRotatef(-1.0, 0.0, 0.0, 0.1);
     //glPointSize(5.0);
     //glBegin (GL_POINTS);
@@ -77,26 +77,26 @@ void GLWidget::paintGL()
     glVertex3f (0.0, 0.0, 0.0);
     glVertex3f (1.0, 0.0, 0.0);
     glEnd ();
-    glPopMatrix();
+    //glPopMatrix();
 
     glColor3f (0.0, 0.0, 1.0);
-    glPushMatrix();
+    //glPushMatrix();
     //glRotatef(1.0, 0.0, 0.0, 0.1);
     //glLineWidth(10.0);
     glBegin (GL_LINES);
     glVertex3f (0.0, 0.0, 0.0);
     glVertex3f (0.0, 1.0, 0.0);
     glEnd ();
-    glPopMatrix();
+    //glPopMatrix();
 
     glColor3f (1.0, 0.0, 0.0);
-    glPushMatrix();
+    //glPushMatrix();
     //glRotatef(1.0, 0.0, 0.0, 0.1);
     glBegin (GL_LINES);
     glVertex3f (0.0, 0.0, 0.0);
     glVertex3f (0.0, 0.0, 1.0);
     glEnd ();
-    glPopMatrix();
+    //glPopMatrix();
 
     glFlush();
 }

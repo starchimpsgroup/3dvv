@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     _view = new GLWidget(this);
-    //setCentralWidget(_view);
-    ui->gridLayout->addWidget(_view,0,0);
+    setCentralWidget(_view);
+    //ui->gridLayout->addWidget(_view,0,0);
 }
 
 MainWindow::~MainWindow()

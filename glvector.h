@@ -39,15 +39,15 @@ public:
 
     void setRadiusLongitudeLatitude(GLdouble radius, GLdouble longitude, GLdouble latitude);
 
-    const GLVector & normalVector(const GLVector& v)const;
-    const GLVector & unitVector()const;
-    const GLVector & vectorMult(const GLVector& v)const;
+    const GLVector normalVector(const GLVector& v)const;
+    const GLVector unitVector()const;
+    const GLVector vectorMult(const GLVector& v)const;
 
-    const GLVector & operator-(const GLVector& v)const;
-    const GLVector & operator+(const GLVector& v)const;
+    const GLVector operator -(const GLVector& v)const;
+    const GLVector operator +(const GLVector& v)const;
     GLdouble operator *(const GLVector &v )const;
     GLVector operator *(const GLdouble d )const;
-    GLVector & operator = (const GLVector & v);
+    GLVector operator = (const GLVector & v);
     bool operator != (const GLVector& v) const;
     bool operator == (const GLVector& v) const;
 
@@ -66,6 +66,6 @@ static GLVector v_YZ   = GLVector(0,1,1);
 static GLVector v_XZ   = GLVector(1,0,1);
 static GLVector v_XYZ  = GLVector(1,1,1);
 
-const GLVector & operator *(GLdouble d, const GLVector &v);
+const GLVector operator *(GLdouble d, const GLVector &v);
 
 #endif // GLVECTOR_H

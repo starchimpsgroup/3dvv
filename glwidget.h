@@ -42,10 +42,6 @@ private:
     void shiftSceneForwardBackward ( double Distance );
     void mouseMoveEvent ( QMouseEvent * me );
 
-private:
-    int _x;
-    int _y;
-
 protected:
     void initializeGL();
     void paintGL();
@@ -54,6 +50,8 @@ protected:
 
 private:
     GLPerspective * _perspective;
+    int _x;
+    int _y;
 };
 
 #endif // GLWIDGET_H

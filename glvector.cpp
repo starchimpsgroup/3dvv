@@ -33,11 +33,11 @@ GLdouble GLVector::latitude()const{
 
   GLdouble latitude;
   if (lengthXZ != 0.0)
-   latitude= atan(_y / lengthXZ);
+   latitude = atan(_y / lengthXZ);
   else{
      if( _y > 0.0)
-      latitude = M_PI /2.0;
-     else latitude = - M_PI /2.0;
+      latitude = M_PI / 2.0;
+     else latitude = -M_PI / 2.0;
   }
   return latitude / M_PI * 180.0;
 }
@@ -46,13 +46,13 @@ GLdouble GLVector::longitude()const{
   GLdouble longitude;
   if(_z == 0.0){
       if(_x > 0.0)
-         longitude = M_PI /2.0;
-      else longitude = -M_PI /2.0;
+         longitude = M_PI / 2.0;
+      else longitude = -M_PI / 2.0;
     }
   else longitude = atan(_x / _z);
   if((_z < 0.0) & (_x > 0.0))
    longitude += M_PI;
-  if((_x <0.0)&(_z<0.0))
+  if((_x < 0.0) & (_z < 0.0))
    longitude -= M_PI;
   return longitude / M_PI * 180.0;
 }
@@ -70,34 +70,34 @@ void GLVector::setRadiusLongitudeLatitude(GLdouble radius, GLdouble longitude, G
   _z = radius * cos(radLongitude)* cos(radLatitude);
 }
 
-const GLVector & GLVector::normalVector(const GLVector& v)const{
+const GLVector GLVector::normalVector(const GLVector& v)const{
  return vectorMult(v).unitVector();
 }
 
-const GLVector & GLVector::unitVector()const{
+const GLVector GLVector::unitVector()const{
  GLdouble aLength;
  aLength= length();
  if (length() != 0.0)
   return GLVector(_x / length(),
-                    _y / length(),
-                    _z / length());
+                  _y / length(),
+                  _z / length());
   else {
    return GLVector();
   }
 }
 
-const GLVector & GLVector::vectorMult( const GLVector& v)const{
+const GLVector GLVector::vectorMult( const GLVector& v)const{
  return GLVector(
    _y * v.z() - _z * v.y(),
    _z * v.x() - _x * v.z(),
    _x * v.y() - _y * v.x());
 }
 
-const GLVector & GLVector::operator-(const GLVector& v)const{
+const GLVector GLVector::operator -(const GLVector& v)const{
     return GLVector(_x - v.x(), _y - v.y(), _z - v.z());
 }
 
-const GLVector & GLVector::operator+(const GLVector& v)const{
+const GLVector GLVector::operator +(const GLVector& v)const{
     return GLVector(_x + v.x(), _y + v.y(), _z + v.z());
 }
 
@@ -109,11 +109,11 @@ GLVector GLVector::operator *(const GLdouble d )const{
     return  GLVector(_x * d, _y * d, _z * d);
 }
 
-const GLVector & operator *(GLdouble d, const GLVector &v){
+const GLVector operator *(GLdouble d, const GLVector &v){
     return v * d;
 }
 
-GLVector & GLVector::operator = (const GLVector & v){
+GLVector GLVector::operator = (const GLVector & v){
     if(this != &v){
         _x = v.x();
         _y = v.y();
@@ -122,11 +122,11 @@ GLVector & GLVector::operator = (const GLVector & v){
     return *this;
 }
 
-bool GLVector::operator != (const GLVector& v) const{
- return ! (this == &v);
+bool GLVector::operator != (const GLVector &v) const{
+ return ! (*this == v);
 }
 
-bool GLVector::operator == (const GLVector& v) const{
+bool GLVector::operator == (const GLVector &v) const{
  return ((v.x() == _x) & (v.y() == _y) & (v.z() == _z));
 }
 
