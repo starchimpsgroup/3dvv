@@ -1,4 +1,4 @@
-<u>Qt 3D Vector Viewer</u>
+Qt 3D Vector Viewer
 ==========================
 Project title:
 --------------
@@ -21,52 +21,48 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 *Components: Version 1.0*
 -----------------------------
 
-- <font color="green">Code:</font>
+- Code: `*ready*`
 
->- <font color="green">Supports Linux</font>
->- <font color="green">C++ (Qt), OpenGL</font>
+>- Supports Linux `*ready*`
+>- C++ (Qt), OpenGL `*ready*`
 
-- <font color="red">File / Script (XML) to represent objects (created by the user)</font>
+- File / Script (XML) to represent objects (created by the user) `*untouched*`
 
->- <font color="red">Object has:</font>
+>- Object has: `*untouched*`
 
->>- <font color="red">ObjectID or unique name</font>
->>- <font color="red">ObjectTyp:</font>
+>>- ObjectID or unique name `*untouched*`
+>>- ObjectTyp: `*untouched*`
 
->>>- <font color="red">Point (to be shown as a cross)</font>
->>>- <font color="orange">Vector (for display with apex)</font>
->>>- <font color="red">Layer</font>
->>>- <font color="red">Line</font>
->>>- <font color="red">Angle</font>
+>>>- Point (to be shown as a cross) `*untouched*`
+>>>- Vector (for display with apex) `*work in progress*`
+>>>- Layer `*untouched*`
+>>>- Line `*untouched*`
+>>>- Angle `*untouched*`
 
->>- <font color="red">Coordinates:</font>
+>>- Coordinates: `*untouched*`
 
->>>- <font color="red">Point, only coordinates</font>
->>>- <font color="red">Vector, start and end point</font>
+>>>- Point, only coordinates `*untouched*`
+>>>- Vector, start and end point `*untouched*`
 
->>- <font color="red">Time parameters for film script</font>
->>- <font color="red">Delete object in the script</font>
+>>- Time parameters for film script `*untouched*`
+>>- Delete object in the script `*untouched*`
 
-- <font color="orange">View:</font>
+- View: `*work in progress*`
 
->- <font color="orange">Coordinate axes (to infinity), perpendicular to each other</font>
+>- Coordinate axes (to infinity), perpendicular to each other `*work in progress*`
 
->>- <font color="red">Not on every tick a number</font>
+>>- Not on every tick a number `*untouched*`
 
->- <font color="orange">Camera control (mouse, keyboard)</font>
->- <font color="red">Objects highlight temporarily, which are displayed newly (in color or otherwise)</font>
->- <font color="red">Object labeling (automatic), font same color as object</font>
->- <font color="red">Layer can be show (to infinity), semi-transparent</font>
->- <font color="red">Line can be adjust to infinity</font>
->- <font color="red">Display angels, between vectors (default, smaller angle)</font>
+>- Camera control (mouse, keyboard) `*work in progress*`
+>- Objects highlight temporarily, which are displayed newly (in color or otherwise) `*untouched*`
+>- Object labeling (automatic), font same color as object `*untouched*`
+>- Layer can be show (to infinity), semi-transparent `*untouched*`
+>- Line can be adjust to infinity `*untouched*`
+>- Display angels, between vectors (default, smaller angle) `*untouched*`
 
->>- <font color="red">Display angular size (degree / radian)</font>
+>>- Display angular size (degree / radian) `*untouched*`
 
->- <font color="red">Color mapping for objects (RGB / Hex) (default color, if not specify)</font>
->- <font color="red">Show coordinates (start, end, middle)</font>
->- <font color="red">Pause function</font>
->- **Optional:** <font color="red">Single step</font>
-
-<font color="green">`*ready*`</font>
-<font color="orange">`*work in progress*`</font>
-<font color="red">`*untouched*`</font>
+>- Color mapping for objects (RGB / Hex) (default color, if not specify) `*untouched*`
+>- Show coordinates (start, end, middle) `*untouched*`
+>- Pause function `*untouched*`
+>- **Optional:** Single step `*untouched*`
