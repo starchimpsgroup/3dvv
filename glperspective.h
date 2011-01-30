@@ -20,7 +20,6 @@
 #ifndef GLPERSPECTIVE_H
 #define GLPERSPECTIVE_H
 
-//#include <GL/glut.h>
 #include <qgl.h>
 
 #include "glvector.h"

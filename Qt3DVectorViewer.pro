@@ -14,11 +14,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     glwidget.cpp \
     glperspective.cpp \
-    glvector.cpp
+    glvector.cpp \
+    glcoordinateaxes.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
     glperspective.h \
-    glvector.h
+    glvector.h \
+    glcoordinateaxes.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES += \
+    README.markdown
