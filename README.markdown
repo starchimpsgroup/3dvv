@@ -28,10 +28,10 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 
 - File / Script (XML) to represent objects (created by the user) `*untouched*`
 
->- Object has: `*untouched*`
+>- Object has: `*work in progress*`
 
->>- ObjectID or unique name `*untouched*`
->>- ObjectTyp: `*untouched*`
+>>- ObjectID or unique name `*work in progress*`
+>>- ObjectTyp: `*work in progress*`
 
 >>>- Point (to be shown as a cross) `*untouched*`
 >>>- Vector (for display with apex) `*work in progress*`
@@ -62,7 +62,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 
 >>- Display angular size (degree / radian) `*untouched*`
 
->- Color mapping for objects (RGB / Hex) (default color, if not specify) `*untouched*`
+>- Color mapping for objects (RGB / Hex) (default color, if not specify) `*work in progress*`
 >- Show coordinates (start, end, middle) `*untouched*`
 >- Pause function `*untouched*`
 >- **Optional:** Single step `*untouched*`
