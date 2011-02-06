@@ -19,17 +19,17 @@ GLCoordinateAxes::GLCoordinateAxes( const GLCoordinateAxes::Range &rangeX,
 GLCoordinateAxes::GLCoordinateAxes( const GLCoordinateAxes::Range &rangeX,
                                     const GLCoordinateAxes::Range &rangeY,
                                     const GLCoordinateAxes::Range &rangeZ,
-                                    const GLCoordinateAxes::Color &colorX,
-                                    const GLCoordinateAxes::Color &colorY,
-                                    const GLCoordinateAxes::Color &colorZ )
+                                    const GLColor &colorX,
+                                    const GLColor &colorY,
+                                    const GLColor &colorZ )
 {
     setRanges( rangeX, rangeY, rangeZ );
     setColors( colorX, colorY, colorZ );
 }
 
-void GLCoordinateAxes::setColors( const GLCoordinateAxes::Color &colorX,
-                                  const GLCoordinateAxes::Color &colorY,
-                                  const GLCoordinateAxes::Color &colorZ )
+void GLCoordinateAxes::setColors( const GLColor &colorX,
+                                  const GLColor &colorY,
+                                  const GLColor &colorZ )
 {
     _colorX = colorX;
     _colorY = colorY;
@@ -47,9 +47,9 @@ void GLCoordinateAxes::setRanges( const GLCoordinateAxes::Range &rangeX,
 
 void GLCoordinateAxes::setDefaultColors()
 {
-    GLCoordinateAxes::Color colorX = { 1.0, 0.0, 0.0 };
-    GLCoordinateAxes::Color colorY = { 0.0, 1.0, 0.0 };
-    GLCoordinateAxes::Color colorZ = { 0.0, 0.0, 1.0 };
+    GLColor colorX( 1.0, 0.0, 0.0 );
+    GLColor colorY( 0.0, 1.0, 0.0 );
+    GLColor colorZ( 0.0, 0.0, 1.0 );
 
     setColors( colorX, colorY, colorZ );
 }
@@ -60,15 +60,15 @@ void GLCoordinateAxes::draw()
 
     glBegin (GL_LINES);
 
-    glColor3f (_colorX.red, _colorX.green, _colorX.blue);
+    glColor3f (_colorX.redF(), _colorX.greenF(), _colorX.blueF());
     glVertex3f (_rangeX.rangeBegin, 0.0, 0.0);
     glVertex3f (_rangeX.rangeEnd  , 0.0, 0.0);
 
-    glColor3f (_colorY.red, _colorY.green, _colorY.blue);
+    glColor3f (_colorY.redF(), _colorY.greenF(), _colorY.blueF());
     glVertex3f (0.0, _rangeY.rangeBegin, 0.0);
     glVertex3f (0.0, _rangeY.rangeEnd  , 0.0);
 
-    glColor3f (_colorZ.red, _colorZ.green, _colorZ.blue);
+    glColor3f (_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF());
     glVertex3f (0.0, 0.0, _rangeZ.rangeBegin);
     glVertex3f (0.0, 0.0, _rangeZ.rangeEnd  );
 
@@ -87,7 +87,7 @@ void GLCoordinateAxes::drawDistanceMarker()
 
     glBegin (GL_LINES);
 
-    glColor3f (_colorX.red, _colorX.green, _colorX.blue);
+    glColor3f (_colorX.redF(), _colorX.greenF(), _colorX.blueF());
     rangePosition = _rangeX.rangeBegin;
     for( int i=rangePosition; i <= (int)_rangeX.rangeEnd; i++ )
     {
@@ -95,7 +95,7 @@ void GLCoordinateAxes::drawDistanceMarker()
         glVertex3f (i, -0.2, 0.0);
     }
 
-    glColor3f (_colorY.red, _colorY.green, _colorY.blue);
+    glColor3f (_colorY.redF(), _colorY.greenF(), _colorY.blueF());
     rangePosition = _rangeY.rangeBegin;
     for( int i=rangePosition; i <= (int)_rangeY.rangeEnd; i++ )
     {
@@ -103,7 +103,7 @@ void GLCoordinateAxes::drawDistanceMarker()
         glVertex3f (-0.2, i, 0.0);
     }
 
-    glColor3f (_colorZ.red, _colorZ.green, _colorZ.blue);
+    glColor3f (_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF());
     rangePosition = _rangeZ.rangeBegin;
     for( int i=rangePosition; i <= (int)_rangeZ.rangeEnd; i++ )
     {

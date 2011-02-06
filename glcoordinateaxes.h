@@ -2,6 +2,7 @@
 #define GLCOORDINATEAXES_H
 
 #include <qgl.h>
+#include <glcolor.h>
 
 class GLCoordinateAxes
 {
@@ -11,14 +12,8 @@ private:
      float rangeBegin, rangeEnd;
     };
 
-    struct color
-    {
-     float red, green, blue;
-    };
-
 public:
     typedef struct range Range;
-    typedef struct color Color;
 
     GLCoordinateAxes();
 
@@ -29,18 +24,18 @@ public:
     GLCoordinateAxes( const GLCoordinateAxes::Range &rangeX,
                       const GLCoordinateAxes::Range &rangeY,
                       const GLCoordinateAxes::Range &rangeZ,
-                      const GLCoordinateAxes::Color &colorX,
-                      const GLCoordinateAxes::Color &colorY,
-                      const GLCoordinateAxes::Color &colorZ );
+                      const GLColor &colorX,
+                      const GLColor &colorY,
+                      const GLColor &colorZ );
 
     void draw();
     void drawDistanceMarker();
 
     void setDefaultColors();
 
-    void setColors( const GLCoordinateAxes::Color &colorX,
-                    const GLCoordinateAxes::Color &colorY,
-                    const GLCoordinateAxes::Color &colorZ );
+    void setColors( const GLColor &colorX,
+                    const GLColor &colorY,
+                    const GLColor &colorZ );
 
     void setRanges( const GLCoordinateAxes::Range &rangeX,
                     const GLCoordinateAxes::Range &rangeY,
@@ -48,7 +43,7 @@ public:
 
 private:
     Range _rangeX, _rangeY, _rangeZ;
-    Color _colorX, _colorY, _colorZ;
+    GLColor _colorX, _colorY, _colorZ;
 
 };
 

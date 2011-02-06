@@ -15,13 +15,17 @@ SOURCES += main.cpp\
     glwidget.cpp \
     glperspective.cpp \
     glvector.cpp \
-    glcoordinateaxes.cpp
+    glcoordinateaxes.cpp \
+    glcolor.cpp \
+    globject.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
     glperspective.h \
     glvector.h \
-    glcoordinateaxes.h
+    glcoordinateaxes.h \
+    glcolor.h \
+    globject.h
 
 FORMS    += mainwindow.ui
 
