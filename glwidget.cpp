@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "glwidget.h"
+#include <math.h>
 
 GLWidget::GLWidget(QWidget *parent)
 {
@@ -35,13 +36,14 @@ GLWidget::GLWidget(QWidget *parent)
 GLWidget::~GLWidget()
 {
     delete _perspective;
+    delete _coordinateAxes;
 }
 
 void GLWidget::initializeGL()
 {
     glClearColor(1.0f,1.0f,1.0f,1.0f);
-    glEnable(GL_DEPTH_TEST);          //Tiefentest aktivieren
-    glEnable(GL_CULL_FACE);           //Backface Culling aktivieren
+    glEnable(GL_DEPTH_TEST);          // Tiefentest aktivieren
+    glEnable(GL_CULL_FACE);           // Backface Culling aktivieren
 }
 
 void GLWidget::paintGL()
@@ -55,6 +57,14 @@ void GLWidget::paintGL()
 
     _coordinateAxes->draw();
 
+    /**
+      * Tests
+      */
+    drawCornerMarks();
+    GLVector t(1,2,2);
+    t.setColor(1,0,1);
+    t.draw();
+
     glFlush();
 }
 
@@ -66,192 +76,196 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::keyPressEvent ( QKeyEvent * ke )
 {
 
-        if ( ke->modifiers() & Qt::ShiftModifier )
+    if ( ke->modifiers() & Qt::ShiftModifier )
+    {
+        switch ( ke->key() )
         {
-                switch ( ke->key() )
-                {
-                case Qt::Key_Left:
-                                shiftSceneLeftRight ( -1 );
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftLeft" ) );
-                                break;
-                case Qt::Key_Right:
-                                shiftSceneLeftRight ( 1 );
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftRight" ) );
-                                break;
-                case Qt::Key_Up:
-                                shiftSceneUpDown ( -1 );
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftUp" ) );
-                                break;
-                case Qt::Key_Down:
-                                shiftSceneUpDown ( 1 );
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftDown" ) );
-                                break;
-                case Qt::Key_W:
-                                shiftSceneForwardBackward ( 0.1 );
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftW" ) );
-                                break;
-                case Qt::Key_S:
-                                shiftSceneForwardBackward ( -0.1 );
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftS" ) );
-                                break;
-                }
+        case Qt::Key_Left:
+            shiftSceneLeftRight ( -1 );
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftLeft" ) );
+            break;
+        case Qt::Key_Right:
+            shiftSceneLeftRight ( 1 );
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftRight" ) );
+            break;
+        case Qt::Key_Up:
+            shiftSceneUpDown ( -1 );
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftUp" ) );
+            break;
+        case Qt::Key_Down:
+            shiftSceneUpDown ( 1 );
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftDown" ) );
+            break;
+        case Qt::Key_W:
+            shiftSceneForwardBackward ( 0.1 );
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftW" ) );
+            break;
+        case Qt::Key_S:
+            shiftSceneForwardBackward ( -0.1 );
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftS" ) );
+            break;
         }
-        else
+    }
+    else
+    {
+        switch ( ke->key() )
         {
-                switch ( ke->key() )
-                {
-                case Qt::Key_Left:
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "Left" ) );
-// 			_Perspective->turnCameraEastWest ( -1 );
-                                turnCameraLeftRight ( -1 );
-                                break;
-                case Qt::Key_Up:
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "Up" ) );
-// 			_Perspective->turnCameraNorthSouth ( 1 );
-                                turnCameraUpDown ( 1 );
-                                break;
-                case Qt::Key_Right:
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "Right" ) );
-// 			_Perspective->turnCameraEastWest ( 1 );
-                                turnCameraLeftRight ( 1 );
-                                break;
-                case Qt::Key_Down:
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "Down" ) );
-// 			_Perspective->turnCameraNorthSouth ( -1 );
-                                turnCameraUpDown ( -1 );
-                                break;
-                case Qt::Key_PageUp:
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "PageUp" ) );
-// 			_Perspective->multiplyDistance ( 1.1 );
-                                stretchCameraDistance ( 1.1 );
-                                break;
-                case Qt::Key_PageDown:
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "PageDown" ) );
-// 			_Perspective->multiplyDistance ( 0.9 );
-                                stretchCameraDistance ( 0.9 );
-                                break;
-                case Qt::Key_Space:
-                                qDebug ( "Key: %s",qPrintable ( ( QString ) "Reset" ) );
-                                _perspective->reset();
-                                repaint();
-                                break;
-                }
+        case Qt::Key_Left:
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "Left" ) );
+            turnCameraLeftRight ( -1 );
+            break;
+        case Qt::Key_Up:
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "Up" ) );
+            turnCameraUpDown ( 1 );
+            break;
+        case Qt::Key_Right:
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "Right" ) );
+            turnCameraLeftRight ( 1 );
+            break;
+        case Qt::Key_Down:
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "Down" ) );
+            turnCameraUpDown ( -1 );
+            break;
+        case Qt::Key_PageUp:
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "PageUp" ) );
+            stretchCameraDistance ( 1.1 );
+            break;
+        case Qt::Key_PageDown:
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "PageDown" ) );
+            stretchCameraDistance ( 0.9 );
+            break;
+        case Qt::Key_Space:
+            // qDebug ( "Key: %s",qPrintable ( ( QString ) "Reset" ) );
+            _perspective->reset();
+            repaint();
+            break;
         }
+    }
 
-        repaint();
+    repaint();
 }
 
 void GLWidget::wheelEvent ( QWheelEvent * event )
 {
 
-// ---------------------------------------------------------------------------
-//   Mausrad Zoom
-// ---------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------
+    //   Mausrad Zoom
+    // ---------------------------------------------------------------------------
 
-        if ( event->modifiers() & Qt::ControlModifier )
+    if ( event->modifiers() & Qt::ControlModifier )
+    {
+        // qDebug ( "Key: %s",qPrintable ( ( QString ) "Wheel" ) );
+        // qDebug ( "Double: %s", qPrintable ( QString::number ( event->delta() ) ) );
+
+        if ( event->delta() > 0 )
         {
-                qDebug ( "Key: %s",qPrintable ( ( QString ) "Wheel" ) );
-                qDebug ( "Double: %s", qPrintable ( QString::number ( event->delta() ) ) );
-
-                if ( event->delta() > 0 )
-                {
-                        stretchCameraDistance ( 1.1 );
-                }
-                else
-                {
-                        stretchCameraDistance ( 0.9 );
-                }
-
-                repaint();
-                event->accept();
+            stretchCameraDistance ( 1.1 );
         }
+        else
+        {
+            stretchCameraDistance ( 0.9 );
+        }
+
+        repaint();
+        event->accept();
+    }
 }
 
 void GLWidget::turnCameraUpDown ( double angle )
 {
-        _perspective->turnCameraUpDown ( angle );
+    _perspective->turnCameraUpDown ( angle );
 }
 
 void GLWidget::turnCameraLeftRight ( double angle )
 {
-        _perspective->turnCameraLeftRight ( angle );
+    _perspective->turnCameraLeftRight ( angle );
 }
 
 void GLWidget::stretchCameraDistance ( double factor )
 {
-        _perspective->stretchCameraDistance ( factor );
+    _perspective->stretchCameraDistance ( factor );
 }
 
 void GLWidget::shiftSceneUpDown ( double distance )
 {
-// 	GLVector camera = _Perspective->getCamera();
-// 	GLVector center = _Perspective->getCenter();
-// 	center.setY ( center.y() + distance );
-// 	camera.setY ( camera.y() + distance );
-// 	_Perspective->setCamera ( camera );
-// 	_Perspective->setCenter ( center );
-// 	repaint();
-
-        _perspective->shiftSceneUpDown ( distance );
+    _perspective->shiftSceneUpDown ( distance );
 }
 
 void GLWidget::shiftSceneLeftRight ( double distance )
 {
-// 	GLVector left ( _Perspective->getCamera() - _Perspective->getCenter() );
-// 	left = left.vectorMult ( _Perspective->getUp() ).unitVector();
-// 	_Perspective->setCamera ( _Perspective->getCamera() + left * distance );
-// 	_Perspective->setCenter ( _Perspective->getCenter() + left * distance );
-
-        _perspective->shiftSceneLeftRight ( distance );
+    _perspective->shiftSceneLeftRight ( distance );
 }
 
 void GLWidget::shiftSceneForwardBackward ( double distance )
 {
-// 	GLVector forward ( _Perspective->getCamera() - _Perspective->getCenter() );
-// 	forward = forward.unitVector();
-// 	_Perspective->setCamera ( _Perspective->getCamera() + forward * distance );
-        //_Perspective->setCenter(_Perspective->getCenter() + forward * distance);
-
-        _perspective->shiftSceneForwardBackward ( distance );
+    _perspective->shiftSceneForwardBackward ( distance );
 }
 
 void GLWidget::mouseMoveEvent ( QMouseEvent * me )
 {
-        if ( me->modifiers() & Qt::AltModifier )
+    if ( me->modifiers() & Qt::AltModifier )
+    {
+        // qDebug ( "Mouse: Alt" );
+
+        int x = abs ( _x - me->x() );
+        int y = abs ( _y - me->y() );
+
+        if ( _x < me->x() )
         {
-                qDebug ( "Mouse: Alt" );
-
-// 		if ( me->buttons() & Qt::LeftButton )
-// 		{
-// 			qDebug ( "x1: %s", qPrintable ( QString::number ( _x ) ) );
-// 			qDebug ( "y1: %s", qPrintable ( QString::number ( _y ) ) );
-// 			qDebug ( "x2: %s", qPrintable ( QString::number ( me->x() ) ) );
-// 			qDebug ( "y2: %s", qPrintable ( QString::number ( me->y() ) ) );
-
-                int x = abs ( _x - me->x() );
-                int y = abs ( _y - me->y() );
-
-                if ( _x < me->x() )
-                {
-                        x *= ( -1 );
-                        //qDebug ( "Double: %s", qPrintable ( QString::number ( x ) ) );
-                }
-
-                if ( _y > me->y() )
-                {
-                        y *= ( -1 );
-                        //qDebug ( "Double: %s", qPrintable ( QString::number ( y ) ) );
-                }
-
-                turnCameraLeftRight ( x );
-                turnCameraUpDown ( y );
-
-                _x = me->x();
-                _y = me->y();
-
-                qDebug ( "Mouse: LeftButton" );
-
-                repaint();
-// 		}
+            x *= ( -1 );
+            //qDebug ( "Double: %s", qPrintable ( QString::number ( x ) ) );
         }
+
+        if ( _y > me->y() )
+        {
+            y *= ( -1 );
+            //qDebug ( "Double: %s", qPrintable ( QString::number ( y ) ) );
+        }
+
+        turnCameraLeftRight ( x );
+        turnCameraUpDown ( y );
+
+        _x = me->x();
+        _y = me->y();
+
+        // qDebug ( "Mouse: LeftButton" );
+
+        repaint();
+    }
+}
+
+void GLWidget::drawCornerMarks()
+{
+    GLVector center = _perspective->center();
+    GLVector camera = _perspective->camera();
+
+    /*
+    qDebug(qPrintable("X: " + QString::number(center.x())));
+    qDebug(qPrintable("Y: " + QString::number(center.y())));
+    qDebug(qPrintable("Z: " + QString::number(center.z())));
+     */
+
+    glPointSize(10);
+
+    glPushMatrix();
+
+    /*glBegin(GL_POINTS);
+        glColor3f (0.0f, 0.0f, 0.0f);
+        glVertex3f(center.x(), center.y(), center.z());
+    glEnd();*/
+
+    glTranslatef(camera.x(), camera.x(), camera.z());
+
+    GLVector temp = camera.unitVector()/cos(_perspective->fovy());
+
+    qDebug(qPrintable("X: " + QString::number(temp.x())));
+    qDebug(qPrintable("Y: " + QString::number(temp.y())));
+    qDebug(qPrintable("Z: " + QString::number(temp.z())));
+
+    glBegin(GL_POINTS);
+        glColor3f (0.0f, 0.0f, 0.0f);
+        glVertex3f(temp.x(), temp.y(), temp.z());
+    glEnd();
+
+    glPopMatrix();
 }

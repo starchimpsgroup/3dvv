@@ -21,17 +21,36 @@
 #define GLVECTOR_H
 
 #include "GL/gl.h"
+#include "globject.h"
 
-class GLVector
+class GLVector : public GLObject
 {
 public:
-    GLVector(){_x=0.0;_y=0.0;_z=0.0;}
-    GLVector(GLdouble x,GLdouble y,GLdouble z){_x=x;_y=y;_z=z;}
-    GLVector(const GLVector &v);
+    void draw();
 
-    GLdouble x()const{ return _x; }
-    GLdouble y()const{ return _y; }
-    GLdouble z()const{ return _z; }
+    GLVector(){_sX = _sY = _sZ =
+               _eX = _eY = _eZ = 0.0;}
+    GLVector(GLdouble x, GLdouble y, GLdouble z){_sX =    _sY =    _sZ = 0.0;
+                                                 _eX = x; _eY = y; _eZ = z;}
+    GLVector(const GLVector &v);
+    GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ)
+    {_sX = sX; _sY = sY; _sZ = sZ;
+     _eX = eX; _eY = eY; _eZ = eZ;}
+
+    GLdouble x()const{ return _eX - _sX; }
+    GLdouble y()const{ return _eY - _sY; }
+    GLdouble z()const{ return _eZ - _sZ; }
+
+    void setX( GLdouble x ){ _eX = _sX + x; }
+    void setY( GLdouble y ){ _eY = _sY + y; }
+    void setZ( GLdouble z ){ _eZ = _sZ + z; }
+
+    GLdouble sX()const{ return _sX; }
+    GLdouble sY()const{ return _sY; }
+    GLdouble sZ()const{ return _sZ; }
+    GLdouble eX()const{ return _eX; }
+    GLdouble eY()const{ return _eY; }
+    GLdouble eZ()const{ return _eZ; }
 
     GLdouble length()const;
     GLdouble latitude()const;
@@ -47,14 +66,18 @@ public:
     const GLVector operator +(const GLVector& v)const;
     GLdouble operator *(const GLVector &v )const;
     GLVector operator *(const GLdouble d )const;
+    const GLVector operator /(GLdouble d)const;
     GLVector operator = (const GLVector & v);
     bool operator != (const GLVector& v) const;
     bool operator == (const GLVector& v) const;
 
 private:
-    GLdouble _x;
-    GLdouble _y;
-    GLdouble _z;
+    GLdouble _sX;
+    GLdouble _sY;
+    GLdouble _sZ;
+    GLdouble _eX;
+    GLdouble _eY;
+    GLdouble _eZ;
 };
 
 static GLVector v_Zero = GLVector(0,0,0);

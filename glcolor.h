@@ -80,6 +80,10 @@ public:
      */
     float alpaF() { return _alpha; }
 
+    void setColors(float red, float green, float blue){_red   = red;
+                                                       _green = green;
+                                                       _blue  = blue;}
+
 private:
     float _red;     //!< Red Color
     float _green;   //!< Green Color

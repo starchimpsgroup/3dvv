@@ -81,6 +81,12 @@ public:
     void setViewport(int width, int height);
 /**Getters*/
     double distance()const{ return (_Camera - _Center).length(); }
+    GLVector camera(){ return _Camera; }
+    GLVector center(){ return _Center; }
+    GLdouble aspect(){ return _Aspect; }
+    GLdouble far()   { return _Far;    }
+    GLdouble fovy()  { return _Fovy;   }
+    GLdouble near()  { return _Near;   }
 
     void reset(){ _Camera = _Camera_backup; _Center = _Center_backup; }
 protected:

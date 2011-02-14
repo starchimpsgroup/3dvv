@@ -2,7 +2,7 @@
 
 GLCoordinateAxes::GLCoordinateAxes()
 {
-    GLCoordinateAxes::Range range = {-5.0, 5.0};
+    GLCoordinateAxes::Range range = {-5, 5};
 
     setRanges( range, range, range );
     setDefaultColors();
@@ -47,11 +47,9 @@ void GLCoordinateAxes::setRanges( const GLCoordinateAxes::Range &rangeX,
 
 void GLCoordinateAxes::setDefaultColors()
 {
-    GLColor colorX( 1.0, 0.0, 0.0 );
-    GLColor colorY( 0.0, 1.0, 0.0 );
-    GLColor colorZ( 0.0, 0.0, 1.0 );
-
-    setColors( colorX, colorY, colorZ );
+    _colorX = GLColor( 1.0, 0.0, 0.0 );
+    _colorY = GLColor( 0.0, 1.0, 0.0 );
+    _colorZ = GLColor( 0.0, 0.0, 1.0 );
 }
 
 void GLCoordinateAxes::draw()
@@ -74,44 +72,42 @@ void GLCoordinateAxes::draw()
 
     glEnd ();
 
+    drawDistanceMarker();
+
     glPopMatrix();
 
-    drawDistanceMarker();
 }
 
 void GLCoordinateAxes::drawDistanceMarker()
 {
-    int rangePosition;
-
     //glPushMatrix(); // Legen die aktuelle Matrix auf den Stack
 
     glBegin (GL_LINES);
 
     glColor3f (_colorX.redF(), _colorX.greenF(), _colorX.blueF());
-    rangePosition = _rangeX.rangeBegin;
-    for( int i=rangePosition; i <= (int)_rangeX.rangeEnd; i++ )
+    for( int i=_rangeX.rangeBegin; i <= (int)_rangeX.rangeEnd; i++ )
     {
         glVertex3f (i, 0.0, 0.0);
         glVertex3f (i, -0.2, 0.0);
     }
 
     glColor3f (_colorY.redF(), _colorY.greenF(), _colorY.blueF());
-    rangePosition = _rangeY.rangeBegin;
-    for( int i=rangePosition; i <= (int)_rangeY.rangeEnd; i++ )
+    for( int i=_rangeY.rangeBegin; i <= (int)_rangeY.rangeEnd; i++ )
     {
         glVertex3f (0.0, i, 0.0);
         glVertex3f (-0.2, i, 0.0);
     }
 
     glColor3f (_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF());
-    rangePosition = _rangeZ.rangeBegin;
-    for( int i=rangePosition; i <= (int)_rangeZ.rangeEnd; i++ )
+    for( int i=_rangeZ.rangeBegin; i <= (int)_rangeZ.rangeEnd; i++ )
     {
         glVertex3f (0.0, 0.0, i);
         glVertex3f (0.0, -0.2, i);
     }
 
     glEnd ();
+
+    glPushMatrix();
 
     glTranslatef(0, 0, 5);
 
@@ -124,6 +120,8 @@ void GLCoordinateAxes::drawDistanceMarker()
     };
 
     glBitmap(8,8,0,0,0,0,Font);*/
+
+    glPopMatrix();
 
     //glPopMatrix();
 }

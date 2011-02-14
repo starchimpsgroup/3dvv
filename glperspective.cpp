@@ -38,37 +38,39 @@ GLPerspective::~GLPerspective()
   * Old matrix values will be overwritten. To be called once before rendering the scene.
   */
 void GLPerspective::apply(){
-  glMatrixMode(GL_PROJECTION); //switch to projection matrix
-  glLoadIdentity();            //initialize matrix with identity matrix
-  //multipy perspective transformation on projection matrix
-  gluPerspective(_Fovy,    //fovy
-                 _Aspect, //aspect
-                 _Near,    //near
-                 _Far);  //far
+  glMatrixMode(GL_PROJECTION); // switch to projection matrix
+  glLoadIdentity();            // initialize matrix with identity matrix
+                               // multipy perspective transformation on projection matrix
+  gluPerspective(_Fovy,        // fovy
+                 _Aspect,      // aspect
+                 _Near,        // near
+                 _Far);        // far
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  gluLookAt(_Camera.x(), _Camera.y(), _Camera.z(), //eye
-            _Center.x(), _Center.y(), _Center.z(),  //center
-            _Up.x(), _Up.y(), _Up.z()); //up
+  gluLookAt(_Camera.x(), _Camera.y(), _Camera.z(), // eye
+            _Center.x(), _Center.y(), _Center.z(), // center
+            _Up.x(), _Up.y(), _Up.z());            // up
 }
 
-/** Moves the camera on a meridian without modifying the distance to _Center
+/**
+  * Moves the camera on a meridian without modifying the distance to _Center
   * Maximum angle is +90 (north), minimum is -90 (south)
   */
 void GLPerspective::turnCameraUpDown( double angleIncrement)  {
   double radius, longitude, latitude;
   GLVector dist = _Camera - _Center;
-  radius= dist.length(); //use getters for coordinate transformation
+  radius= dist.length();    // use getters for coordinate transformation
   longitude = dist.longitude();
   latitude = dist.latitude() + angleIncrement;
-  if(latitude > 90.0) //no flying over the poles
+  if(latitude > 90.0)       // no flying over the poles
    latitude = 90.0;
   if (latitude < -90.0)
    latitude = -90.0;
   dist.setRadiusLongitudeLatitude(radius, longitude,latitude);
-  setCamera(_Center + dist); //add dist to get new cam,era position
+  setCamera(_Center + dist); // add dist to get new cam,era position
 }
-/** Moves the camera on a latitude without modifying the distance to _Center
+/**
+  * Moves the camera on a latitude without modifying the distance to _Center
   * Maximum angle is +180 (east), minimum is -180 (west)
   */
 void GLPerspective::turnCameraLeftRight( double angleIncrement){
@@ -126,8 +128,9 @@ void GLPerspective::stretchCameraDistance(double factor)
   dist = dist * factor;
   setCamera(_Center + dist);
 }
-/**Shift the whole scene in y direction
-*/
+/**
+  *Shift the whole scene in y direction
+  */
 void GLPerspective::shiftSceneUpDown(double distance)
 {
  GLVector vShift = distance * _Up;

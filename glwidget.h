@@ -43,6 +43,8 @@ private:
     void shiftSceneForwardBackward ( double Distance );
     void mouseMoveEvent ( QMouseEvent * me );
 
+    void drawCornerMarks();
+
 protected:
     void initializeGL();
     void paintGL();

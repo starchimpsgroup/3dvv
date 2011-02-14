@@ -42,9 +42,9 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>- Coordinates: `*untouched*`
 
 >>>- Point, only coordinates `*untouched*`
->>>- Vector, start and end point `*untouched*`
+>>>- Vector, start and end point `*ready*`
 
->>- Time parameters for film script `*untouched*`
+>>- Time parameters for film script `*ready*`
 >>- Delete object in the script `*untouched*`
 
 - View: `*work in progress*`
