@@ -26,7 +26,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >- Supports Linux `*ready*`
 >- C++ (Qt), OpenGL `*ready*`
 
-- File / Script (XML) to represent objects (created by the user) `*untouched*`
+- File / Script (XML) to represent objects (created by the user) `*work in progress*`
 
 >- Object has: `*work in progress*`
 
@@ -34,8 +34,8 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>- ObjectTyp: `*work in progress*`
 
 >>>- Point (to be shown as a cross) `*untouched*`
->>>- Vector (for display with apex) `*ready*`
->>>- Layer `*untouched*`
+>>>- Vector (for display with peak) `*ready*`
+>>>- Plain `*untouched*`
 >>>- Line `*untouched*`
 >>>- Angle `*untouched*`
 

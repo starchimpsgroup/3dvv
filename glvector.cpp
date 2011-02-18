@@ -298,5 +298,8 @@ void GLVector::draw()
     glColor3f (_color.redF(), _color.greenF(), _color.blueF());
     gluCylinder(gluNewQuadric(), 0.1, 0, 0.3, 16, 4);
 
+    glRotatef(180, 1.0, 0.0, 0.0);
+    gluDisk(gluNewQuadric(), 0, 0.1, 16, 4);
+
     glPopMatrix();
 }
