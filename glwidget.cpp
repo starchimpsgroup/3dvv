@@ -97,6 +97,50 @@ void GLWidget::paintGL()
     t9.setColor(1,0,1);
     t9.draw();
 
+    GLVector t10(0,-2,-2);
+    t10.setColor(1,0,1);
+    t10.draw();
+
+    GLVector t10a(0,2,-2);
+    t10a.setColor(1,0,1);
+    t10a.draw();
+
+    GLVector t10b(0,-2,2);
+    t10b.setColor(1,0,1);
+    t10b.draw();
+
+    GLVector t10c(0,2,2);
+    t10c.setColor(1,0,1);
+    t10c.draw();
+
+    GLVector t11(0,0,-2);
+    t11.setColor(1,0,1);
+    t11.draw();
+
+    GLVector t11a(0,0,2);
+    t11a.setColor(1,0,1);
+    t11a.draw();
+
+    GLVector t12(0,-2,0);
+    t12.setColor(1,0,1);
+    t12.draw();
+
+    GLVector t12a(0,2,0);
+    t12a.setColor(1,0,1);
+    t12a.draw();
+
+    GLVector t13(-2,0,0);
+    t13.setColor(1,0,1);
+    t13.draw();
+
+    GLVector t13a(2,0,0);
+    t13a.setColor(1,0,1);
+    t13a.draw();
+
+    /*GLVector t14(0,0,0);
+    t14.setColor(1,0,1);
+    t14.draw();*/
+
     glFlush();
 }
 

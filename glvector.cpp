@@ -21,7 +21,7 @@
 #include "math.h"
 #include <qgl.h>
 
-#define TEST true
+#define TEST false
 
 GLVector::GLVector(const GLVector &v){
     if(this != &v){
@@ -229,59 +229,71 @@ void GLVector::draw()
         glVertex3f(0.0, 0.0, 0.0);
         glVertex3f(this->x(), this->y(), this->z());
         glEnd ();
-
-        //qDebug(qPrintable(QString::number(angleXZ)));
-        //qDebug(qPrintable(QString::number(angleYZ)));
     }
     /** */
 
-    if(x() > 0 && y() > 0 && z() > 0)
+    if(x() == 0)
     {
-    glRotatef(angleXZ, 0.0, 1.0, 0.0);
-    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
+        if(y() > 0 && z() != 0)
+        {
+            angleYZ *= -1;
+        }
+        else
+        if(z() == 0)
+        {
+            angleXZ = 0;
+
+            if(y() > 0)
+            {
+                angleYZ = 270;
+            }
+            else
+            if(y() < 0)
+            {
+                angleYZ = 90;
+            }
+        }
+    }
+    else
+    if(x() < 0 && y() == 0 && z() == 0)
+    {
+        angleXZ *= -1;
+    }
+    else
+    if(z() > 0)
+    {
+        if(x() > 0 && y() > 0)
+        {
+            angleYZ *= -1;
+        }
+        else
+        if(x() < 0)
+        {
+            angleXZ *= -1;
+
+            if(y() > 0)
+                angleYZ *= -1;
+        }
+    }
+    else
+    if(z() < 0)
+    {
+        if(x() > 0 && y() > 0)
+        {
+            angleYZ *= -1;
+        }
+        else
+        if(x() < 0)
+        {
+            angleXZ *= -1;
+
+            if(y() > 0)
+                angleYZ *= -1;
+        }
     }
 
-    if(x() < 0 && y() > 0 && z() > 0)
-    {
-    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
-    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
-    }
-
-    if(x() > 0 && y() < 0 && z() > 0)
-    {
     glRotatef(angleXZ, 0.0, 1.0, 0.0);
     glRotatef(angleYZ, 1.0, 0.0, 0.0);
-    }
-
-    if(x() > 0 && y() > 0 && z() < 0)
-    {
-    glRotatef(angleXZ, 0.0, 1.0, 0.0);
-    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
-    }
-
-    if(x() < 0 && y() < 0 && z() > 0)
-    {
-    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
-    glRotatef(angleYZ, 1.0, 0.0, 0.0);
-    }
-
-    if(x() > 0 && y() < 0 && z() < 0)
-    {
-    glRotatef(angleXZ, 0.0, 1.0, 0.0);
-    glRotatef(angleYZ, 1.0, 0.0, 0.0);
-    }
-
-    if(x() < 0 && y() > 0 && z() < 0)
-    {
-    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
-    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
-    }
-
-    if(x() < 0 && y() < 0 && z() < 0)
-    {
-    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
-    glRotatef(angleYZ, 1.0, 0.0, 0.0);
-    }
 
     glColor3f (_color.redF(), _color.greenF(), _color.blueF());
     gluCylinder(gluNewQuadric(), 0.1, 0, 0.3, 16, 4);
