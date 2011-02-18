@@ -21,8 +21,8 @@
 #define GLPERSPECTIVE_H
 
 #include <qgl.h>
-
 #include "glvector.h"
+
 /**
 A class for encapsulating all data for a gluPerspective and a gluLookAt call. These include:
 _Fovy: Opening angle of frustum in y-direction (45° is a good average to start with)

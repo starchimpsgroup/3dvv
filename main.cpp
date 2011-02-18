@@ -26,6 +26,11 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
 
+    QCoreApplication::setOrganizationName("FH-SWF");
+    QCoreApplication::setOrganizationDomain("fh-swf.de");
+    QCoreApplication::setApplicationName("Qt 3D Vector Viewer");
+    QCoreApplication::setApplicationVersion("1.0");
+
     //w.resize(w.sizeHint());
     int desktopArea = QApplication::desktop()->width() *
                      QApplication::desktop()->height();

@@ -19,6 +19,9 @@
  ***************************************************************************/
 #include "glvector.h"
 #include "math.h"
+#include <qgl.h>
+
+#define TEST true
 
 GLVector::GLVector(const GLVector &v){
     if(this != &v){
@@ -154,49 +157,134 @@ void GLVector::draw()
 {
     glPushMatrix();
 
+    glTranslatef(_sX, _sY, _sZ);
+
     glBegin (GL_LINE);
 
     glColor3f (_color.redF(), _color.greenF(), _color.blueF());
-    glVertex3f(_sX, _sY, _sZ);
-    glVertex3f(_eX, _eY, _eZ);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(x(), y(), z());
 
     glEnd ();
+
+    GLdouble len = ((this->length() - 0.3) /  this->length());
 
     /**
       * Test
       */
+    if(TEST)
+    {
 
-    GLVector t(_eX, _eY, _eZ);
+        glBegin (GL_LINES);
 
-    float len = ((t.length() - 0.3) /  t.length());
+        glColor3f (0.0, 0.0, 0.0);
+        glVertex3f(x(), 0.0, 0.0);
+        glVertex3f(x(), y(), z());
 
-    glBegin (GL_LINES);
+        glColor3f (0.0, 0.0, 0.0);
+        glVertex3f(0.0, y(), 0.0);
+        glVertex3f(x(), y(), z());
 
-    glColor3f (0.0, 0.0, 0.0);
-    glVertex3f(_eX, 0.0, 0.0);
-    glVertex3f(_eX, _eY, _eZ);
+        glColor3f (0.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, z());
+        glVertex3f(x(), y(), z());
 
-    glColor3f (0.0, 0.0, 0.0);
-    glVertex3f(0.0, _eY, 0.0);
-    glVertex3f(_eX, _eY, _eZ);
+        glColor3f (0.0, 0.0, 0.0);
+        glVertex3f(x(), 0.0, 0.0);
+        glVertex3f(x() * len, y() * len, z() * len);
 
-    glColor3f (0.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, _eZ);
-    glVertex3f(_eX, _eY, _eZ);
+        glColor3f (0.0, 0.0, 0.0);
+        glVertex3f(0.0, y(), 0.0);
+        glVertex3f(x() * len, y() * len, z() * len);
 
-    glColor3f (0.0, 0.0, 0.0);
-    glVertex3f(_eX, 0.0, 0.0);
-    glVertex3f(_eX * len, _eY * len, _eZ * len);
+        glColor3f (0.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, z());
+        glVertex3f(x() * len, y() * len, z() * len);
 
-    glColor3f (0.0, 0.0, 0.0);
-    glVertex3f(0.0, _eY, 0.0);
-    glVertex3f(_eX * len, _eY * len, _eZ * len);
+        glEnd ();
+    }
 
-    glColor3f (0.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, _eZ);
-    glVertex3f(_eX * len, _eY * len, _eZ * len);
+    /**
+      * Spitze
+      */
 
-    glEnd ();
+    glTranslatef(x() * len, y() * len, z() * len);
+
+    GLVector vectorXZ(this->x(), 0.0, this->z());
+
+    GLdouble angleXZ = acos( (v_Z * vectorXZ) / (v_Z.length() * vectorXZ.length()) ) * 180.0 / M_PI;
+    GLdouble angleYZ = acos( (*this * vectorXZ) / (this->length() * vectorXZ.length()) ) * 180.0 / M_PI;
+
+    /**
+      * Test
+      */
+    if(TEST)
+    {
+        glBegin (GL_LINES);
+        glColor3f (1.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(vectorXZ.x(), vectorXZ.y(), vectorXZ.z());
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(v_Z.x(), v_Z.y(), v_Z.z());
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(this->x(), this->y(), this->z());
+        glEnd ();
+
+        //qDebug(qPrintable(QString::number(angleXZ)));
+        //qDebug(qPrintable(QString::number(angleYZ)));
+    }
+    /** */
+
+    if(x() > 0 && y() > 0 && z() > 0)
+    {
+    glRotatef(angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    if(x() < 0 && y() > 0 && z() > 0)
+    {
+    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    if(x() > 0 && y() < 0 && z() > 0)
+    {
+    glRotatef(angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    if(x() > 0 && y() > 0 && z() < 0)
+    {
+    glRotatef(angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    if(x() < 0 && y() < 0 && z() > 0)
+    {
+    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    if(x() > 0 && y() < 0 && z() < 0)
+    {
+    glRotatef(angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    if(x() < 0 && y() > 0 && z() < 0)
+    {
+    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    if(x() < 0 && y() < 0 && z() < 0)
+    {
+    glRotatef(-angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(angleYZ, 1.0, 0.0, 0.0);
+    }
+
+    glColor3f (_color.redF(), _color.greenF(), _color.blueF());
+    gluCylinder(gluNewQuadric(), 0.1, 0, 0.3, 16, 4);
 
     glPopMatrix();
 }

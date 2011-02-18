@@ -60,10 +60,42 @@ void GLWidget::paintGL()
     /**
       * Tests
       */
-    drawCornerMarks();
+    //drawCornerMarks();
     GLVector t(1,2,2);
     t.setColor(1,0,1);
     t.draw();
+
+    GLVector t2(1,2,2,4,5,6);
+    t2.setColor(0.5,0,1);
+    t2.draw();
+
+    GLVector t3(-1,2,2);
+    t3.setColor(1,0,1);
+    t3.draw();
+
+    GLVector t4(1,-2,2);
+    t4.setColor(1,0,1);
+    t4.draw();
+
+    GLVector t5(1,2,-2);
+    t5.setColor(1,0,1);
+    t5.draw();
+
+    GLVector t6(-1,-2,2);
+    t6.setColor(1,0,1);
+    t6.draw();
+
+    GLVector t7(1,-2,-2);
+    t7.setColor(1,0,1);
+    t7.draw();
+
+    GLVector t8(-1,2,-2);
+    t8.setColor(1,0,1);
+    t8.draw();
+
+    GLVector t9(-1,-2,-2);
+    t9.setColor(1,0,1);
+    t9.draw();
 
     glFlush();
 }
@@ -238,12 +270,6 @@ void GLWidget::drawCornerMarks()
 {
     GLVector center = _perspective->center();
     GLVector camera = _perspective->camera();
-
-    /*
-    qDebug(qPrintable("X: " + QString::number(center.x())));
-    qDebug(qPrintable("Y: " + QString::number(center.y())));
-    qDebug(qPrintable("Z: " + QString::number(center.z())));
-     */
 
     glPointSize(10);
 
