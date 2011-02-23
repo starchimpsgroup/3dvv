@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     glvector.cpp \
     glcoordinateaxes.cpp \
     glcolor.cpp \
-    globject.cpp
+    globject.cpp \
+    glpoint.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -25,7 +26,8 @@ HEADERS  += mainwindow.h \
     glvector.h \
     glcoordinateaxes.h \
     glcolor.h \
-    globject.h
+    globject.h \
+    glpoint.h
 
 FORMS    += mainwindow.ui
 

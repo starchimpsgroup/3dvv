@@ -33,7 +33,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>- ObjectID or unique name `*work in progress*`
 >>- ObjectTyp: `*work in progress*`
 
->>>- Point (to be shown as a cross) `*untouched*`
+>>>- Point (to be shown as a cross) `*ready*`
 >>>- Vector (for display with peak) `*ready*`
 >>>- Plain `*untouched*`
 >>>- Line `*untouched*`

@@ -25,6 +25,7 @@
 #include <QMouseEvent>
 #include "glperspective.h"
 #include "glcoordinateaxes.h"
+#include "glpoint.h"
 
 class GLWidget : public QGLWidget
 {

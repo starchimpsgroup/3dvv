@@ -137,9 +137,29 @@ void GLWidget::paintGL()
     t13a.setColor(1,0,1);
     t13a.draw();
 
+    GLVector tx(-1,-2,3,2,0,0);
+    tx.setColor(1,0,1);
+    tx.draw();
+
+    GLVector tx1(5,5,5,0,0,0);
+    tx1.setColor(1,0,1);
+    tx1.draw();
+
+    GLVector tx2(3,3,3,3,-3,-3);
+    tx2.setColor(1,0,1);
+    tx2.draw();
+
     /*GLVector t14(0,0,0);
     t14.setColor(1,0,1);
     t14.draw();*/
+
+    GLPoint p1( 3.0, 3.0, 3.0 );
+    p1.setColor(0.5,0.5,0.5);
+    p1.draw();
+
+    GLPoint p2( -3.0, 3.0, 3.0 );
+    p2.setColor(0.5,0.5,0.0);
+    p2.draw();
 
     glFlush();
 }
