@@ -61,6 +61,7 @@ void GLWidget::paintGL()
       * Tests
       */
     //drawCornerMarks();
+
     GLVector t(1,2,2);
     t.setColor(1,0,1);
     t.draw();
@@ -141,9 +142,9 @@ void GLWidget::paintGL()
     tx.setColor(1,0,1);
     tx.draw();
 
-    GLVector tx1(5,5,5,0,0,0);
+    /*GLVector tx1(5,5,5,0,0,0);
     tx1.setColor(1,0,1);
-    tx1.draw();
+    tx1.draw();*/
 
     GLVector tx2(3,3,3,3,-3,-3);
     tx2.setColor(1,0,1);
@@ -160,6 +161,10 @@ void GLWidget::paintGL()
     GLPoint p2( -3.0, 3.0, 3.0 );
     p2.setColor(0.5,0.5,0.0);
     p2.draw();
+
+    /**
+      * Tests /
+      */
 
     glFlush();
 }
@@ -335,27 +340,97 @@ void GLWidget::drawCornerMarks()
     GLVector center = _perspective->center();
     GLVector camera = _perspective->camera();
 
+    GLVector vecNear( 0,0,0, 5,5,5 );
+
+    //GLVector vecNear( center.x(), center.y(), center.z(), camera.x(), camera.y(), camera.z() );
+
+    GLdouble x = tan(_perspective->fovy()/2.0) * vecNear.length();
+    qDebug(qPrintable(QString::number(x)));
+    GLVector angleX(x,0,-vecNear.z());
+
     glPointSize(10);
 
     glPushMatrix();
 
-    /*glBegin(GL_POINTS);
+    glBegin(GL_POINTS);
         glColor3f (0.0f, 0.0f, 0.0f);
         glVertex3f(center.x(), center.y(), center.z());
-    glEnd();*/
+    glEnd();
 
-    glTranslatef(camera.x(), camera.x(), camera.z());
+    glTranslatef(vecNear.x(), vecNear.y(), vecNear.z());
+// ####
+    GLVector vectorXZ(vecNear.x(), 0, vecNear.z());
 
-    GLVector temp = camera.unitVector()/cos(_perspective->fovy());
+    glBegin(GL_LINES);
+    glColor3f (0.0f, 0.0f, 0.0f);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(vecNear.x(), vecNear.y(), vecNear.z());
+
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(vecNear.x(), 0, vecNear.z());
+    glEnd();
+
+    GLdouble angleXZ = v_Z.angle(vectorXZ);
+    GLdouble angleYZ = vecNear.angle(vectorXZ);
+
+    glRotatef(angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(-angleYZ, 1.0, 0.0, 0.0);
+// ####
+    glBegin(GL_POINTS);
+        glColor3f (0.0f, 0.0f, 0.0f);
+        glVertex3f(angleX.x(), angleX.y(), angleX.z());
+
+        glColor3f (0.0f, 0.0f, 0.0f);
+        glVertex3f(angleX.y(), angleX.x(), angleX.z());
+    glEnd();
+
+    //qDebug(qPrintable(QString::number(angleX.x()) + " " + QString::number(angleX.y()) + " " + QString::number(angleX.z())));
+
+    // Kreuz
+    glBegin(GL_LINES);
+
+        glColor3f (0.0f, 1.0f, 0.0f);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, 50.0);
+
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, 50.0, 0.0);
+
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(50.0, 0.0, 0.0);
+
+        glColor3f (1.0f, 0.0f, 0.0f);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, -50.0);
+
+        glColor3f (0.0f, 1.0f, 0.0f);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, -50.0, 0.0);
+
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(-50.0, 0.0, 0.0);
+    glEnd();
+
+    /*GLVector vectorXZ(angleX.x(), 0.0, angleX.z());
+
+    GLdouble angleXZ = v_Z.angle(vectorXZ);
+    GLdouble angleYZ = angleX.angle(vectorXZ);
+
+    glRotatef(angleXZ, 0.0, 1.0, 0.0);
+    glRotatef(angleYZ, 1.0, 0.0, 0.0);*/
+
+    /*GLVector temp = camera.unitVector()/cos(_perspective->fovy());
 
     qDebug(qPrintable("X: " + QString::number(temp.x())));
     qDebug(qPrintable("Y: " + QString::number(temp.y())));
     qDebug(qPrintable("Z: " + QString::number(temp.z())));
-
-    glBegin(GL_POINTS);
+*/
+    /*glBegin(GL_POINTS);
         glColor3f (0.0f, 0.0f, 0.0f);
-        glVertex3f(temp.x(), temp.y(), temp.z());
-    glEnd();
+        //glVertex3f(temp.x(), temp.y(), temp.z());
+
+        glVertex3f(x, 0, center.z());
+    glEnd();*/
 
     glPopMatrix();
 }

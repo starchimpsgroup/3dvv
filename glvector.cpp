@@ -153,6 +153,11 @@ GLdouble GLVector::length()const{
     return sqrt(x()*x() + y()*y() + z()*z());
 }
 
+GLdouble GLVector::angle( const GLVector &v )
+{
+    return acos( (*this * v) / (this->length() * v.length()) ) * 180.0 / M_PI;
+}
+
 void GLVector::draw()
 {
     glPushMatrix();
@@ -212,8 +217,8 @@ void GLVector::draw()
 
     GLVector vectorXZ(this->x(), 0.0, this->z());
 
-    GLdouble angleXZ = acos( (v_Z * vectorXZ) / (v_Z.length() * vectorXZ.length()) ) * 180.0 / M_PI;
-    GLdouble angleYZ = acos( (*this * vectorXZ) / (this->length() * vectorXZ.length()) ) * 180.0 / M_PI;
+    GLdouble angleXZ = v_Z.angle(vectorXZ);  // acos( (v_Z * vectorXZ) / (v_Z.length() * vectorXZ.length()) ) * 180.0 / M_PI;
+    GLdouble angleYZ = this->angle(vectorXZ);// acos( (*this * vectorXZ) / (this->length() * vectorXZ.length()) ) * 180.0 / M_PI;
 
     /**
       * Test

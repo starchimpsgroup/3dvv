@@ -28,6 +28,8 @@ class GLVector : public GLObject
 public:
     void draw();
 
+    GLdouble angle( const GLVector &v );
+
     GLVector(){_sX = _sY = _sZ =
                _eX = _eY = _eZ = 0.0;}
     GLVector(GLdouble x, GLdouble y, GLdouble z){_sX =    _sY =    _sZ = 0.0;

@@ -88,12 +88,10 @@ public:
     GLdouble fovy()  { return _Fovy;   }
     GLdouble near()  { return _Near;   }
 
-    void reset(){ _Camera = _Camera_backup; _Center = _Center_backup; }
+    void reset(){ _Camera = 5.0 * v_XYZ; _Center = v_Zero; }
 protected:
     GLVector _Camera;
     GLVector _Center;
-    GLVector _Camera_backup;
-    GLVector _Center_backup;
     GLVector _Up;
     GLdouble _Aspect;
     GLdouble _Far;

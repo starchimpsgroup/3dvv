@@ -80,9 +80,17 @@ public:
      */
     float alpaF() { return _alpha; }
 
-    void setColors(float red, float green, float blue){_red   = red;
-                                                       _green = green;
-                                                       _blue  = blue;}
+    /*!
+        Set the colors and standard alpha.
+        \param red color
+        \param green color
+        \param blue color
+        \param alpha value
+     */
+    void setColors(float red, float green, float blue, float alpha = 1.0){_red   = red;
+                                                                          _green = green;
+                                                                          _blue  = blue;
+                                                                          _alpha = alpha;}
 
 private:
     float _red;     //!< Red Color

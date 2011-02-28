@@ -3,6 +3,9 @@
 
 #include <qgl.h>
 #include <glcolor.h>
+#include "glvector.h"
+
+#define CYLINDERHEIGHT 0.3
 
 class GLCoordinateAxes
 {
@@ -29,7 +32,6 @@ public:
                       const GLColor &colorZ );
 
     void draw();
-    void drawDistanceMarker();
 
     void setDefaultColors();
 
@@ -40,6 +42,10 @@ public:
     void setRanges( const GLCoordinateAxes::Range &rangeX,
                     const GLCoordinateAxes::Range &rangeY,
                     const GLCoordinateAxes::Range &rangeZ);
+
+private:
+    void drawCylinder( const GLVector &point, const GLVector &around, GLfloat angel );
+    void drawDistanceMarker();
 
 private:
     Range _rangeX, _rangeY, _rangeZ;
