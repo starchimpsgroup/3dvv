@@ -31,7 +31,7 @@ public:
                       const GLColor &colorY,
                       const GLColor &colorZ );
 
-    void draw();
+    void draw(GLVector * camera);
 
     void setDefaultColors();
 
@@ -45,7 +45,7 @@ public:
 
 private:
     void drawCylinder( const GLVector &point, const GLVector &around, GLfloat angel );
-    void drawDistanceMarker();
+    void drawDistanceMarker(GLVector * camera);
 
 private:
     Range _rangeX, _rangeY, _rangeZ;

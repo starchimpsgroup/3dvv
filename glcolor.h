@@ -80,6 +80,14 @@ public:
      */
     float alpaF() { return _alpha; }
 
+    int redDez()  { return _red   * 255.0; }
+
+    int greenDez(){ return _green * 255.0; }
+
+    int blueDez() { return _blue  * 255.0; }
+
+    int alphaDez(){ return _alpha * 255.0; }
+
     /*!
         Set the colors and standard alpha.
         \param red color

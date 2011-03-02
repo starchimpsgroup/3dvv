@@ -1,8 +1,6 @@
 #include "glcoordinateaxes.h"
-#include <QFile>
 #include <QDataStream>
-#include <QImage>
-#include <QPicture>
+#include "gltext.h"
 
 GLCoordinateAxes::GLCoordinateAxes()
 {
@@ -56,7 +54,7 @@ void GLCoordinateAxes::setDefaultColors()
     _colorZ = GLColor( 0.0, 0.0, 1.0 );
 }
 
-void GLCoordinateAxes::draw()
+void GLCoordinateAxes::draw(GLVector * camera)
 {
     glPushMatrix(); // Legen die aktuelle Matrix auf den Stack
 
@@ -76,7 +74,7 @@ void GLCoordinateAxes::draw()
 
     glEnd ();
 
-    drawDistanceMarker();
+    drawDistanceMarker(camera);
 
     glPopMatrix();
 
@@ -91,115 +89,72 @@ void GLCoordinateAxes::draw()
     glColor3f (_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF());
     drawCylinder(GLVector(0.0, 0.0, _rangeZ.rangeBegin + CYLINDERHEIGHT), v_Y, 180.0);
     drawCylinder(GLVector(0.0, 0.0, _rangeZ.rangeEnd   - CYLINDERHEIGHT), v_Y, 0.0);
-
-    // Test
-
-    //glPushMatrix();
-
-    glEnable(GL_TEXTURE_2D);	       // Aktiviert Texture Mapping
-
-    int width, height;
-    //QByteArray data;
-
-    // texture data
-    width  = 256;
-    height = 256;
-    /*char b[width*height*3];
-
-    for(int i = 0; i < width*height*3; i++)
-    {
-        b[i] = 150;
-    }*/
-
-    /*QFile file("/home/cernst/Qt3DVectorViewer-build-desktop/Alphatest_Tex.png");
-    if (!file.open(QIODevice::ReadOnly))
-        return;
-
-    data = file.readAll();*/
-
-    QImage pic(width, height, QImage::Format_ARGB32);
-    QPainter paint(&pic);
-
-    paint.begin(&pic);
-
-    for (int i = 0; i < pic.height() * pic.width() * 4; i++) // 4 für RGBA
-        pic.bits()[i] = 0;
-
-    QFont font = paint.font();
-    font.setPixelSize(100);
-
-    paint.setPen(Qt::blue);
-    //paint.setBrush(Qt::blue);
-    paint.setFont(font);
-    paint.drawText(0,100,"test");
-    //paint.drawRect(0,0,20,20);
-    paint.end();
-    pic.save("drawing.png", "PNG");
-
-    QImage t = QGLWidget::convertToGLFormat(pic);
-
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-
-    //glEnable(GL_BLEND);
-    glEnable(GL_ALPHA_TEST);
-    // http://wiki.delphigl.com/index.php/glAlphaFunc
-    // http://www.sorgonet.com/games/fogshadow/
-    glAlphaFunc(GL_GREATER, 0.0);
-    //glBlendFunc(GL_DST_COLOR, GL_ZERO);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pic.width(), pic.height(), 0,
-                 GL_RGBA, GL_UNSIGNED_BYTE, /*b*/ /*data.data()*/ t.constBits());
-
-    glBegin( GL_QUADS );
-    glTexCoord2d(0.0,0.0); glVertex2d(0.0,0.0);
-    glTexCoord2d(1.0,0.0); glVertex2d(1.0,0.0);
-    glTexCoord2d(1.0,1.0); glVertex2d(1.0,1.0);
-    glTexCoord2d(0.0,1.0); glVertex2d(0.0,1.0);
-    glEnd();
-
-    glDisable(GL_ALPHA_TEST);
-    //glDisable(GL_BLEND);
-    glDisable(GL_TEXTURE_2D);
-
 }
 
-void GLCoordinateAxes::drawDistanceMarker()
+void GLCoordinateAxes::drawDistanceMarker(GLVector * camera)
 {
-    glBegin (GL_LINES);
+    GLdouble angelX = v_Y.angle(*camera) - 90.0;
+    GLdouble angelY = v_Z.angle(GLVector(camera->x(), 0.0, camera->z()));
 
-    glColor3f (_colorX.redF(), _colorX.greenF(), _colorX.blueF());
+    if(camera->x() < 0)
+        angelY *= -1;
+
     for( int i=_rangeX.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeX.rangeEnd-CYLINDERHEIGHT; i++ )
     {
         if( i != 0)
         {
-            glVertex3f (i, 0.0, 0.0);
-            glVertex3f (i, -0.2, 0.0);
+            glBegin(GL_LINES);
+            glColor3f (_colorX.redF(), _colorX.greenF(), _colorX.blueF());
+            glVertex3f(i,  0.0, 0.0);
+            glVertex3f(i, -0.2, 0.0);
+            glEnd();
+        }
+
+        if( i % 2 )
+        {
+            GLText::draw(QString::number(i),
+                         GLColor(_colorX.redF(), _colorX.greenF(), _colorX.blueF()),
+                         GLVector(i, -0.35, 0.0), angelX, angelY);
         }
     }
 
-    glColor3f (_colorY.redF(), _colorY.greenF(), _colorY.blueF());
     for( int i=_rangeY.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeY.rangeEnd-CYLINDERHEIGHT; i++ )
     {
         if( i != 0)
         {
-            glVertex3f (0.0, i, 0.0);
-            glVertex3f (-0.2, i, 0.0);
+            glBegin(GL_LINES);
+            glColor3f (_colorY.redF(), _colorY.greenF(), _colorY.blueF());
+            glVertex3f( 0.0, i, 0.0);
+            glVertex3f(-0.2, i, 0.0);
+            glEnd();
+        }
+
+        if( i % 2 )
+        {
+            GLText::draw(QString::number(i),
+                         GLColor(_colorY.redF(), _colorY.greenF(), _colorY.blueF()),
+                         GLVector(-0.35, i, 0.0), angelX, angelY);
         }
     }
 
-    glColor3f (_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF());
     for( int i=_rangeZ.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeZ.rangeEnd-CYLINDERHEIGHT; i++ )
     {
         if( i != 0)
         {
-            glVertex3f (0.0, 0.0, i);
+            glBegin(GL_LINES);
+            glColor3f (_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF());
+            glVertex3f (0.0,  0.0, i);
             glVertex3f (0.0, -0.2, i);
+            glEnd();
+        }
+
+        if( i % 2 )
+        {
+            GLText::draw(QString::number(i),
+                         GLColor(_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF()),
+                         GLVector(0.0, -0.35, i), angelX, angelY);
         }
     }
-
-    glEnd ();
 }
 
 void GLCoordinateAxes::drawCylinder( const GLVector &point, const GLVector &around, GLfloat angel )
