@@ -164,12 +164,10 @@ void GLVector::draw()
 
     glTranslatef(_sX, _sY, _sZ);
 
-    glBegin (GL_LINE);
-
+    glBegin (GL_LINES);
     glColor3f (_color.redF(), _color.greenF(), _color.blueF());
     glVertex3f(0.0, 0.0, 0.0);
     glVertex3f(x(), y(), z());
-
     glEnd ();
 
     GLdouble len = ((this->length() - 0.3) /  this->length());

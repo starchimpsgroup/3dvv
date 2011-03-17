@@ -28,7 +28,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -74,7 +74,7 @@
   </action>
   <action name="actionAboutQt">
    <property name="text">
-    <string>AboutQt</string>
+    <string>About Qt</string>
    </property>
   </action>
  </widget>
