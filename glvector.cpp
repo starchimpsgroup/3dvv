@@ -171,9 +171,13 @@ void GLVector::draw()
     glVertex3f(x(), y(), z());
     glEnd ();
 
-    GLText::draw(QString::number(_sX) + "\n" + QString::number(_sY) + "\n" + QString::number(_sZ),
+    GLText::draw("(" + QString::number(_sX) + ", " + QString::number(_sY) + ", " + QString::number(_sZ) + ")",
                  GLColor(_color.redF(), _color.greenF(), _color.blueF()),
                  GLVector(0.0, -0.35, 0.0));
+
+    GLText::draw("(" + QString::number(_eX) + ", " + QString::number(_eY) + ", " + QString::number(_eZ) + ")",
+                 GLColor(_color.redF(), _color.greenF(), _color.blueF()),
+                 GLVector(x(), y()-0.35, z()));
 
     GLdouble len = ((this->length() - 0.3) /  this->length());
 

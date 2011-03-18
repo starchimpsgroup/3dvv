@@ -112,6 +112,14 @@ void GLCoordinateAxes::drawDistanceMarker()
         }
     }
 
+    GLText::draw("-X",
+                 GLColor(_colorX.redF(), _colorX.greenF(), _colorX.blueF()),
+                 GLVector(_rangeX.rangeBegin, -0.35, 0.0));
+
+    GLText::draw("X",
+                 GLColor(_colorX.redF(), _colorX.greenF(), _colorX.blueF()),
+                 GLVector(_rangeX.rangeEnd, -0.35, 0.0));
+
     for( int i=_rangeY.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeY.rangeEnd-CYLINDERHEIGHT; i++ )
     {
         if( i != 0)
@@ -131,6 +139,14 @@ void GLCoordinateAxes::drawDistanceMarker()
         }
     }
 
+    GLText::draw("-Y",
+                 GLColor(_colorY.redF(), _colorY.greenF(), _colorY.blueF()),
+                 GLVector(-0.35, _rangeY.rangeBegin, 0.0));
+
+    GLText::draw("Y",
+                 GLColor(_colorY.redF(), _colorY.greenF(), _colorY.blueF()),
+                 GLVector(-0.35, _rangeY.rangeEnd, 0.0));
+
     for( int i=_rangeZ.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeZ.rangeEnd-CYLINDERHEIGHT; i++ )
     {
         if( i != 0)
@@ -149,6 +165,14 @@ void GLCoordinateAxes::drawDistanceMarker()
                          GLVector(0.0, -0.35, i));
         }
     }
+
+    GLText::draw("-Z",
+                 GLColor(_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF()),
+                 GLVector(0.0, -0.35, _rangeZ.rangeBegin));
+
+    GLText::draw("Z",
+                 GLColor(_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF()),
+                 GLVector(0.0, -0.35, _rangeZ.rangeEnd));
 }
 
 void GLCoordinateAxes::drawCylinder( const GLVector &point, const GLVector &around, GLfloat angel )

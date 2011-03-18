@@ -119,7 +119,7 @@ void GLText::createImage(QString text, GLColor color)
         paint.drawText(0,TEXTSIZE*(i+1)+SPACER*i,stringList.at(i));
     }
     paint.end();
-    picture.save("drawing.png", "PNG");
+    //picture.save("drawing.png", "PNG");
 
     QImage glPicture = QGLWidget::convertToGLFormat(picture);
 
