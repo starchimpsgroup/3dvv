@@ -54,7 +54,7 @@ void GLCoordinateAxes::setDefaultColors()
     _colorZ = GLColor( 0.0, 0.0, 1.0 );
 }
 
-void GLCoordinateAxes::draw(GLVector * camera)
+void GLCoordinateAxes::draw()
 {
     glPushMatrix(); // Legen die aktuelle Matrix auf den Stack
 
@@ -74,7 +74,7 @@ void GLCoordinateAxes::draw(GLVector * camera)
 
     glEnd ();
 
-    drawDistanceMarker(camera);
+    drawDistanceMarker();
 
     glPopMatrix();
 
@@ -91,14 +91,8 @@ void GLCoordinateAxes::draw(GLVector * camera)
     drawCylinder(GLVector(0.0, 0.0, _rangeZ.rangeEnd   - CYLINDERHEIGHT), v_Y, 0.0);
 }
 
-void GLCoordinateAxes::drawDistanceMarker(GLVector * camera)
+void GLCoordinateAxes::drawDistanceMarker()
 {
-    GLdouble angelX = v_Y.angle(*camera) - 90.0;
-    GLdouble angelY = v_Z.angle(GLVector(camera->x(), 0.0, camera->z()));
-
-    if(camera->x() < 0)
-        angelY *= -1;
-
     for( int i=_rangeX.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeX.rangeEnd-CYLINDERHEIGHT; i++ )
     {
         if( i != 0)
@@ -114,7 +108,7 @@ void GLCoordinateAxes::drawDistanceMarker(GLVector * camera)
         {
             GLText::draw(QString::number(i),
                          GLColor(_colorX.redF(), _colorX.greenF(), _colorX.blueF()),
-                         GLVector(i, -0.35, 0.0), angelX, angelY);
+                         GLVector(i, -0.35, 0.0));
         }
     }
 
@@ -133,7 +127,7 @@ void GLCoordinateAxes::drawDistanceMarker(GLVector * camera)
         {
             GLText::draw(QString::number(i),
                          GLColor(_colorY.redF(), _colorY.greenF(), _colorY.blueF()),
-                         GLVector(-0.35, i, 0.0), angelX, angelY);
+                         GLVector(-0.35, i, 0.0));
         }
     }
 
@@ -152,7 +146,7 @@ void GLCoordinateAxes::drawDistanceMarker(GLVector * camera)
         {
             GLText::draw(QString::number(i),
                          GLColor(_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF()),
-                         GLVector(0.0, -0.35, i), angelX, angelY);
+                         GLVector(0.0, -0.35, i));
         }
     }
 }

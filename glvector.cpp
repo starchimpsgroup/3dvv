@@ -20,6 +20,7 @@
 #include "glvector.h"
 #include "math.h"
 #include <qgl.h>
+#include "gltext.h"
 
 #define TEST false
 
@@ -169,6 +170,10 @@ void GLVector::draw()
     glVertex3f(0.0, 0.0, 0.0);
     glVertex3f(x(), y(), z());
     glEnd ();
+
+    GLText::draw(QString::number(_sX) + "\n" + QString::number(_sY) + "\n" + QString::number(_sZ),
+                 GLColor(_color.redF(), _color.greenF(), _color.blueF()),
+                 GLVector(0.0, -0.35, 0.0));
 
     GLdouble len = ((this->length() - 0.3) /  this->length());
 

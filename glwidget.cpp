@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "glwidget.h"
 #include <math.h>
+#include "gltext.h"
 
 GLWidget::GLWidget(QWidget *parent)
 {
@@ -50,12 +51,20 @@ void GLWidget::paintGL()
 {
     _perspective->apply();
 
+    GLdouble angelX = v_Y.angle(*_perspective->camera()) - 90.0;
+    GLdouble angelY = v_Z.angle(GLVector(_perspective->camera()->x(), 0.0, _perspective->camera()->z()));
+
+    if(_perspective->camera()->x() < 0)
+        angelY *= -1;
+
+    GLText::setAngels(angelX, angelY);
+
     /**
       * clear both the color buffer and the depth buffer
       **/
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    _coordinateAxes->draw(&_perspective->camera());
+    _coordinateAxes->draw();
 
     /**
       * Tests
@@ -338,7 +347,7 @@ void GLWidget::mouseMoveEvent ( QMouseEvent * me )
 void GLWidget::drawCornerMarks()
 {
     GLVector center = _perspective->center();
-    GLVector camera = _perspective->camera();
+    const GLVector * camera = _perspective->camera();
 
     GLVector vecNear( 0,0,0, 5,5,5 );
 

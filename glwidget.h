@@ -35,21 +35,21 @@ public:
     ~GLWidget();
 
 private:
-    void keyPressEvent ( QKeyEvent * ke );
-    void turnCameraUpDown ( double angle );
-    void turnCameraLeftRight ( double angle );
-    void stretchCameraDistance ( double factor );
-    void shiftSceneUpDown ( double distance );
-    void shiftSceneLeftRight ( double distance );
+    void keyPressEvent             ( QKeyEvent * ke );
+    void turnCameraUpDown          ( double angle );
+    void turnCameraLeftRight       ( double angle );
+    void stretchCameraDistance     ( double factor );
+    void shiftSceneUpDown          ( double distance );
+    void shiftSceneLeftRight       ( double distance );
     void shiftSceneForwardBackward ( double Distance );
-    void mouseMoveEvent ( QMouseEvent * me );
+    void mouseMoveEvent            ( QMouseEvent * me );
 
     void drawCornerMarks();
 
 protected:
-    void initializeGL();
-    void paintGL();
-    void resizeGL(int width, int height);
+    void initializeGL       ();
+    void paintGL            ();
+    void resizeGL           ( int width, int height );
     virtual void wheelEvent ( QWheelEvent* );
 
 private:
