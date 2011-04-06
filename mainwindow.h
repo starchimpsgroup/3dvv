@@ -22,6 +22,9 @@
 
 #include <QMainWindow>
 #include "glwidget.h"
+#include "navigation.h"
+#include "preferences.h"
+#include "settings.h"
 
 namespace Ui {
     class MainWindow;
@@ -36,13 +39,19 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
-    GLWidget * _view;
+    Ui::MainWindow * ui;
+    GLWidget       * _view;
+    Navigation     * _navigation;
+    Preferences    * _preferences;
+    Settings       * _settings;
 
 private slots:
     void on_actionAboutQt_triggered();
     void on_actionAbout_3DVV_triggered();
     void on_actionOpen_object_file_triggered();
+    void on_actionPreferences_triggered();
+    void openNavigation(bool open);
+    void changeBackgroundColor(GLColor color);
 };
 
 #endif // MAINWINDOW_H

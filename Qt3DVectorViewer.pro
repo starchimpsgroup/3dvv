@@ -19,7 +19,11 @@ SOURCES += main.cpp\
     glcolor.cpp \
     globject.cpp \
     glpoint.cpp \
-    gltext.cpp
+    gltext.cpp \
+    navigation.cpp \
+    navigationlabel.cpp \
+    preferences.cpp \
+    settings.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -29,9 +33,18 @@ HEADERS  += mainwindow.h \
     glcolor.h \
     globject.h \
     glpoint.h \
-    gltext.h
+    gltext.h \
+    navigation.h \
+    navigationlabel.h \
+    preferences.h \
+    settings.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    navigation.ui \
+    preferences.ui
 
 OTHER_FILES += \
     README.markdown
+
+RESOURCES += \
+    Resouces/resouces.qrc

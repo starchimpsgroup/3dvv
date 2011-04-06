@@ -1,7 +1,7 @@
 #ifndef GLPOINT_H
 #define GLPOINT_H
 
-#include "GL/gl.h"
+#include "qgl.h"
 #include "globject.h"
 
 class GLPoint : public GLObject

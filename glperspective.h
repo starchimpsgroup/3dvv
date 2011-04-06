@@ -23,8 +23,9 @@
 #include <qgl.h>
 #include "glvector.h"
 
-/**
-A class for encapsulating all data for a gluPerspective and a gluLookAt call. These include:
+//! A class for encapsulating all data for a gluPerspective and a gluLookAt call.
+/*!
+These include:
 _Fovy: Opening angle of frustum in y-direction (45° is a good average to start with)
 _Aspect: The aspect ratio of the viewport (width / height)
 _Near and _Far clipping plane distances
@@ -35,36 +36,53 @@ _Up: The 3d-vector that points upwards in the viewport
 Use the apply() function to transfer the perspective settings to the OpenGL matrices.
 
         @author walter <walter@HP2100-Roth>
-*/
+ */
 class GLPerspective{
 public:
     GLPerspective();
 
     ~GLPerspective();
-    /** Applies the perspective settings to projection and modelview matrices.
-      * Old matrix values will be overwritten. To be called once before rendering the scene.
-      */
-     void apply();
 
-    /**Moves the camera on a meridian without modifying the distance to _Center
-     * Maximum angle is +90 (north), minimum is -90 (south)
+    //! Applies the perspective settings to projection and modelview matrices.
+    /*!
+        Old matrix values will be overwritten. To be called once before rendering the scene.
      */
-     void turnCameraUpDown( double angleIncrement);
-    /**Moves the camera on a latitude without modifying the distance to _Center
-     * Maximum angle is +180 (east), minimum is -180 (west)
-     */
-     void turnCameraLeftRight( double angleIncrement);
-    /**Multiply camera vector by factor
-    */
+    void apply();
+
+    //! Moves the camera on a meridian without modifying the distance to _Center.
+    /*!
+         Maximum angle is +90 (north), minimum is -90 (south).
+      */
+    void turnCameraUpDown( double angleIncrement);
+
+    //! Moves the camera on a latitude without modifying the distance to _Center.
+    /*!
+         Maximum angle is +180 (east), minimum is -180 (west).
+      */
+    void turnCameraLeftRight( double angleIncrement);
+
+    //! Multiply camera vector by factor.
+    /*!
+
+      */
     void stretchCameraDistance(double factor);
-    /**Shift the whole scene in y direction
-    */
+
+    //! Shift the whole scene in y direction.
+    /*!
+
+      */
     void shiftSceneUpDown(double distance);
-    /**Shift the whole scene in x-z plane orthogonal to camera vector
-    */
+
+    //! Shift the whole scene in x-z plane orthogonal to camera vector.
+    /*!
+
+      */
     void shiftSceneLeftRight(double distance);
-    /**Shift the whole scene in x-z plane parallel to camera vector projection in xz plane
-    */
+
+    //! Shift the whole scene in x-z plane parallel to camera vector projection in xz plane.
+    /*!
+
+      */
     void shiftSceneForwardBackward(double distance);
 
  /**Setters*/
@@ -97,12 +115,8 @@ protected:
     GLdouble _Far;
     GLdouble _Fovy;
     GLdouble _Near;
-    /**Viewport width
-     */
-    GLint _Width;
-    /**Viewport height
-      */
-    GLint _Height;
+    GLint    _Width;  //!< Viewport width
+    GLint    _Height; //!< Viewport height
 };
 
 #endif

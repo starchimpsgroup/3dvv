@@ -18,15 +18,15 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "glwidget.h"
-#include <math.h>
 #include "gltext.h"
+#include <math.h>
 
-GLWidget::GLWidget(QWidget *parent)
+GLWidget::GLWidget(GLColor backgroundColor, QWidget *parent) : QGLWidget(parent)
 {
-    setParent(parent);
 
-    _perspective    = new GLPerspective();
-    _coordinateAxes = new GLCoordinateAxes();
+    _backgroundColor = backgroundColor;
+    _perspective     = new GLPerspective();
+    _coordinateAxes  = new GLCoordinateAxes();
 
     setFocusPolicy ( Qt::StrongFocus );
 
@@ -42,7 +42,11 @@ GLWidget::~GLWidget()
 
 void GLWidget::initializeGL()
 {
-    glClearColor(1.0f,1.0f,1.0f,1.0f);
+    glClearColor(_backgroundColor.redF(),
+                 _backgroundColor.greenF(),
+                 _backgroundColor.blueF(),
+                 _backgroundColor.alphaF());
+
     glEnable(GL_DEPTH_TEST);          // Tiefentest aktivieren
     glEnable(GL_CULL_FACE);           // Backface Culling aktivieren
 }
@@ -71,7 +75,211 @@ void GLWidget::paintGL()
       */
     //drawCornerMarks();
 
-    GLVector t(1,2,2);
+    // E
+    /*GLColor E(1.0,0.0,0.5);
+
+    GLVector e(1,0,0,1,5,0);
+    e.setColor(E);
+    e.draw();
+
+    GLVector e1(1,5,0,4,5,0);
+    e1.setColor(E);
+    e1.draw();
+
+    GLVector e2(4,5,0,4,4,0);
+    e2.setColor(E);
+    e2.draw();
+
+    GLVector e3(4,4,0,2,4,0);
+    e3.setColor(E);
+    e3.draw();
+
+    GLVector e4(2,4,0,2,3,0);
+    e4.setColor(E);
+    e4.draw();
+
+    GLVector e5(2,3,0,4,3,0);
+    e5.setColor(E);
+    e5.draw();
+
+    GLVector e6(4,3,0,4,2,0);
+    e6.setColor(E);
+    e6.draw();
+
+    GLVector e7(4,2,0,2,2,0);
+    e7.setColor(E);
+    e7.draw();
+
+    GLVector e8(2,2,0,2,1,0);
+    e8.setColor(E);
+    e8.draw();
+
+    GLVector e9(2,1,0,4,1,0);
+    e9.setColor(E);
+    e9.draw();
+
+    GLVector e10(4,1,0,4,0,0);
+    e10.setColor(E);
+    e10.draw();
+
+    GLVector e11(4,0,0,1,0,0);
+    e11.setColor(E);
+    e11.draw();
+
+    // N
+    GLColor N(1.0,0.5,0.0);
+
+    GLVector n(5,0,0,5,5,0);
+    n.setColor(N);
+    n.draw();
+
+    GLVector n1(5,5,0,6,5,0);
+    n1.setColor(N);
+    n1.draw();
+
+    GLVector n2(6,5,0,7,2,0);
+    n2.setColor(N);
+    n2.draw();
+
+    GLVector n3(7,2,0,7,5,0);
+    n3.setColor(N);
+    n3.draw();
+
+    GLVector n4(7,5,0,8,5,0);
+    n4.setColor(N);
+    n4.draw();
+
+    GLVector n5(8,5,0,8,0,0);
+    n5.setColor(N);
+    n5.draw();
+
+    GLVector n6(8,0,0,7,0,0);
+    n6.setColor(N);
+    n6.draw();
+
+    GLVector n7(7,0,0,6,3,0);
+    n7.setColor(N);
+    n7.draw();
+
+    GLVector n8(6,3,0,6,0,0);
+    n8.setColor(N);
+    n8.draw();
+
+    GLVector n9(6,0,0,5,0,0);
+    n9.setColor(N);
+    n9.draw();
+
+    // D
+    GLColor D(0.0,0.5,1.0);
+
+    GLVector d(9,0,0,9,5,0);
+    d.setColor(D);
+    d.draw();
+
+    GLVector d1(9,5,0,11,5,0);
+    d1.setColor(D);
+    d1.draw();
+
+    GLVector d2(11,5,0,12,4,0);
+    d2.setColor(D);
+    d2.draw();
+
+    GLVector d3(12,4,0,12,1,0);
+    d3.setColor(D);
+    d3.draw();
+
+    GLVector d4(12,1,0,11,0,0);
+    d4.setColor(D);
+    d4.draw();
+
+    GLVector d5(11,0,0,9,0,0);
+    d5.setColor(D);
+    d5.draw();
+
+    GLVector d6(10,1,0,10,4,0);
+    d6.setColor(D);
+    d6.draw();
+
+    GLVector d7(10,4,0,11,4,0);
+    d7.setColor(D);
+    d7.draw();
+
+    GLVector d8(11,4,0,11,1,0);
+    d8.setColor(D);
+    d8.draw();
+
+    GLVector d9(11,1,0,10,1,0);
+    d9.setColor(D);
+    d9.draw();
+
+    // E2
+    GLColor E2(0.5,1.0,0.0);
+
+    GLVector eb(13,0,0,13,5,0);
+    eb.setColor(E2);
+    eb.draw();
+
+    GLVector eb1(13,5,0,16,5,0);
+    eb1.setColor(E2);
+    eb1.draw();
+
+    GLVector eb2(16,5,0,16,4,0);
+    eb2.setColor(E2);
+    eb2.draw();
+
+    GLVector eb3(16,4,0,14,4,0);
+    eb3.setColor(E2);
+    eb3.draw();
+
+    GLVector eb4(14,4,0,14,3,0);
+    eb4.setColor(E2);
+    eb4.draw();
+
+    GLVector eb5(14,3,0,16,3,0);
+    eb5.setColor(E2);
+    eb5.draw();
+
+    GLVector eb6(16,3,0,16,2,0);
+    eb6.setColor(E2);
+    eb6.draw();
+
+    GLVector eb7(16,2,0,14,2,0);
+    eb7.setColor(E2);
+    eb7.draw();
+
+    GLVector eb8(14,2,0,14,1,0);
+    eb8.setColor(E2);
+    eb8.draw();
+
+    GLVector eb9(14,1,0,16,1,0);
+    eb9.setColor(E2);
+    eb9.draw();
+
+    GLVector eb10(16,1,0,16,0,0);
+    eb10.setColor(E2);
+    eb10.draw();
+
+    GLVector eb11(16,0,0,13,0,0);
+    eb11.setColor(E2);
+    eb11.draw();*/
+
+    // bsp
+
+    GLVector v1(3,2,-3);
+    v1.setColor(0.5,1.0,0.0);
+    v1.draw();
+
+    GLVector v2(3,2,-3,4,4,-3);
+    v2.setColor(1.0,0.5,0.0);
+    v2.draw();
+
+    GLVector v3(4,4,-3);
+    v3.setColor(0.0,0.5,1.0);
+    v3.draw();
+
+    //test
+
+    /*GLVector t(1,2,2);
     t.setColor(1,0,1);
     t.draw();
 
@@ -147,7 +355,7 @@ void GLWidget::paintGL()
     t13a.setColor(1,0,1);
     t13a.draw();
 
-    GLVector tx(-1,-2,3,2,0,0);
+    /*GLVector tx(-1,-2,3,2,0,0);
     tx.setColor(1,0,1);
     tx.draw();
 
@@ -155,7 +363,7 @@ void GLWidget::paintGL()
     tx1.setColor(1,0,1);
     tx1.draw();*/
 
-    GLVector tx2(3,3,3,3,-3,-3);
+    /*GLVector tx2(3,3,3,3,-3,-3);
     tx2.setColor(1,0,1);
     tx2.draw();
 
@@ -163,7 +371,7 @@ void GLWidget::paintGL()
     t14.setColor(1,0,1);
     t14.draw();*/
 
-    GLPoint p1( 3.0, 3.0, 3.0 );
+    /*GLPoint p1( 3.0, 3.0, 3.0 );
     p1.setColor(0.5,0.5,0.5);
     p1.draw();
 
@@ -176,6 +384,8 @@ void GLWidget::paintGL()
       */
 
     glFlush();
+
+    //_navigation->repaint();
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -255,19 +465,19 @@ void GLWidget::keyPressEvent ( QKeyEvent * ke )
     repaint();
 }
 
-void GLWidget::wheelEvent ( QWheelEvent * event )
+void GLWidget::wheelEvent ( QWheelEvent * we )
 {
 
     // ---------------------------------------------------------------------------
     //   Mausrad Zoom
     // ---------------------------------------------------------------------------
 
-    if ( event->modifiers() & Qt::ControlModifier )
+    if ( we->modifiers() & Qt::ControlModifier )
     {
         // qDebug ( "Key: %s",qPrintable ( ( QString ) "Wheel" ) );
         // qDebug ( "Double: %s", qPrintable ( QString::number ( event->delta() ) ) );
 
-        if ( event->delta() > 0 )
+        if ( we->delta() > 0 )
         {
             stretchCameraDistance ( 1.1 );
         }
@@ -277,7 +487,7 @@ void GLWidget::wheelEvent ( QWheelEvent * event )
         }
 
         repaint();
-        event->accept();
+        we->accept();
     }
 }
 
@@ -342,6 +552,12 @@ void GLWidget::mouseMoveEvent ( QMouseEvent * me )
 
         repaint();
     }
+}
+
+void GLWidget::setBackgroundColor(GLColor color)
+{
+    glClearColor(color.redF(),color.greenF(),color.blueF(),color.alphaF());
+    repaint();
 }
 
 void GLWidget::drawCornerMarks()

@@ -31,7 +31,7 @@ void GLText::draw( QString text, GLColor color, GLVector position, float angleX,
     draw(text, color, position);
 }
 
-void GLText::draw(QImage image, GLVector position, float angleX, float angleY)
+void GLText::draw(QImage &image, GLVector &position, float angleX, float angleY)
 {
     glPushMatrix();
 
@@ -74,7 +74,7 @@ void GLText::draw(QImage image, GLVector position, float angleX, float angleY)
     glPopMatrix();
 }
 
-int GLText::longestPart( QStringList list )
+int GLText::longestPart( QStringList &list )
 {
     int longest = -1;
 
@@ -95,7 +95,7 @@ int GLText::longestPart( QStringList list )
     return longest;
 }
 
-void GLText::createImage(QString text, GLColor color)
+void GLText::createImage(QString &text, GLColor &color)
 {
     QFont font;
     font.setPointSize(TEXTSIZE);
@@ -119,17 +119,17 @@ void GLText::createImage(QString text, GLColor color)
         paint.drawText(0,TEXTSIZE*(i+1)+SPACER*i,stringList.at(i));
     }
     paint.end();
-    //picture.save("drawing.png", "PNG");
+    picture.save(text + ".png", "PNG");
 
     QImage glPicture = QGLWidget::convertToGLFormat(picture);
 
     _imageMap.insert(createName(text, color), glPicture);
 }
 
-QString GLText::createName(QString text, GLColor color)
+QString GLText::createName(QString &text, GLColor &color)
 {
-    return text + "#" + QString::number(color.redF())
-                + "#" + QString::number(color.greenF())
-                + "#" + QString::number(color.blueF())
-                + "#" + QString::number(color.alpaF());
+    return text + "#" + QString::number(color.redDez())
+                + "#" + QString::number(color.greenDez())
+                + "#" + QString::number(color.blueDez())
+                + "#" + QString::number(color.alphaDez());
 }

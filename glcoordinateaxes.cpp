@@ -4,7 +4,7 @@
 
 GLCoordinateAxes::GLCoordinateAxes()
 {
-    GLCoordinateAxes::Range range = {-5, 5};
+    GLCoordinateAxes::Range range = {-80,80};
 
     setRanges( range, range, range );
     setDefaultColors();
@@ -49,9 +49,9 @@ void GLCoordinateAxes::setRanges( const GLCoordinateAxes::Range &rangeX,
 
 void GLCoordinateAxes::setDefaultColors()
 {
-    _colorX = GLColor( 1.0, 0.0, 0.0 );
-    _colorY = GLColor( 0.0, 1.0, 0.0 );
-    _colorZ = GLColor( 0.0, 0.0, 1.0 );
+    _colorX = GLColor( 1.0f, 0.0f, 0.0f );
+    _colorY = GLColor( 0.0f, 1.0f, 0.0f );
+    _colorZ = GLColor( 0.0f, 0.0f, 1.0f );
 }
 
 void GLCoordinateAxes::draw()
@@ -73,6 +73,30 @@ void GLCoordinateAxes::draw()
     glVertex3f (0.0, 0.0, _rangeZ.rangeEnd  );
 
     glEnd ();
+
+    GLText::draw("-X",
+                 _colorX,
+                 GLVector(_rangeX.rangeBegin, -0.35, 0.0));
+
+    GLText::draw("X",
+                 _colorX,
+                 GLVector(_rangeX.rangeEnd, -0.35, 0.0));
+
+    GLText::draw("-Y",
+                 _colorY,
+                 GLVector(-0.35, _rangeY.rangeBegin, 0.0));
+
+    GLText::draw("Y",
+                 _colorY,
+                 GLVector(-0.35, _rangeY.rangeEnd, 0.0));
+
+    GLText::draw("-Z",
+                 _colorZ,
+                 GLVector(0.0, -0.35, _rangeZ.rangeBegin));
+
+    GLText::draw("Z",
+                 _colorZ,
+                 GLVector(0.0, -0.35, _rangeZ.rangeEnd));
 
     drawDistanceMarker();
 
@@ -107,18 +131,10 @@ void GLCoordinateAxes::drawDistanceMarker()
         if( i % 2 )
         {
             GLText::draw(QString::number(i),
-                         GLColor(_colorX.redF(), _colorX.greenF(), _colorX.blueF()),
+                         _colorX,
                          GLVector(i, -0.35, 0.0));
         }
     }
-
-    GLText::draw("-X",
-                 GLColor(_colorX.redF(), _colorX.greenF(), _colorX.blueF()),
-                 GLVector(_rangeX.rangeBegin, -0.35, 0.0));
-
-    GLText::draw("X",
-                 GLColor(_colorX.redF(), _colorX.greenF(), _colorX.blueF()),
-                 GLVector(_rangeX.rangeEnd, -0.35, 0.0));
 
     for( int i=_rangeY.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeY.rangeEnd-CYLINDERHEIGHT; i++ )
     {
@@ -134,18 +150,10 @@ void GLCoordinateAxes::drawDistanceMarker()
         if( i % 2 )
         {
             GLText::draw(QString::number(i),
-                         GLColor(_colorY.redF(), _colorY.greenF(), _colorY.blueF()),
+                         _colorY,
                          GLVector(-0.35, i, 0.0));
         }
     }
-
-    GLText::draw("-Y",
-                 GLColor(_colorY.redF(), _colorY.greenF(), _colorY.blueF()),
-                 GLVector(-0.35, _rangeY.rangeBegin, 0.0));
-
-    GLText::draw("Y",
-                 GLColor(_colorY.redF(), _colorY.greenF(), _colorY.blueF()),
-                 GLVector(-0.35, _rangeY.rangeEnd, 0.0));
 
     for( int i=_rangeZ.rangeBegin+CYLINDERHEIGHT; i <= (int)_rangeZ.rangeEnd-CYLINDERHEIGHT; i++ )
     {
@@ -161,18 +169,10 @@ void GLCoordinateAxes::drawDistanceMarker()
         if( i % 2 )
         {
             GLText::draw(QString::number(i),
-                         GLColor(_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF()),
+                         _colorZ,
                          GLVector(0.0, -0.35, i));
         }
     }
-
-    GLText::draw("-Z",
-                 GLColor(_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF()),
-                 GLVector(0.0, -0.35, _rangeZ.rangeBegin));
-
-    GLText::draw("Z",
-                 GLColor(_colorZ.redF(), _colorZ.greenF(), _colorZ.blueF()),
-                 GLVector(0.0, -0.35, _rangeZ.rangeEnd));
 }
 
 void GLCoordinateAxes::drawCylinder( const GLVector &point, const GLVector &around, GLfloat angel )

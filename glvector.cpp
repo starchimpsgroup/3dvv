@@ -22,7 +22,7 @@
 #include <qgl.h>
 #include "gltext.h"
 
-#define TEST false
+//#define TEST
 
 GLVector::GLVector(const GLVector &v){
     if(this != &v){
@@ -172,21 +172,16 @@ void GLVector::draw()
     glEnd ();
 
     GLText::draw("(" + QString::number(_sX) + ", " + QString::number(_sY) + ", " + QString::number(_sZ) + ")",
-                 GLColor(_color.redF(), _color.greenF(), _color.blueF()),
+                 _color,
                  GLVector(0.0, -0.35, 0.0));
 
     GLText::draw("(" + QString::number(_eX) + ", " + QString::number(_eY) + ", " + QString::number(_eZ) + ")",
-                 GLColor(_color.redF(), _color.greenF(), _color.blueF()),
+                 _color,
                  GLVector(x(), y()-0.35, z()));
 
     GLdouble len = ((this->length() - 0.3) /  this->length());
 
-    /**
-      * Test
-      */
-    if(TEST)
-    {
-
+#ifdef TEST
         glBegin (GL_LINES);
 
         glColor3f (0.0, 0.0, 0.0);
@@ -214,7 +209,7 @@ void GLVector::draw()
         glVertex3f(x() * len, y() * len, z() * len);
 
         glEnd ();
-    }
+#endif
 
     /**
       * Spitze
@@ -224,14 +219,28 @@ void GLVector::draw()
 
     GLVector vectorXZ(this->x(), 0.0, this->z());
 
-    GLdouble angleXZ = v_Z.angle(vectorXZ);  // acos( (v_Z * vectorXZ) / (v_Z.length() * vectorXZ.length()) ) * 180.0 / M_PI;
-    GLdouble angleYZ = this->angle(vectorXZ);// acos( (*this * vectorXZ) / (this->length() * vectorXZ.length()) ) * 180.0 / M_PI;
+    GLdouble angleXZ = v_Z.angle(vectorXZ);
+    GLdouble angleYZ = this->angle(vectorXZ);
 
-    /**
-      * Test
-      */
-    if(TEST)
+    if( this->x() < 0 )
+        angleXZ *= -1;
+
+    if( this->y() > 0 )
+        angleYZ *= -1;
+
+    if( this->x() == 0 && this->z() == 0 )
     {
+        if( this->y() > 0 )
+        {
+            angleYZ = 270;
+        }
+        else if( this->y() < 0 )
+        {
+            angleYZ = 90;
+        }
+    }
+
+#ifdef TEST
         glBegin (GL_LINES);
         glColor3f (1.0, 0.0, 0.0);
         glVertex3f(0.0, 0.0, 0.0);
@@ -241,68 +250,7 @@ void GLVector::draw()
         glVertex3f(0.0, 0.0, 0.0);
         glVertex3f(this->x(), this->y(), this->z());
         glEnd ();
-    }
-    /** */
-
-    if(x() == 0)
-    {
-        if(y() > 0 && z() != 0)
-        {
-            angleYZ *= -1;
-        }
-        else
-        if(z() == 0)
-        {
-            angleXZ = 0;
-
-            if(y() > 0)
-            {
-                angleYZ = 270;
-            }
-            else
-            if(y() < 0)
-            {
-                angleYZ = 90;
-            }
-        }
-    }
-    else
-    if(x() < 0 && y() == 0 && z() == 0)
-    {
-        angleXZ *= -1;
-    }
-    else
-    if(z() > 0)
-    {
-        if(x() > 0 && y() > 0)
-        {
-            angleYZ *= -1;
-        }
-        else
-        if(x() < 0)
-        {
-            angleXZ *= -1;
-
-            if(y() > 0)
-                angleYZ *= -1;
-        }
-    }
-    else
-    if(z() < 0)
-    {
-        if(x() > 0 && y() > 0)
-        {
-            angleYZ *= -1;
-        }
-        else
-        if(x() < 0)
-        {
-            angleXZ *= -1;
-
-            if(y() > 0)
-                angleYZ *= -1;
-        }
-    }
+#endif
 
     glRotatef(angleXZ, 0.0, 1.0, 0.0);
     glRotatef(angleYZ, 1.0, 0.0, 0.0);

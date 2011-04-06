@@ -20,7 +20,7 @@
 #ifndef GLVECTOR_H
 #define GLVECTOR_H
 
-#include "GL/gl.h"
+#include "qgl.h"
 #include "globject.h"
 
 class GLVector : public GLObject

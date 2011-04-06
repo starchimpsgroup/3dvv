@@ -23,11 +23,11 @@ GLPerspective::GLPerspective()
 {
   _Center = v_Zero;
   _Camera = 5.0 * v_XYZ;
-  _Up = v_Y;
-  _Fovy = 45.0;
+  _Up     = v_Y;
+  _Fovy   = 45.0;
   _Aspect = 1.0;
-  _Near = 1.0;
-  _Far = 100.0;
+  _Near   = 1.0;
+  _Far    = 100.0;
 }
 
 GLPerspective::~GLPerspective()

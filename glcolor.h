@@ -20,6 +20,8 @@
 #ifndef GLCOLOR_H
 #define GLCOLOR_H
 
+#include <QColor>
+
 //! The Color class.
 /*!
     This class contains the values of a color.
@@ -35,22 +37,33 @@ public:
 
     //! Constructor of thr GLColor class with color parameters.
     /*!
-        Initialize with the input colors and standard alpha.
-        \param red color
-        \param green color
-        \param blue color
-     */
-    GLColor( float redF, float greenF, float blueF );
-
-    //! Constructor of thr GLColor class with color parameters.
-    /*!
         Initialize with the input colors and alpha.
+        Input range 0.0f to 1.0f.
         \param red color
         \param green color
         \param blue color
         \param alpha value
      */
-    GLColor( float redF, float greenF, float blueF, float alphaF );
+    GLColor( float redF, float greenF, float blueF, float alphaF = 1.0f );
+
+    //! Constructor of thr GLColor class with color parameters.
+    /*!
+        Initialize with the input colors and alpha.
+        Input range 0 to 255.
+        \param red color
+        \param green color
+        \param blue color
+        \param alpha value
+     */
+    GLColor( int redI, int greenI, int blueI, int alphaI = 255 );
+
+    //! Constructor of thr GLColor class with QColor parameter.
+    /*!
+        Initialize with colors and alpha in QColor.
+        Input range 0 to 255.
+        \param data QChar
+     */
+    GLColor( QColor color );
 
     //! Return red color of the color.
     /*!
@@ -78,7 +91,7 @@ public:
         \see _alpha
         \return alpha value float
      */
-    float alpaF() { return _alpha; }
+    float alphaF() { return _alpha; }
 
     int redDez()  { return _red   * 255.0; }
 
@@ -95,10 +108,12 @@ public:
         \param blue color
         \param alpha value
      */
-    void setColors(float red, float green, float blue, float alpha = 1.0){_red   = red;
-                                                                          _green = green;
-                                                                          _blue  = blue;
-                                                                          _alpha = alpha;}
+    void setColors(float redF, float greenF, float blueF, float alphaF = 1.0f){_red   = redF;
+                                                                               _green = greenF;
+                                                                               _blue  = blueF;
+                                                                               _alpha = alphaF;}
+
+    const QColor qcolor();
 
 private:
     float _red;     //!< Red Color

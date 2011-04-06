@@ -22,17 +22,17 @@ public:
     static void setAngels( float angleX, float angleY ){ _angleX = angleX; _angleY = angleY; }
 
 private:
-    static void draw(QImage image, GLVector position, float angleX, float angleY);
+    static void draw(QImage &image, GLVector &position, float angleX, float angleY);
 
-    static void createImage(QString text, GLColor color);
+    static void createImage(QString &text, GLColor &color);
 
-    static QString createName(QString text, GLColor color);
+    static QString createName(QString &text, GLColor &color);
 
     static QMap<QString, QImage> initMap();
 
     static float initAngel(){ return 0.0f; }
 
-    static int longestPart( QStringList list );
+    static int longestPart( QStringList &list );
 
 private:
     static QMap<QString, QImage> _imageMap;

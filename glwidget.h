@@ -31,30 +31,35 @@ class GLWidget : public QGLWidget
 {
     Q_OBJECT
 public:
-    GLWidget(QWidget *parent = 0);
+    GLWidget(GLColor backgroundColor, QWidget *parent = 0);
     ~GLWidget();
 
+    void setBackgroundColor(GLColor color);
+
 private:
-    void keyPressEvent             ( QKeyEvent * ke );
     void turnCameraUpDown          ( double angle );
     void turnCameraLeftRight       ( double angle );
     void stretchCameraDistance     ( double factor );
     void shiftSceneUpDown          ( double distance );
     void shiftSceneLeftRight       ( double distance );
-    void shiftSceneForwardBackward ( double Distance );
+    void shiftSceneForwardBackward ( double distance );
+
+    void drawCornerMarks           ();
+
+    void initializeGL              ();
+    void paintGL                   ();
+    void resizeGL                  ( int width, int height );
+
     void mouseMoveEvent            ( QMouseEvent * me );
-
-    void drawCornerMarks();
-
-protected:
-    void initializeGL       ();
-    void paintGL            ();
-    void resizeGL           ( int width, int height );
-    virtual void wheelEvent ( QWheelEvent* );
+    void keyPressEvent             ( QKeyEvent   * ke );
+    void wheelEvent                ( QWheelEvent * we );
 
 private:
     GLPerspective    * _perspective;
     GLCoordinateAxes * _coordinateAxes;
+
+    GLColor            _backgroundColor;
+
     int _x;
     int _y;
 };
