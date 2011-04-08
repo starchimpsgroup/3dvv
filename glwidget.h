@@ -36,10 +36,13 @@ public:
 
     void setBackgroundColor(GLColor color);
 
+    void setObjects(QList<GLObject *> * objects){ _objects = objects; }
+    void setObjectIndex(int index){ _objectIndex = index; };
+
 private:
-    void turnCameraUpDown          ( double angle );
-    void turnCameraLeftRight       ( double angle );
-    void stretchCameraDistance     ( double factor );
+    void turnCameraUpDown          ( double angle    );
+    void turnCameraLeftRight       ( double angle    );
+    void stretchCameraDistance     ( double factor   );
     void shiftSceneUpDown          ( double distance );
     void shiftSceneLeftRight       ( double distance );
     void shiftSceneForwardBackward ( double distance );
@@ -59,6 +62,9 @@ private:
     GLCoordinateAxes * _coordinateAxes;
 
     GLColor            _backgroundColor;
+
+    QList<GLObject *> * _objects;
+    int _objectIndex;
 
     int _x;
     int _y;

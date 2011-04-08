@@ -7,26 +7,29 @@
 class GLObject
 {
 public:
-    void setID( QString objectID ){ _objectID = objectID; }
+    GLObject( GLColor color = GLColor(), QString objectID = "", int time = 0 ){ _objectID = objectID;
+                                                                                _color    = color;
+                                                                                _time     = time; }
 
-    void setColor( GLColor color ){ _color = color; }
+    GLObject( const GLObject &o ){ if(this != &o){ _color = o.color(); _objectID = o.id(); _time = o.time(); } }
 
-    void setColor( float red, float green, float blue ){ _color.setColors(red, green, blue); }
+    void setID    ( QString objectID ){ _objectID = objectID; }
+    void setColor ( GLColor color    ){ _color    = color;    }
+    void setColor ( float redF, float greenF, float blueF ){ _color.setColors(redF, greenF, blueF); }
+    void setTime  ( int time         ){ _time     = time;     }
+    void setValues( QString objectID, GLColor color = GLColor(), int time = 0 ){ _objectID = objectID;
+                                                                                      _color    = color;
+                                                                                      _time     = time; }
+    QString id()   const{ return _objectID; }
+    GLColor color()const{ return _color;    }
+    int     time() const{ return _time;     }
 
-    void setID_Color( QString objectID, GLColor color ){ _objectID = objectID;
-                                                         _color    = color; }
-
-    void setTime( float time ){ _time = time; }
-
-    void setID_Color_Time( QString objectID, GLColor color, float time ){ _objectID = objectID;
-                                                                          _color    = color;
-                                                                          _time     = time; }
     virtual void draw() = 0;
 
 protected:
     QString _objectID;
     GLColor _color;
-    float _time;
+    int     _time;
 };
 
 #endif // GLOBJECT_H

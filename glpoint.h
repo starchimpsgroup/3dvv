@@ -9,10 +9,8 @@ class GLPoint : public GLObject
 public:
     void draw();
 
-    GLPoint(){ _x = _y = _z = 0.0; }
-    GLPoint( GLdouble x, GLdouble y, GLdouble z ){ _x = x;
-                                                   _y = y;
-                                                   _z = z; }
+    GLPoint( GLColor color = GLColor(), QString objectID = "", int time = 0 );
+    GLPoint( GLdouble x, GLdouble y, GLdouble z, GLColor color = GLColor(), QString objectID = "", int time = 0 );
 
 private:
     GLdouble _x;

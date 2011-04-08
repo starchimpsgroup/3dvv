@@ -26,6 +26,8 @@
 #include "preferences.h"
 #include "settings.h"
 
+#define TIMERANGE 32
+
 namespace Ui {
     class MainWindow;
 }
@@ -39,19 +41,33 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow * ui;
-    GLWidget       * _view;
-    Navigation     * _navigation;
-    Preferences    * _preferences;
-    Settings       * _settings;
+    Ui::MainWindow   * ui;
+    GLWidget         * _view;
+    Navigation       * _navigation;
+    Preferences      * _preferences;
+    Settings         * _settings;
+
+    int                _time;
+    int                _timeMax;
+    int                _timeID;
+    int                _objectPos;
+    int                _objectPosSave;
+
+    QList<GLObject *>  _objects;
 
 private slots:
     void on_actionAboutQt_triggered();
     void on_actionAbout_3DVV_triggered();
     void on_actionOpen_object_file_triggered();
     void on_actionPreferences_triggered();
+
     void openNavigation(bool open);
     void changeBackgroundColor(GLColor color);
+
+    void play(bool);
+
+protected:
+    void timerEvent(QTimerEvent *event);
 };
 
 #endif // MAINWINDOW_H

@@ -12,13 +12,12 @@ void NavigationLabel::mousePressEvent( QMouseEvent * ev )
     {
         setPixmap(QPixmap(":/navigation/navigation_up.png"));
         _pressed = false;
-        emit pressed(_pressed);
-
     }
     else
     {
         setPixmap(QPixmap(":/navigation/navigation_down.png"));
         _pressed = true;
-        emit pressed(_pressed);
     }
+
+    emit pressed(_pressed);
 }

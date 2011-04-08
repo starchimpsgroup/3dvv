@@ -26,18 +26,15 @@
 class GLVector : public GLObject
 {
 public:
-    void draw();
+    GLVector(GLColor color = GLColor(), QString objectID = "", int time = 0);
+
+    GLVector(GLdouble x, GLdouble y, GLdouble z, GLColor color = GLColor(), QString objectID = "", int time = 0);
+
+    GLVector(const GLVector &v);
+
+    GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ, GLColor color = GLColor(), QString objectID = "", int time = 0);
 
     GLdouble angle( const GLVector &v );
-
-    GLVector(){_sX = _sY = _sZ =
-               _eX = _eY = _eZ = 0.0;}
-    GLVector(GLdouble x, GLdouble y, GLdouble z){_sX =    _sY =    _sZ = 0.0;
-                                                 _eX = x; _eY = y; _eZ = z;}
-    GLVector(const GLVector &v);
-    GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ)
-    {_sX = sX; _sY = sY; _sZ = sZ;
-     _eX = eX; _eY = eY; _eZ = eZ;}
 
     GLdouble x()const{ return _eX - _sX; }
     GLdouble y()const{ return _eY - _sY; }
@@ -68,10 +65,12 @@ public:
     const GLVector operator +(const GLVector &v)const;
     GLdouble operator       *(const GLVector &v)const;
     GLVector operator       *(const GLdouble  d)const;
-    const GLVector operator /(GLdouble d)const;
+    const GLVector operator /(      GLdouble  d)const;
     GLVector operator       =(const GLVector &v);
-    bool operator          !=(const GLVector &v) const;
-    bool operator          ==(const GLVector &v) const;
+    bool operator          !=(const GLVector &v)const;
+    bool operator          ==(const GLVector &v)const;
+
+    void draw();
 
 private:
     GLdouble _sX;

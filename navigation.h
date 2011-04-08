@@ -15,8 +15,19 @@ public:
     explicit Navigation(QWidget *parent = 0);
     ~Navigation();
 
+    void pause();
+    void setSliderMaximum (int max);
+    void setSliderPosition(int pos);
+
 private:
-    Ui::Navigation *ui;
+    Ui::Navigation * ui;
+    bool             _play;
+
+private slots:
+    void on_playPause_clicked();
+
+signals:
+    void play(bool);
 };
 
 #endif // NAVIGATION_H

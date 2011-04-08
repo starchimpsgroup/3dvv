@@ -14,13 +14,6 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="5">
-    <widget class="QSlider" name="horizontalSlider">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -82,8 +75,7 @@
      </property>
      <property name="icon">
       <iconset resource="Resouces/resouces.qrc">
-       <normaloff>:/navigation/play.png</normaloff>
-       <normalon>:/navigation/pause.png</normalon>:/navigation/play.png</iconset>
+       <normaloff>:/navigation/play.png</normaloff>:/navigation/play.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -134,6 +126,16 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="0" column="0" colspan="5">
+    <widget class="QSlider" name="positionSlider">
+     <property name="sliderPosition">
+      <number>0</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

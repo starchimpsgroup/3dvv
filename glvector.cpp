@@ -24,14 +24,33 @@
 
 //#define TEST
 
-GLVector::GLVector(const GLVector &v){
+GLVector::GLVector(GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+{
+    _sX = _sY = _sZ =
+    _eX = _eY = _eZ = 0.0;
+}
+
+GLVector::GLVector(GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+{
+    _sX =    _sY =    _sZ = 0.0;
+    _eX = x; _eY = y; _eZ = z;
+}
+
+GLVector::GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ, GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+{
+    _sX = sX; _sY = sY; _sZ = sZ;
+    _eX = eX; _eY = eY; _eZ = eZ;
+}
+
+GLVector::GLVector(const GLVector &v) : GLObject(v)
+{
     if(this != &v){
-        _sX = v.sX();
-        _sY = v.sY();
-        _sZ = v.sZ();
-        _eX = v.eX();
-        _eY = v.eY();
-        _eZ = v.eZ();
+        _sX       = v.sX();
+        _sY       = v.sY();
+        _sZ       = v.sZ();
+        _eX       = v.eX();
+        _eY       = v.eY();
+        _eZ       = v.eZ();
     }
 }
 

@@ -1,5 +1,17 @@
 #include "glpoint.h"
 
+GLPoint::GLPoint(GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+{
+    _x = _y = _z = 0.0;
+}
+
+GLPoint::GLPoint( GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time ) : GLObject(color, objectID, time)
+{
+    _x = x;
+    _y = y;
+    _z = z;
+}
+
 void GLPoint::draw()
 {
     glPushMatrix();

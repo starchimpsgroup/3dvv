@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(_preferences, SIGNAL(changeBackgroundColor(GLColor)), this, SLOT(changeBackgroundColor(GLColor)));
 
-    _navigation->setVisible(false);
+    QObject::connect(_navigation, SIGNAL(play(bool)), this, SLOT(play(bool)));
 
     NavigationLabel * label = new NavigationLabel(this);
     QObject::connect(label, SIGNAL(pressed(bool)), this, SLOT(openNavigation(bool)));
@@ -52,6 +52,171 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->viewLayout->addWidget(_view);
     ui->gridLayout->addWidget(_navigation);
+
+    _timeMax = _time = _objectPos = 0;
+    _timeID  = -1;
+
+    // Input
+
+    QList<GLObject *>  datei;
+    GLObject * vec;
+
+    // E
+    GLColor E(1.0f,0.0f,0.5f);
+
+    vec = new GLVector(1,0,0,1,5,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(1,5,0,4,5,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(4,5,0,4,4,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(4,4,0,2,4,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(2,4,0,2,3,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(2,3,0,4,3,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(4,3,0,4,2,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(4,2,0,2,2,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(2,2,0,2,1,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(2,1,0,4,1,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(4,1,0,4,0,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLVector(4,0,0,1,0,0,E,"E", 0);
+    datei.append(vec);
+
+    // N
+    GLColor N(1.0f,0.5f,0.0f);
+
+    vec = new GLVector(5,0,0,5,5,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(5,5,0,6,5,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(6,5,0,7,2,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(7,2,0,7,5,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(7,5,0,8,5,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(8,5,0,8,0,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(8,0,0,7,0,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(7,0,0,6,3,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(6,3,0,6,0,0,N,"N", 1000);
+    datei.append(vec);
+
+    vec = new GLVector(6,0,0,5,0,0,N,"N", 1000);
+    datei.append(vec);
+
+    // D
+    GLColor D(0.0f,0.5f,1.0f);
+
+    vec = new GLVector(9,0,0,9,5,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(9,5,0,11,5,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(11,5,0,12,4,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(12,4,0,12,1,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(12,1,0,11,0,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(11,0,0,9,0,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(10,1,0,10,4,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(10,4,0,11,4,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(11,4,0,11,1,0,D,"D", 2000);
+    datei.append(vec);
+
+    vec = new GLVector(11,1,0,10,1,0,D,"D", 2000);
+    datei.append(vec);
+
+    // E2
+    GLColor E2(0.5f,1.0f,0.0f);
+
+    vec = new GLVector(13,0,0,13,5,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(13,5,0,16,5,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(16,5,0,16,4,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(16,4,0,14,4,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(14,4,0,14,3,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(14,3,0,16,3,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(16,3,0,16,2,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(16,2,0,14,2,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(14,2,0,14,1,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(14,1,0,16,1,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(16,1,0,16,0,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    vec = new GLVector(16,0,0,13,0,0,E2,"E2", 3000);
+    datei.append(vec);
+
+    foreach(GLObject * vec, datei)
+    {
+        _objects.append(vec);
+
+        if(_timeMax < vec->time())
+            _timeMax = vec->time();
+    }
+
+    // Input
+
+    _navigation->setSliderMaximum(_timeMax);
+    _view->setObjects(&_objects);
 }
 
 MainWindow::~MainWindow()
@@ -61,6 +226,36 @@ MainWindow::~MainWindow()
     delete _navigation;
     delete _preferences;
     delete _settings;
+}
+
+void MainWindow::timerEvent(QTimerEvent *event)
+{
+    _objectPosSave = _objectPos;
+    _time += TIMERANGE;
+
+    for(_objectPos; _objectPos < _objects.size(); _objectPos++)
+    {
+        if(_time >= _objects.at(_objectPos)->time())
+        {
+            _view->setObjectIndex(_objectPos);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if(_objectPosSave != _objectPos)
+        _view->repaint();
+
+    _navigation->setSliderPosition(_time);
+
+    if(_time >= _timeMax)
+    {
+        killTimer(_timeID);
+        _timeID = -1;
+        _navigation->pause();
+    }
 }
 
 void MainWindow::openNavigation(bool open)
@@ -96,4 +291,17 @@ void MainWindow::changeBackgroundColor(GLColor color)
 {
     _settings->setBackgroundColor(color);
     _view->setBackgroundColor(color);
+}
+
+void MainWindow::play(bool p)
+{
+    if(p && _timeID == -1)
+    {
+        _timeID = startTimer(TIMERANGE);
+    }
+    else if(!p && _timeID != -1)
+    {
+        killTimer(_timeID);
+        _timeID = -1;
+    }
 }
