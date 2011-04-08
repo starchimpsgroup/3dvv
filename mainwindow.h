@@ -55,6 +55,9 @@ private:
 
     QList<GLObject *>  _objects;
 
+private:
+    void updateIndex();
+
 private slots:
     void on_actionAboutQt_triggered();
     void on_actionAbout_3DVV_triggered();
@@ -65,6 +68,7 @@ private slots:
     void changeBackgroundColor(GLColor color);
 
     void play(bool);
+    void setTime(int time);
 
 protected:
     void timerEvent(QTimerEvent *event);

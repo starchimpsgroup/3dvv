@@ -42,8 +42,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _preferences = new Preferences(this);
 
     QObject::connect(_preferences, SIGNAL(changeBackgroundColor(GLColor)), this, SLOT(changeBackgroundColor(GLColor)));
-
-    QObject::connect(_navigation, SIGNAL(play(bool)), this, SLOT(play(bool)));
+    QObject::connect(_navigation,  SIGNAL(play(bool)),                     this, SLOT(play(bool)));
+    QObject::connect(_navigation,  SIGNAL(positionChanged(int)),           this, SLOT(setTime(int)));
 
     NavigationLabel * label = new NavigationLabel(this);
     QObject::connect(label, SIGNAL(pressed(bool)), this, SLOT(openNavigation(bool)));
@@ -217,6 +217,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _navigation->setSliderMaximum(_timeMax);
     _view->setObjects(&_objects);
+
+    updateIndex();
 }
 
 MainWindow::~MainWindow()
@@ -228,12 +230,17 @@ MainWindow::~MainWindow()
     delete _settings;
 }
 
-void MainWindow::timerEvent(QTimerEvent *event)
+void MainWindow::setTime(int time)
+{
+    _time = time;
+    qDebug(qPrintable(QString::number(_time)));
+    updateIndex();
+}
+
+void MainWindow::updateIndex()
 {
     _objectPosSave = _objectPos;
-    _time += TIMERANGE;
-
-    for(_objectPos; _objectPos < _objects.size(); _objectPos++)
+    for(_objectPos = 0; _objectPos < _objects.size(); _objectPos++)
     {
         if(_time >= _objects.at(_objectPos)->time())
         {
@@ -247,6 +254,13 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
     if(_objectPosSave != _objectPos)
         _view->repaint();
+}
+
+void MainWindow::timerEvent(QTimerEvent *event)
+{
+    _time += TIMERANGE;
+
+    updateIndex();
 
     _navigation->setSliderPosition(_time);
 

@@ -9,11 +9,18 @@ Navigation::Navigation(QWidget *parent) :
     setVisible(false);
 
     _play = false;
+
+    QObject::connect(ui->positionSlider, SIGNAL(sliderMoved(int)), this, SLOT(sliderMoved(int)));
 }
 
 Navigation::~Navigation()
 {
     delete ui;
+}
+
+void Navigation::sliderMoved(int value)
+{
+    emit positionChanged(value);
 }
 
 void Navigation::setSliderMaximum(int max)

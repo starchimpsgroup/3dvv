@@ -25,9 +25,11 @@ private:
 
 private slots:
     void on_playPause_clicked();
+    void sliderMoved(int value);
 
 signals:
     void play(bool);
+    void positionChanged(int);
 };
 
 #endif // NAVIGATION_H
