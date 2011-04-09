@@ -55,7 +55,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 
 >- Camera control (mouse, keyboard) `*work in progress*`
 >- Objects highlight temporarily, which are displayed newly (in color or otherwise) `*untouched*`
->- Object labeling (automatic), font same color as object `*untouched*`
+>- Object labeling (automatic), font same color as object `*work in progress*`
 >- Plain can be show (to infinity), semi-transparent `*untouched*`
 >- Line can be adjust to infinity `*untouched*`
 >- Display angels, between vectors (default, smaller angle) `*untouched*`
@@ -63,6 +63,6 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>- Display angular size (degree / radian) `*untouched*`
 
 >- Color mapping for objects (RGB / Hex) (default color, if not specify) `*work in progress*`
->- Show coordinates (start, end, middle) `*untouched*`
->- Pause function `*untouched*`
->- **Optional:** Single step `*untouched*`
+>- Show coordinates (start, end, middle) `*work in progress*`
+>- Pause function `*ready*`
+>- **Optional:** Single step `*ready*`
