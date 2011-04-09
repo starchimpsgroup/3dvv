@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_preferences, SIGNAL(changeBackgroundColor(GLColor)), this, SLOT(changeBackgroundColor(GLColor)));
     QObject::connect(_navigation,  SIGNAL(play(bool)),                     this, SLOT(play(bool)));
     QObject::connect(_navigation,  SIGNAL(positionChanged(int)),           this, SLOT(setTime(int)));
+    QObject::connect(_navigation,  SIGNAL(step(int)),                      this, SLOT(step(int)));
 
     NavigationLabel * label = new NavigationLabel(this);
     QObject::connect(label, SIGNAL(pressed(bool)), this, SLOT(openNavigation(bool)));
@@ -230,10 +231,19 @@ MainWindow::~MainWindow()
     delete _settings;
 }
 
+void MainWindow::step(int value)
+{
+    if(_objectPos + value >= 0 && _objectPos + value < _objects.size())
+    {
+        _view->setObjectIndex(_objectPos += value);
+        _view->repaint();
+        _navigation->setSliderPosition(_time = _objects.at(_objectPos)->time());
+    }
+}
+
 void MainWindow::setTime(int time)
 {
     _time = time;
-    qDebug(qPrintable(QString::number(_time)));
     updateIndex();
 }
 
@@ -248,6 +258,7 @@ void MainWindow::updateIndex()
         }
         else
         {
+            _objectPos--;
             break;
         }
     }
@@ -307,13 +318,13 @@ void MainWindow::changeBackgroundColor(GLColor color)
     _view->setBackgroundColor(color);
 }
 
-void MainWindow::play(bool p)
+void MainWindow::play(bool value)
 {
-    if(p && _timeID == -1)
+    if(value && _timeID == -1)
     {
         _timeID = startTimer(TIMERANGE);
     }
-    else if(!p && _timeID != -1)
+    else if(!value && _timeID != -1)
     {
         killTimer(_timeID);
         _timeID = -1;

@@ -57,3 +57,13 @@ void Navigation::pause()
         ui->playPause->setIcon(QIcon(":/navigation/play.png"));
     }
 }
+
+void Navigation::on_previous_clicked()
+{
+    emit step(-1);
+}
+
+void Navigation::on_next_clicked()
+{
+    emit step(1);
+}

@@ -67,8 +67,9 @@ private slots:
     void openNavigation(bool open);
     void changeBackgroundColor(GLColor color);
 
-    void play(bool);
+    void play(bool value);
     void setTime(int time);
+    void step(int value);
 
 protected:
     void timerEvent(QTimerEvent *event);
