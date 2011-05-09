@@ -26,6 +26,10 @@ public:
 
     virtual void draw() = 0;
 
+    virtual void drawObjectId() = 0;
+    virtual void drawCoordinate() = 0;
+    virtual void drawVector() = 0;
+
 protected:
     QString _objectID;
     GLColor _color;

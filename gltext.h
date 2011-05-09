@@ -21,6 +21,8 @@ public:
 
     static void setAngels( float angleX, float angleY ){ _angleX = angleX; _angleY = angleY; }
 
+    static float heightOfText(QString text);
+
 private:
     static void draw(QImage &image, GLVector &position, float angleX, float angleY);
 

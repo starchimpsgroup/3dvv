@@ -66,6 +66,9 @@ private slots:
 
     void openNavigation(bool open);
     void changeBackgroundColor(GLColor color);
+    void showObjectIds(int state);
+    void showCoordinates(int state);
+    void showVectors(int state);
 
     void play(bool value);
     void setTime(int time);

@@ -22,7 +22,7 @@
 
 GLColor::GLColor()
 {
-    _red   = 1.0f;
+    _red   = 0.0f;
     _green = 0.0f;
     _blue  = 0.0f;
     _alpha = 1.0f;

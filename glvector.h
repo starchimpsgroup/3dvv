@@ -72,6 +72,10 @@ public:
 
     void draw();
 
+    void drawObjectId();
+    void drawCoordinate();
+    void drawVector();
+
 private:
     GLdouble _sX;
     GLdouble _sY;

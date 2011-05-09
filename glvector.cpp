@@ -190,16 +190,6 @@ void GLVector::draw()
     glVertex3f(x(), y(), z());
     glEnd ();
 
-    GLText::draw("(" + QString::number(_sX) + ", " + QString::number(_sY) + ", " + QString::number(_sZ) + ")",
-                 _color,
-                 GLVector(0.0, -0.35, 0.0));
-
-    GLText::draw("(" + QString::number(_eX) + ", " + QString::number(_eY) + ", " + QString::number(_eZ) + ")",
-                 _color,
-                 GLVector(x(), y()-0.35, z()));
-
-    GLdouble len = ((this->length() - 0.3) /  this->length());
-
 #ifdef TEST
         glBegin (GL_LINES);
 
@@ -233,6 +223,8 @@ void GLVector::draw()
     /**
       * Spitze
       */
+
+    GLdouble len = ((this->length() - 0.3) /  this->length());
 
     glTranslatef(x() * len, y() * len, z() * len);
 
@@ -279,6 +271,50 @@ void GLVector::draw()
 
     glRotatef(180, 1.0, 0.0, 0.0);
     gluDisk(gluNewQuadric(), 0, 0.1, 16, 4);
+
+    glPopMatrix();
+}
+
+void GLVector::drawObjectId()
+{
+    glPushMatrix();
+
+    glTranslatef(_sX, _sY, _sZ);
+
+    GLText::draw(_objectID,
+                 _color,
+                 GLVector(x()/2.0, y()/2.0 + GLText::heightOfText(_objectID)/2.0 + 0.15, z()/2.0));
+
+    glPopMatrix();
+}
+
+void GLVector::drawCoordinate()
+{
+    glPushMatrix();
+
+    glTranslatef(_sX, _sY, _sZ);
+
+    GLText::draw("(" + QString::number(_sX) + ", " + QString::number(_sY) + ", " + QString::number(_sZ) + ")",
+                 _color,
+                 GLVector(0.0, -0.35, 0.0));
+
+    GLText::draw("(" + QString::number(_eX) + ", " + QString::number(_eY) + ", " + QString::number(_eZ) + ")",
+                 _color,
+                 GLVector(x(), y()-0.35, z()));
+
+    glPopMatrix();
+}
+
+void GLVector::drawVector()
+{
+    glPushMatrix();
+
+    glTranslatef(_sX, _sY, _sZ);
+
+    QString vector = QString::number(x()) + "\n" + QString::number(y()) + "\n" + QString::number(z());
+    GLText::draw("(" + vector + ")",
+                 _color,
+                 GLVector(x()/2.0, y()/2.0 - GLText::heightOfText(vector)/2.0 - 0.15, z()/2.0));
 
     glPopMatrix();
 }

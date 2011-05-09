@@ -31,10 +31,17 @@ class GLWidget : public QGLWidget
 {
     Q_OBJECT
 public:
-    GLWidget(GLColor backgroundColor, QWidget *parent = 0);
+    GLWidget(GLColor backgroundColor = GLColor(),
+             bool showObjectIds      = true,
+             bool showCoordinates    = true,
+             bool showVectors        = true,
+             QWidget *parent         = 0);
     ~GLWidget();
 
     void setBackgroundColor(GLColor color);
+    void setShowObjectIds(bool value);
+    void setShowCoordinates(bool value);
+    void setShowVectors(bool value);
 
     void setObjects(QList<GLObject *> * objects){ _objects = objects; }
     void setObjectIndex(int index){ _objectIndex = index; };
@@ -62,6 +69,9 @@ private:
     GLCoordinateAxes * _coordinateAxes;
 
     GLColor            _backgroundColor;
+    bool               _showObjectIds;
+    bool               _showCoordinates;
+    bool               _showVectors;
 
     QList<GLObject *> * _objects;
     int _objectIndex;

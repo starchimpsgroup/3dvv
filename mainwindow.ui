@@ -46,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>442</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatei">
@@ -86,10 +86,16 @@
    <property name="text">
     <string>Open Object File</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionClose">
    <property name="text">
     <string>Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="actionAbout_3DVV">
@@ -105,6 +111,9 @@
   <action name="actionPreferences">
    <property name="text">
     <string>Preferences</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

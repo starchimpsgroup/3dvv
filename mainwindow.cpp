@@ -31,17 +31,25 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QCoreApplication::setOrganizationName  ("Fachhochschule Südwestfalen");
+    QCoreApplication::setOrganizationName  ("FH-SWF");
     QCoreApplication::setOrganizationDomain("fh-swf.de");
     QCoreApplication::setApplicationName   ("3D Vector Viewer");
 
-    _settings    = new Settings("Fachhochschule Südwestfalen", "3D Vector Viewer");
+    _settings    = new Settings();
 
-    _view        = new GLWidget(_settings->backgroundColor(), this);
+    _view        = new GLWidget(_settings->backgroundColor(),
+                                _settings->showObjectIds(),
+                                _settings->showCoordinates(),
+                                _settings->showVectors(),
+                                this);
+
     _navigation  = new Navigation(this);
     _preferences = new Preferences(this);
 
     QObject::connect(_preferences, SIGNAL(changeBackgroundColor(GLColor)), this, SLOT(changeBackgroundColor(GLColor)));
+    QObject::connect(_preferences, SIGNAL(showCoordinates(int)), this, SLOT(showCoordinates(int)));
+    QObject::connect(_preferences, SIGNAL(showObjectIds(int)), this, SLOT(showObjectIds(int)));
+    QObject::connect(_preferences, SIGNAL(showVectors(int)), this, SLOT(showVectors(int)));
     QObject::connect(_navigation,  SIGNAL(play(bool)),                     this, SLOT(play(bool)));
     QObject::connect(_navigation,  SIGNAL(positionChanged(int)),           this, SLOT(setTime(int)));
     QObject::connect(_navigation,  SIGNAL(step(int)),                      this, SLOT(step(int)));
@@ -61,6 +69,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QList<GLObject *>  datei;
     GLObject * vec;
+
+    // Point
+    vec = new GLPoint(2.0f,2.0f,2.0f,GLColor(1.0f,0.0f,0.0f),"Point", 0);
+    datei.append(vec);
+
+    vec = new GLPoint(-2.0f,2.0f,2.0f,GLColor(1.0f,0.0f,0.0f),"(Point1111\n1\n2\n3\n4\n5\n6)", 0);
+    datei.append(vec);
 
     // E
     GLColor E(1.0f,0.0f,0.5f);
@@ -309,6 +324,9 @@ void MainWindow::on_actionAboutQt_triggered()
 void MainWindow::on_actionPreferences_triggered()
 {
     _preferences->setBackgroundColorButtonColor(_settings->backgroundColor());
+    _preferences->setShowObjectIds(_settings->showObjectIds());
+    _preferences->setShowCoordinates(_settings->showCoordinates());
+    _preferences->setShowVectors(_settings->showVectors());
     _preferences->exec();
 }
 
@@ -316,6 +334,24 @@ void MainWindow::changeBackgroundColor(GLColor color)
 {
     _settings->setBackgroundColor(color);
     _view->setBackgroundColor(color);
+}
+
+void MainWindow::showObjectIds(int state)
+{
+    _settings->setShowObjectIds(state);
+    _view->setShowObjectIds(state);
+}
+
+void MainWindow::showCoordinates(int state)
+{
+    _settings->setShowCoordinates(state);
+    _view->setShowCoordinates(state);
+}
+
+void MainWindow::showVectors(int state)
+{
+    _settings->setShowVectors(state);
+    _view->setShowVectors(state);
 }
 
 void MainWindow::play(bool value)

@@ -21,10 +21,17 @@
 #include "gltext.h"
 #include <math.h>
 
-GLWidget::GLWidget(GLColor backgroundColor, QWidget *parent) : QGLWidget(parent)
+GLWidget::GLWidget(GLColor backgroundColor,
+                   bool showObjectIds,
+                   bool showCoordinates,
+                   bool showVectors,
+                   QWidget *parent) : QGLWidget(parent)
 {
 
     _backgroundColor = backgroundColor;
+    _showObjectIds   = showObjectIds;
+    _showCoordinates = showCoordinates;
+    _showVectors     = showVectors;
     _perspective     = new GLPerspective();
     _coordinateAxes  = new GLCoordinateAxes();
 
@@ -75,6 +82,21 @@ void GLWidget::paintGL()
     for(int i = 0; i <= _objectIndex; i++)
     {
         _objects->at(i)->draw();
+
+        if(_showObjectIds)
+        {
+            _objects->at(i)->drawObjectId();
+        }
+
+        if(_showVectors)
+        {
+            _objects->at(i)->drawVector();
+        }
+
+        if(_showCoordinates)
+        {
+            _objects->at(i)->drawCoordinate();
+        }
     }
 
     /**
@@ -376,6 +398,24 @@ void GLWidget::mouseMoveEvent ( QMouseEvent * me )
 void GLWidget::setBackgroundColor(GLColor color)
 {
     glClearColor(color.redF(),color.greenF(),color.blueF(),color.alphaF());
+    repaint();
+}
+
+void GLWidget::setShowObjectIds(bool value)
+{
+    _showObjectIds = value;
+    repaint();
+}
+
+void GLWidget::setShowCoordinates(bool value)
+{
+    _showCoordinates = value;
+    repaint();
+}
+
+void GLWidget::setShowVectors(bool value)
+{
+    _showVectors = value;
     repaint();
 }
 

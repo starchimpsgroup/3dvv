@@ -7,11 +7,18 @@
 class Settings
 {
 public:
-    Settings(QString organization, QString application);
+    Settings();
     ~Settings();
 
     void setBackgroundColor(GLColor &color);
     GLColor backgroundColor();
+
+    void setShowObjectIds(int state);
+    void setShowCoordinates(int state);
+    void setShowVectors(int state);
+    int showObjectIds();
+    int showCoordinates();
+    int showVectors();
 
 private:
     QSettings * _settings;

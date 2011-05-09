@@ -12,15 +12,12 @@ QMap<QString, QImage> GLText::initMap()
 
 void GLText::draw( QString text, GLColor color, GLVector position )
 {
-    if(_imageMap.contains(createName(text, color)))
-    {
-        draw(_imageMap[createName(text, color)], position, _angleX, _angleY);
-    }
-    else
+    if(!_imageMap.contains(createName(text, color)))
     {
         createImage(text, color);
-        draw(_imageMap[createName(text, color)], position, _angleX, _angleY);
     }
+
+    draw(_imageMap[createName(text, color)], position, _angleX, _angleY);
 }
 
 void GLText::draw( QString text, GLColor color, GLVector position, float angleX, float angleY )
@@ -97,14 +94,22 @@ int GLText::longestPart( QStringList &list )
 
 void GLText::createImage(QString &text, GLColor &color)
 {
+    int width, height, bracketsWidth = 0, bracketsHeight = 0;
+    QString textInput = text;
     QFont font;
+
+    if(textInput.indexOf("\n") != -1 && textInput.startsWith("(") && textInput.endsWith(")"))
+    {
+        textInput = textInput.mid(1,textInput.size()-2);
+        bracketsHeight = (TEXTSIZE + SPACER) * (textInput.count("\n") + 1);
+        bracketsWidth = 20;
+    }
+
+    QStringList stringList = textInput.split("\n");
     font.setPointSize(TEXTSIZE);
 
-    int width, height;
-    QStringList stringList = text.split("\n");
-
-    width  = QFontMetrics(font).width(stringList.at(longestPart(stringList)));
-    height = TEXTSIZE * stringList.size() + SPACER * stringList.size();
+    width  = QFontMetrics(font).width(stringList.at(longestPart(stringList))) + bracketsWidth*2;
+    height = (TEXTSIZE + SPACER) * stringList.size();
 
     QImage picture(width, height, QImage::Format_ARGB32);
     QPainter paint(&picture);
@@ -113,13 +118,25 @@ void GLText::createImage(QString &text, GLColor &color)
         picture.bits()[i] = 0;
 
     paint.setPen(QColor(color.redDez(), color.greenDez(), color.blueDez(), color.alphaDez()));
+
+    if(bracketsWidth > 0)
+    {
+        QPen pen = paint.pen();
+        pen.setWidth(3);
+        paint.setPen(pen);
+        int part = 5760/4;
+
+        paint.drawArc(QRectF(4, 0, bracketsWidth, bracketsHeight), part, 2*part);
+        paint.drawArc(QRectF(width-bracketsWidth-4, 0, bracketsWidth, bracketsHeight), -part, 2*part);
+    }
+
     paint.setFont(font);
     for(int i = 0; i < stringList.size(); i++)
     {
-        paint.drawText(0,TEXTSIZE*(i+1)+SPACER*i,stringList.at(i));
+        paint.drawText(bracketsWidth,TEXTSIZE*(i+1)+SPACER*i,stringList.at(i));
     }
     paint.end();
-    //picture.save(text + ".png", "PNG");
+    picture.save(text + ".png", "PNG");
 
     QImage glPicture = QGLWidget::convertToGLFormat(picture);
 
@@ -132,4 +149,9 @@ QString GLText::createName(QString &text, GLColor &color)
                 + "#" + QString::number(color.greenDez())
                 + "#" + QString::number(color.blueDez())
                 + "#" + QString::number(color.alphaDez());
+}
+
+float GLText::heightOfText(QString text)
+{
+    return (TEXTSIZE + SPACER) * PIXEL * text.split("\n").size();
 }

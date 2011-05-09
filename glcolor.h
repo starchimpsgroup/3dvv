@@ -37,23 +37,23 @@ public:
 
     //! Constructor of thr GLColor class with color parameters.
     /*!
-        Initialize with the input colors and alpha.
+        Initialize with the input colors and alpha in float.
         Input range 0.0f to 1.0f.
-        \param red color
-        \param green color
-        \param blue color
-        \param alpha value
+        \param redF color
+        \param greenF color
+        \param blueF color
+        \param alphaF value
      */
     GLColor( float redF, float greenF, float blueF, float alphaF = 1.0f );
 
     //! Constructor of thr GLColor class with color parameters.
     /*!
-        Initialize with the input colors and alpha.
+        Initialize with the input colors and alpha in integer.
         Input range 0 to 255.
-        \param red color
-        \param green color
-        \param blue color
-        \param alpha value
+        \param redI color
+        \param greenI color
+        \param blueI color
+        \param alphaI value
      */
     GLColor( int redI, int greenI, int blueI, int alphaI = 255 );
 

@@ -25,6 +25,21 @@ void Preferences::on_backgroundColorButton_clicked()
     emit changeBackgroundColor(selectedColor);
 }
 
+void Preferences::on_ids_stateChanged(int state)
+{
+    emit showObjectIds(state);
+}
+
+void Preferences::on_coordinates_stateChanged(int state)
+{
+    emit showCoordinates(state);
+}
+
+void Preferences::on_vectors_stateChanged(int state)
+{
+    emit showVectors(state);
+}
+
 void Preferences::setBackgroundColorButtonColor(GLColor color, bool save)
 {
     if(save)
@@ -35,7 +50,28 @@ void Preferences::setBackgroundColorButtonColor(GLColor color, bool save)
                                                                       + QString::number(color.blueDez()) + ");");
 }
 
+void Preferences::setShowObjectIds(int state)
+{
+    _showObjectIds = state;
+    ui->ids->setCheckState((Qt::CheckState)state);
+}
+
+void Preferences::setShowCoordinates(int state)
+{
+    _showCoordinates = state;
+    ui->coordinates->setCheckState((Qt::CheckState)state);
+}
+
+void Preferences::setShowVectors(int state)
+{
+    _showVectors = state;
+    ui->vectors->setCheckState((Qt::CheckState)state);
+}
+
 void Preferences::abort()
 {
     emit changeBackgroundColor(_backgroundColor);
+    emit showObjectIds(_showObjectIds);
+    emit showCoordinates(_showCoordinates);
+    emit showVectors(_showVectors);
 }
