@@ -47,9 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _preferences = new Preferences(this);
 
     QObject::connect(_preferences, SIGNAL(changeBackgroundColor(GLColor)), this, SLOT(changeBackgroundColor(GLColor)));
-    QObject::connect(_preferences, SIGNAL(showCoordinates(int)), this, SLOT(showCoordinates(int)));
-    QObject::connect(_preferences, SIGNAL(showObjectIds(int)), this, SLOT(showObjectIds(int)));
-    QObject::connect(_preferences, SIGNAL(showVectors(int)), this, SLOT(showVectors(int)));
+    QObject::connect(_preferences, SIGNAL(showCoordinates(int)),           this, SLOT(showCoordinates(int)));
+    QObject::connect(_preferences, SIGNAL(showObjectIds(int)),             this, SLOT(showObjectIds(int)));
+    QObject::connect(_preferences, SIGNAL(showVectors(int)),               this, SLOT(showVectors(int)));
     QObject::connect(_navigation,  SIGNAL(play(bool)),                     this, SLOT(play(bool)));
     QObject::connect(_navigation,  SIGNAL(positionChanged(int)),           this, SLOT(setTime(int)));
     QObject::connect(_navigation,  SIGNAL(step(int)),                      this, SLOT(step(int)));
@@ -59,8 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->statusBar->addPermanentWidget(label);
 
-    ui->viewLayout->addWidget(_view);
-    ui->gridLayout->addWidget(_navigation);
+    setCentralWidget(_view);
+    ui->mainToolBar->addWidget(_navigation);
+    ui->mainToolBar->setVisible(false);
 
     _timeMax = _time = _objectPos = 0;
     _timeID  = -1;
@@ -75,6 +76,52 @@ MainWindow::MainWindow(QWidget *parent) :
     datei.append(vec);
 
     vec = new GLPoint(-2.0f,2.0f,2.0f,GLColor(1.0f,0.0f,0.0f),"(Point1111\n1\n2\n3\n4\n5\n6)", 0);
+    datei.append(vec);
+
+
+    vec = new GLPlain(GLVector(-5,-6,-4),
+                      GLVector(-1,-0,-0),
+                      GLColor(100,50,0,125),
+                      "Plain",
+                      0);
+    datei.append(vec);
+
+    vec = new GLPlain(GLVector(-5,6,4),
+                      GLVector(1,0,0),
+                      GLColor(100,50,0,125),
+                      "Plain",
+                      0);
+    datei.append(vec);
+
+    vec = new GLPlain(GLVector(-5,-6,-4),
+                      GLVector(-5,-3,-1),
+                      GLColor(0,255,0,125),
+                      "Plain",
+                      0);
+    datei.append(vec);
+
+    vec = new GLPlain(GLVector(5,6,4),
+                      GLVector(5,3,1),
+                      GLColor(0,255,0,125),
+                      "Plain",
+                      0);
+    datei.append(vec);
+
+    vec = new GLPlain(GLVector(3.0,3.0,3.0),
+                      GLVector(4.0,-3.0,4.0),
+                      GLColor(0,255,0,125),
+                      "Plain",
+                      0);
+    datei.append(vec);
+
+    vec = new GLPlain(GLVector(-3.0,-3.0,-3.0),
+                      GLVector(-4.0,-3.0,-4.0),
+                      GLColor(0,255,0,125),
+                      "Plain",
+                      0);
+    datei.append(vec);
+
+    vec = new GLPoint(2.0f,2.0f,4.0f,GLColor(1.0f,0.0f,0.0f),"TEST", 0);
     datei.append(vec);
 
     // E
@@ -300,7 +347,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 void MainWindow::openNavigation(bool open)
 {
-    _navigation->setVisible(open);
+    ui->mainToolBar->setVisible(open);
 }
 
 void MainWindow::on_actionOpen_object_file_triggered()

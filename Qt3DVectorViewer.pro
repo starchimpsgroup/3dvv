@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     navigation.cpp \
     navigationlabel.cpp \
     preferences.cpp \
-    settings.cpp
+    settings.cpp \
+    glplain.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     navigation.h \
     navigationlabel.h \
     preferences.h \
-    settings.h
+    settings.h \
+    glplain.h
 
 FORMS    += mainwindow.ui \
     navigation.ui \

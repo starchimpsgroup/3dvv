@@ -36,20 +36,6 @@ void GLPoint::draw()
 
     glEnd ();
 
-    /*if(drawObjectId)
-    {
-        GLText::draw(_objectID,
-                     _color,
-                     GLVector(0.0, GLText::heightOfText(_objectID)/2.0 + 0.15, 0.0));
-    }
-
-    if(drawCoordinate)
-    {
-        GLText::draw("(" + QString::number(_x) + ", " + QString::number(_y) + ", " + QString::number(_z) + ")",
-                     _color,
-                     GLVector(0.0, -0.35, 0.0));
-    }*/
-
     glPopMatrix();
 }
 

@@ -26,6 +26,7 @@
 #include "glperspective.h"
 #include "glcoordinateaxes.h"
 #include "glpoint.h"
+#include "glplain.h"
 
 class GLWidget : public QGLWidget
 {
@@ -75,6 +76,8 @@ private:
 
     QList<GLObject *> * _objects;
     int _objectIndex;
+
+    QList<GLObject *> _transparentObjects;
 
     int _x;
     int _y;

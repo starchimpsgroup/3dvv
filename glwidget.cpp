@@ -64,13 +64,13 @@ void GLWidget::paintGL()
 {
     _perspective->apply();
 
-    GLdouble angelX = v_Y.angle(*_perspective->camera()) - 90.0;
-    GLdouble angelY = v_Z.angle(GLVector(_perspective->camera()->x(), 0.0, _perspective->camera()->z()));
+    GLdouble angleX = v_Y.angle(*_perspective->camera()) - 90.0;
+    GLdouble angleY = v_Z.angle(GLVector(_perspective->camera()->x(), 0.0, _perspective->camera()->z()));
 
     if(_perspective->camera()->x() < 0)
-        angelY *= -1;
+        angleY *= -1;
 
-    GLText::setAngels(angelX, angelY);
+    GLText::setAngels(angleX, angleY);
 
     /**
       * clear both the color buffer and the depth buffer
@@ -81,7 +81,14 @@ void GLWidget::paintGL()
 
     for(int i = 0; i <= _objectIndex; i++)
     {
-        _objects->at(i)->draw();
+        if(_objects->at(i)->color().isTransparent())
+        {
+            _transparentObjects.append(_objects->at(i));
+        }
+        else
+        {
+            _objects->at(i)->draw();
+        }
 
         if(_showObjectIds)
         {
@@ -97,6 +104,11 @@ void GLWidget::paintGL()
         {
             _objects->at(i)->drawCoordinate();
         }
+    }
+
+    while(!_transparentObjects.isEmpty())
+    {
+        _transparentObjects.takeFirst()->draw();
     }
 
     /**

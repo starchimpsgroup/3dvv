@@ -6,7 +6,6 @@ Navigation::Navigation(QWidget *parent) :
     ui(new Ui::Navigation)
 {
     ui->setupUi(this);
-    setVisible(false);
 
     _play = false;
 

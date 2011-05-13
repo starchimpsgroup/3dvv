@@ -102,18 +102,25 @@ public:
     int alphaDez(){ return _alpha * 255.0; }
 
     /*!
-        Set the colors and standard alpha.
-        \param red color
-        \param green color
-        \param blue color
-        \param alpha value
+        Set the colors and standard alphain float.
+        \param redF color
+        \param greenF color
+        \param blueF color
+        \param alphaF value
      */
-    void setColors(float redF, float greenF, float blueF, float alphaF = 1.0f){_red   = redF;
-                                                                               _green = greenF;
-                                                                               _blue  = blueF;
-                                                                               _alpha = alphaF;}
+    void setColorsF(float redF, float greenF, float blueF, float alphaF = 1.0f){_red   = redF;
+                                                                                _green = greenF;
+                                                                                _blue  = blueF;
+                                                                                _alpha = alphaF;}
+
+    void setRedF  (float redF)  { _red   = redF; }
+    void setGreenF(float greenF){ _green = greenF; }
+    void setBlueF (float blueF) { _blue  = blueF; }
+    void setAlphaF(float alphaF){ _alpha = alphaF; }
 
     const QColor qcolor();
+
+    bool isTransparent(){ return _alpha != 1.0f; }
 
 private:
     float _red;     //!< Red Color

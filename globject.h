@@ -15,7 +15,7 @@ public:
 
     void setID    ( QString objectID ){ _objectID = objectID; }
     void setColor ( GLColor color    ){ _color    = color;    }
-    void setColor ( float redF, float greenF, float blueF ){ _color.setColors(redF, greenF, blueF); }
+    void setColor ( float redF, float greenF, float blueF ){ _color.setColorsF(redF, greenF, blueF); }
     void setTime  ( int time         ){ _time     = time;     }
     void setValues( QString objectID, GLColor color = GLColor(), int time = 0 ){ _objectID = objectID;
                                                                                       _color    = color;
@@ -26,9 +26,9 @@ public:
 
     virtual void draw() = 0;
 
-    virtual void drawObjectId() = 0;
-    virtual void drawCoordinate() = 0;
-    virtual void drawVector() = 0;
+    virtual void drawObjectId(){};
+    virtual void drawCoordinate(){};
+    virtual void drawVector(){};
 
 protected:
     QString _objectID;

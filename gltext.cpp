@@ -117,7 +117,7 @@ void GLText::createImage(QString &text, GLColor &color)
     for (int i = 0; i < picture.height() * picture.width() * 4; i++) // 4 für RGBA
         picture.bits()[i] = 0;
 
-    paint.setPen(QColor(color.redDez(), color.greenDez(), color.blueDez(), color.alphaDez()));
+    paint.setPen(QColor(color.redDez(), color.greenDez(), color.blueDez()));//, color.alphaDez()));
 
     if(bracketsWidth > 0)
     {
@@ -153,5 +153,5 @@ QString GLText::createName(QString &text, GLColor &color)
 
 float GLText::heightOfText(QString text)
 {
-    return (TEXTSIZE + SPACER) * PIXEL * text.split("\n").size();
+    return (TEXTSIZE + SPACER) * (text.count("\n") + 1) * PIXEL;
 }

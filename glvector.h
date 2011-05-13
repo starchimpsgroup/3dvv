@@ -44,6 +44,10 @@ public:
     void setY( GLdouble y ){ _eY = _sY + y; }
     void setZ( GLdouble z ){ _eZ = _sZ + z; }
 
+    void setSX( GLdouble sX ){ _sX = sX; }
+    void setSY( GLdouble sY ){ _sY = sY; }
+    void setSZ( GLdouble sZ ){ _sZ = sZ; }
+
     GLdouble sX()const{ return _sX; }
     GLdouble sY()const{ return _sY; }
     GLdouble sZ()const{ return _sZ; }
