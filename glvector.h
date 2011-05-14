@@ -74,11 +74,13 @@ public:
     bool operator          !=(const GLVector &v)const;
     bool operator          ==(const GLVector &v)const;
 
-    void draw();
+    static GLVector * fromXml(const QDomElement &object);
 
-    void drawObjectId();
-    void drawCoordinate();
-    void drawVector();
+protected:
+    void glObject();
+    void glObjectId();
+    void glCoordinate();
+    void glVector();
 
 private:
     GLdouble _sX;

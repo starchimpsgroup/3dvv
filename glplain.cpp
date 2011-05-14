@@ -3,13 +3,13 @@
 
 #define MULT 3
 
-GLPlain::GLPlain(GLVector point, GLVector normal, GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+GLPlain::GLPlain(GLVector point, GLVector normal, GLColor color, QString objectID, int time) : GLObject(GLObject::PLAIN, color, objectID, time)
 {
     _point  = point;
     _normal = normal;
 }
 
-void GLPlain::draw()
+void GLPlain::glObject()
 {
     glPushMatrix();
 
@@ -21,9 +21,7 @@ void GLPlain::draw()
     if(_normal.x() < 0)
         angleY *= -1;
 
-    //qDebug("angle: %f", angle);
-
-    _normal.draw();
+    //_normal.draw();
 
     glRotatef(angleY, 0.0, 1.0, 0.0);
     glRotatef(angleX, 1.0, 0.0, 0.0);
@@ -53,7 +51,7 @@ void GLPlain::draw()
     glPopMatrix();
 }
 
-void GLPlain::drawObjectId()
+void GLPlain::glObjectId()
 {
     glPushMatrix();
 
@@ -66,7 +64,7 @@ void GLPlain::drawObjectId()
     glPopMatrix();
 }
 
-void GLPlain::drawCoordinate()
+void GLPlain::glCoordinate()
 {
     glPushMatrix();
 

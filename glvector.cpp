@@ -24,19 +24,19 @@
 
 //#define TEST
 
-GLVector::GLVector(GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+GLVector::GLVector(GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR, color, objectID, time)
 {
     _sX = _sY = _sZ =
     _eX = _eY = _eZ = 0.0;
 }
 
-GLVector::GLVector(GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+GLVector::GLVector(GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR, color, objectID, time)
 {
     _sX =    _sY =    _sZ = 0.0;
     _eX = x; _eY = y; _eZ = z;
 }
 
-GLVector::GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ, GLColor color, QString objectID, int time) : GLObject(color, objectID, time)
+GLVector::GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ, GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR, color, objectID, time)
 {
     _sX = sX; _sY = sY; _sZ = sZ;
     _eX = eX; _eY = eY; _eZ = eZ;
@@ -178,7 +178,7 @@ GLdouble GLVector::angle( const GLVector &v )
     return acos( (*this * v) / (this->length() * v.length()) ) * 180.0 / M_PI;
 }
 
-void GLVector::draw()
+void GLVector::glObject()
 {
     glPushMatrix();
 
@@ -275,7 +275,7 @@ void GLVector::draw()
     glPopMatrix();
 }
 
-void GLVector::drawObjectId()
+void GLVector::glObjectId()
 {
     glPushMatrix();
 
@@ -288,7 +288,7 @@ void GLVector::drawObjectId()
     glPopMatrix();
 }
 
-void GLVector::drawCoordinate()
+void GLVector::glCoordinate()
 {
     glPushMatrix();
 
@@ -305,7 +305,7 @@ void GLVector::drawCoordinate()
     glPopMatrix();
 }
 
-void GLVector::drawVector()
+void GLVector::glVector()
 {
     glPushMatrix();
 
@@ -317,4 +317,57 @@ void GLVector::drawVector()
                  GLVector(x()/2.0, y()/2.0 - GLText::heightOfText(vector)/2.0 - 0.15, z()/2.0));
 
     glPopMatrix();
+}
+
+GLVector * GLVector::fromXml(const QDomElement &object)
+{
+
+    if (object.isNull() || object.attribute("type") != "vector")
+        return NULL;
+
+    QString id = object.attribute("id");
+
+    GLdouble sx = 0.0;
+    GLdouble sy = 0.0;
+    GLdouble sz = 0.0;
+
+    GLdouble ex = 0.0;
+    GLdouble ey = 0.0;
+    GLdouble ez = 0.0;
+
+    QDomNodeList points = object.elementsByTagName("point");
+    if (points.count() == 2)
+    {
+        QDomElement point = points.at(0).toElement();
+        sx = point.attribute("x").toDouble();
+        sy = point.attribute("y").toDouble();
+        sz = point.attribute("z").toDouble();
+        point = points.at(1).toElement();
+        ex = point.attribute("x").toDouble();
+        ey = point.attribute("y").toDouble();
+        ez = point.attribute("z").toDouble();
+    }
+
+    GLColor color;
+
+    QDomNodeList colors = object.elementsByTagName("color");
+    if (!colors.isEmpty())
+    {
+        QDomElement colorNode = colors.at(0).toElement();
+        uchar r = (uchar)colorNode.attribute("r").toUShort(NULL, 16);
+        uchar g = (uchar)colorNode.attribute("g").toUShort(NULL, 16);
+        uchar b = (uchar)colorNode.attribute("b").toUShort(NULL, 16);
+        uchar a = (uchar)colorNode.attribute("a").toUShort(NULL, 16);
+        color = GLColor(r,g,b,a);
+    }
+
+    int time = 0;
+    QDomNodeList times = object.elementsByTagName("time");
+    if (!colors.isEmpty())
+    {
+        QDomElement timeNode = times.at(0).toElement();
+        time = timeNode.text().toInt();
+    }
+
+    return new GLVector(sx,sy,sz,ex,ey,ez,color,id,time);
 }

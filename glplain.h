@@ -9,10 +9,10 @@ class GLPlain : public GLObject
 public:
     GLPlain(GLVector point, GLVector normal, GLColor color, QString objectID, int time);
 
-    void draw();
-
-    void drawObjectId();
-    void drawCoordinate();
+protected:
+    void glObject();
+    void glObjectId();
+    void glCoordinate();
 
 private:
     GLVector _normal;

@@ -21,9 +21,8 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QGridLayout>
-#include <QPicture>
 #include "navigationlabel.h"
+#include "xml.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -161,6 +160,9 @@ MainWindow::MainWindow(QWidget *parent) :
     datei.append(vec);
 
     vec = new GLVector(4,0,0,1,0,0,E,"E", 0);
+    datei.append(vec);
+
+    vec = new GLDelete(vec, "delete", 1000);
     datei.append(vec);
 
     // N
@@ -311,22 +313,24 @@ void MainWindow::setTime(int time)
 
 void MainWindow::updateIndex()
 {
+    //qDebug("size: %i", _objects.size());
+
     _objectPosSave = _objectPos;
     for(_objectPos = 0; _objectPos < _objects.size(); _objectPos++)
     {
-        if(_time >= _objects.at(_objectPos)->time())
+        if(_time < _objects.at(_objectPos)->time())
         {
-            _view->setObjectIndex(_objectPos);
-        }
-        else
-        {
-            _objectPos--;
             break;
         }
     }
 
+    _objectPos--;
+
     if(_objectPosSave != _objectPos)
+    {
+        _view->setObjectIndex(_objectPos);
         _view->repaint();
+    }
 }
 
 void MainWindow::timerEvent(QTimerEvent *event)
@@ -352,7 +356,15 @@ void MainWindow::openNavigation(bool open)
 
 void MainWindow::on_actionOpen_object_file_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "File open", QApplication::applicationDirPath(), "All files (*.*)");
+    QString fileName = QFileDialog::getOpenFileName(this, "File open", QApplication::applicationDirPath(), "XML files (*.xml);;All files (*)");
+    QList<GLObject*> objects = XML::readXML(fileName);
+
+    qDebug("%d",objects.count());
+
+    foreach (GLObject *object, objects)
+    {
+        qDebug("%s", qPrintable( object->id()));
+    }
 }
 
 void MainWindow::on_actionAbout_3DVV_triggered()

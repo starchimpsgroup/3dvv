@@ -27,6 +27,7 @@
 #include "glcoordinateaxes.h"
 #include "glpoint.h"
 #include "glplain.h"
+#include "gldelete.h"
 
 class GLWidget : public QGLWidget
 {

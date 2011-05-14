@@ -1,5 +1,6 @@
 #include <QString>
 #include "glcolor.h"
+#include <QDomElement>
 
 #ifndef GLOBJECT_H
 #define GLOBJECT_H
@@ -7,33 +8,53 @@
 class GLObject
 {
 public:
-    GLObject( GLColor color = GLColor(), QString objectID = "", int time = 0 ){ _objectID = objectID;
-                                                                                _color    = color;
-                                                                                _time     = time; }
+    typedef enum ObjectType
+    {
+        ANGLE,
+        DELETE,
+        LINE,
+        PLAIN,
+        POINT,
+        VECTOR
+    }
+    ObjectType;
 
-    GLObject( const GLObject &o ){ if(this != &o){ _color = o.color(); _objectID = o.id(); _time = o.time(); } }
+    GLObject( ObjectType type, GLColor color = GLColor(), QString objectID = "", int time = 0 );
+    GLObject( const GLObject &o );
 
-    void setID    ( QString objectID ){ _objectID = objectID; }
-    void setColor ( GLColor color    ){ _color    = color;    }
-    void setColor ( float redF, float greenF, float blueF ){ _color.setColorsF(redF, greenF, blueF); }
-    void setTime  ( int time         ){ _time     = time;     }
-    void setValues( QString objectID, GLColor color = GLColor(), int time = 0 ){ _objectID = objectID;
-                                                                                      _color    = color;
-                                                                                      _time     = time; }
-    QString id()   const{ return _objectID; }
-    GLColor color()const{ return _color;    }
-    int     time() const{ return _time;     }
+    void setID    ( QString objectID );
+    void setColor ( GLColor color    );
+    void setColor ( float redF, float greenF, float blueF );
+    void setTime  ( int time         );
+    void setValues( QString objectID, GLColor color = GLColor(), int time = 0 );
+    void setDraw(bool draw);
 
-    virtual void draw() = 0;
+    QString id()     const{ return _objectID; }
+    GLColor color()  const{ return _color;    }
+    int time()       const{ return _time;     }
+    ObjectType type()const{ return _type;     }
 
-    virtual void drawObjectId(){};
-    virtual void drawCoordinate(){};
-    virtual void drawVector(){};
+    bool isDrawing() const{ return _draw;     }
+
+    void draw();
+    void drawObjectId();
+    void drawCoordinate();
+    void drawVector();
 
 protected:
-    QString _objectID;
-    GLColor _color;
-    int     _time;
+    virtual void glObject() = 0;
+    virtual void glObjectId(){}
+    virtual void glCoordinate(){}
+    virtual void glVector(){}
+
+protected:
+    QString    _objectID;
+    GLColor    _color;
+    int        _time;
+
+private:
+    bool       _draw;
+    ObjectType _type;
 };
 
 #endif // GLOBJECT_H
