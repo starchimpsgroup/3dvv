@@ -59,10 +59,6 @@ void GLObject::draw()
     {
         glObject();
     }
-    else
-    {
-        _draw = true;
-    }
 }
 
 void GLObject::drawObjectId()

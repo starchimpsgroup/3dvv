@@ -313,8 +313,6 @@ void MainWindow::setTime(int time)
 
 void MainWindow::updateIndex()
 {
-    //qDebug("size: %i", _objects.size());
-
     _objectPosSave = _objectPos;
     for(_objectPos = 0; _objectPos < _objects.size(); _objectPos++)
     {
@@ -329,7 +327,6 @@ void MainWindow::updateIndex()
     if(_objectPosSave != _objectPos)
     {
         _view->setObjectIndex(_objectPos);
-        _view->repaint();
     }
 }
 

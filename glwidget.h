@@ -38,6 +38,7 @@ public:
              bool showCoordinates    = true,
              bool showVectors        = true,
              QWidget *parent         = 0);
+
     ~GLWidget();
 
     void setBackgroundColor(GLColor color);
@@ -46,7 +47,7 @@ public:
     void setShowVectors(bool value);
 
     void setObjects(QList<GLObject *> * objects){ _objects = objects; }
-    void setObjectIndex(int index){ _objectIndex = index; };
+    void setObjectIndex(int index);
 
 private:
     void turnCameraUpDown          ( double angle    );
@@ -78,7 +79,7 @@ private:
     QList<GLObject *> * _objects;
     int _objectIndex;
 
-    QList<GLObject *> _transparentObjects;
+    QList<GLObject *>   _objectsSorted;
 
     int _x;
     int _y;

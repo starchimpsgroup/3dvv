@@ -79,36 +79,27 @@ void GLWidget::paintGL()
 
     _coordinateAxes->draw();
 
-    for(int i = 0; i <= _objectIndex; i++)
+    foreach(GLObject * object, _objectsSorted)
     {
-        if(_objects->at(i)->color().isTransparent())
-        {
-            _transparentObjects.append(_objects->at(i));
-        }
-        else
-        {
-            _objects->at(i)->draw();
-        }
-
         if(_showObjectIds)
         {
-            _objects->at(i)->drawObjectId();
+            object->drawObjectId();
         }
 
         if(_showVectors)
         {
-            _objects->at(i)->drawVector();
+            object->drawVector();
         }
 
         if(_showCoordinates)
         {
-            _objects->at(i)->drawCoordinate();
+            object->drawCoordinate();
         }
     }
 
-    while(!_transparentObjects.isEmpty())
+    foreach(GLObject * object, _objectsSorted)
     {
-        _transparentObjects.takeFirst()->draw();
+        object->draw();
     }
 
     /**
@@ -244,6 +235,37 @@ void GLWidget::paintGL()
 void GLWidget::resizeGL(int width, int height)
 {
     _perspective->setViewport ( width, height );
+}
+
+void GLWidget::setObjectIndex(int index)
+{
+    _objectIndex = index;
+
+    QList<GLObject *> objectsNormal;
+    QList<GLObject *> objectsTransparent;
+
+    for(int i = 0; i <= _objectIndex; i++)
+    {
+        _objects->at(i)->setDraw(true);
+
+        if(_objects->at(i)->type() == GLObject::DELETE)
+        {
+            _objects->at(i)->draw();
+        }
+        else if(_objects->at(i)->color().isTransparent())
+        {
+            objectsTransparent.append(_objects->at(i));
+        }
+        else
+        {
+            objectsNormal.append(_objects->at(i));
+        }
+    }
+
+    _objectsSorted.clear();
+    _objectsSorted.append(objectsNormal + objectsTransparent);
+
+    repaint();
 }
 
 void GLWidget::keyPressEvent ( QKeyEvent * ke )
