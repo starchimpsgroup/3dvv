@@ -13,7 +13,7 @@ public:
         ANGLE,
         DELETE,
         LINE,
-        PLAIN,
+        PLANE,
         POINT,
         VECTOR
     }

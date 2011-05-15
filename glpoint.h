@@ -10,6 +10,18 @@ public:
     GLPoint( GLColor color = GLColor(), QString objectID = "", int time = 0 );
     GLPoint( GLdouble x, GLdouble y, GLdouble z, GLColor color = GLColor(), QString objectID = "", int time = 0 );
 
+    /*!
+        \brief The point fromXML method is used to fetch specified tags from the XML-File.
+
+        This method fetches a specified amount of tags , the most important being:
+
+        \list
+            \i id.
+            \i one points.
+            \i The color.
+            \i The time.
+        \endlist
+     */
     static GLPoint* fromXml(const QDomElement &object);
 
 protected:

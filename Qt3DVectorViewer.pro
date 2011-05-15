@@ -24,11 +24,11 @@ SOURCES += main.cpp\
     navigationlabel.cpp \
     preferences.cpp \
     settings.cpp \
-    glplain.cpp \
     glline.cpp \
     glangle.cpp \
     gldelete.cpp \
-    xml.cpp
+    xml.cpp \
+    glplane.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -43,11 +43,11 @@ HEADERS  += mainwindow.h \
     navigationlabel.h \
     preferences.h \
     settings.h \
-    glplain.h \
     glline.h \
     glangle.h \
     gldelete.h \
-    xml.h
+    xml.h \
+    glplane.h
 
 FORMS    += mainwindow.ui \
     navigation.ui \

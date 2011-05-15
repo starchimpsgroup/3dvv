@@ -74,6 +74,18 @@ public:
     bool operator          !=(const GLVector &v)const;
     bool operator          ==(const GLVector &v)const;
 
+    /*!
+        \brief The vector fromXML method is used to fetch specified tags from the XML-File.
+
+        This method fetches a specified amount of tags , the most important being:
+
+        \list
+            \i id.
+            \i Two points.
+            \i The color.
+            \i The time.
+        \endlist
+     */
     static GLVector * fromXml(const QDomElement &object);
 
 protected:

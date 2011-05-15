@@ -77,46 +77,52 @@ MainWindow::MainWindow(QWidget *parent) :
     vec = new GLPoint(-2.0f,2.0f,2.0f,GLColor(1.0f,0.0f,0.0f),"(Point1111\n1\n2\n3\n4\n5\n6)", 0);
     datei.append(vec);
 
-
-    vec = new GLPlain(GLVector(-5,-6,-4),
+    vec = new GLPlane(GLVector(-5,-6,-4),
                       GLVector(-1,-0,-0),
                       GLColor(100,50,0,125),
-                      "Plain",
+                      "Plane",
                       0);
     datei.append(vec);
 
-    vec = new GLPlain(GLVector(-5,6,4),
+    vec = new GLPlane(GLVector(-5,6,4),
                       GLVector(1,0,0),
                       GLColor(100,50,0,125),
-                      "Plain",
+                      "Plane",
                       0);
     datei.append(vec);
 
-    vec = new GLPlain(GLVector(-5,-6,-4),
+    vec = new GLPlane(GLVector(-5,-6,-4),
                       GLVector(-5,-3,-1),
                       GLColor(0,255,0,125),
-                      "Plain",
+                      "Plane",
                       0);
     datei.append(vec);
 
-    vec = new GLPlain(GLVector(5,6,4),
+    vec = new GLPlane(GLVector(5,6,4),
                       GLVector(5,3,1),
                       GLColor(0,255,0,125),
-                      "Plain",
+                      "Plane",
                       0);
     datei.append(vec);
 
-    vec = new GLPlain(GLVector(3.0,3.0,3.0),
+    vec = new GLPlane(GLVector(3.0,3.0,3.0),
                       GLVector(4.0,-3.0,4.0),
-                      GLColor(0,255,0,125),
-                      "Plain",
+                      GLColor(0,100,255,125),
+                      "Plane",
                       0);
     datei.append(vec);
 
-    vec = new GLPlain(GLVector(-3.0,-3.0,-3.0),
+    vec = new GLLine(GLVector(3.0,4.0,3.0),
+                     GLVector(4.0,-3.0,4.0),
+                     GLColor(100,50,0,125),
+                     "Line",
+                     0);
+    datei.append(vec);
+
+    vec = new GLPlane(GLVector(-3.0,-3.0,-3.0),
                       GLVector(-4.0,-3.0,-4.0),
                       GLColor(0,255,0,125),
-                      "Plain",
+                      "Plane",
                       0);
     datei.append(vec);
 
@@ -356,11 +362,11 @@ void MainWindow::on_actionOpen_object_file_triggered()
     QString fileName = QFileDialog::getOpenFileName(this, "File open", QApplication::applicationDirPath(), "XML files (*.xml);;All files (*)");
     QList<GLObject*> objects = XML::readXML(fileName);
 
-    qDebug("%d",objects.count());
+    qDebug("Count: %d",objects.count());
 
     foreach (GLObject *object, objects)
     {
-        qDebug("%s", qPrintable( object->id()));
+        qDebug("ID: %s", qPrintable( object->id()));
     }
 }
 

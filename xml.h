@@ -6,7 +6,13 @@
 class XML
 {
 public:
-    XML();
+
+    /*! \brief readXML is used to read all tags from the XML-File.
+     *
+     *
+     *  This method is used to read all tags from the XML-File.
+     *  \return The method returns an objectList.
+     */
     static QList<GLObject*> readXML(const QString &path);
 };
 

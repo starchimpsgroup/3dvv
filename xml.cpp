@@ -4,10 +4,6 @@
 #include "glpoint.h"
 #include "glvector.h"
 
-XML::XML()
-{
-}
-
 QList<GLObject*> XML::readXML(const QString &path)
 {
      QDomDocument doc("vd");
