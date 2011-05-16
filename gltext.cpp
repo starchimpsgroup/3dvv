@@ -2,11 +2,12 @@
 
 float GLText::_angleX = GLText::initAngel();
 float GLText::_angleY = GLText::initAngel();
-QMap<QString, QImage> GLText::_imageMap(GLText::initMap());
+//QMap<QString, QImage> GLText::_imageMap(GLText::initMap());
+QMap<QString, QPair<QImage, GLuint> > GLText::_imageMap(GLText::initMap());
 
-QMap<QString, QImage> GLText::initMap()
+QMap<QString, QPair<QImage, GLuint> > GLText::initMap()
 {
-    QMap<QString, QImage> temp;
+    QMap<QString, QPair<QImage, GLuint> > temp;
     return temp;
 }
 
@@ -28,7 +29,7 @@ void GLText::draw( QString text, GLColor color, GLVector position, float angleX,
     draw(text, color, position);
 }
 
-void GLText::draw(QImage &image, GLVector &position, float angleX, float angleY)
+void GLText::draw(QPair<QImage, GLuint> &image, GLVector &position, float angleX, float angleY)
 {
     glPushMatrix();
 
@@ -38,12 +39,7 @@ void GLText::draw(QImage &image, GLVector &position, float angleX, float angleY)
 
     glEnable(GL_TEXTURE_2D);	       // Aktiviert Texture Mapping
 
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-
-    // wrap textur on borders
-    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+    glBindTexture(GL_TEXTURE_2D, image.second);
 
     // Alpha Test löscht pixel
     glEnable(GL_ALPHA_TEST);
@@ -53,15 +49,12 @@ void GLText::draw(QImage &image, GLVector &position, float angleX, float angleY)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
-                 GL_RGBA, GL_UNSIGNED_BYTE, image.constBits());
-
     glColor3f(1.0, 1.0, 1.0);
     glBegin( GL_QUADS );
-    glTexCoord2d(0.0,0.0); glVertex2d(-(image.width()*PIXEL/2.0),-(image.height()*PIXEL/2.0));
-    glTexCoord2d(1.0,0.0); glVertex2d(  image.width()*PIXEL/2.0 ,-(image.height()*PIXEL/2.0));
-    glTexCoord2d(1.0,1.0); glVertex2d(  image.width()*PIXEL/2.0 ,  image.height()*PIXEL/2.0 );
-    glTexCoord2d(0.0,1.0); glVertex2d(-(image.width()*PIXEL/2.0),  image.height()*PIXEL/2.0 );
+    glTexCoord2d(0.0,0.0); glVertex2d(-(image.first.width()*PIXEL/2.0),-(image.first.height()*PIXEL/2.0));
+    glTexCoord2d(1.0,0.0); glVertex2d(  image.first.width()*PIXEL/2.0 ,-(image.first.height()*PIXEL/2.0));
+    glTexCoord2d(1.0,1.0); glVertex2d(  image.first.width()*PIXEL/2.0 ,  image.first.height()*PIXEL/2.0 );
+    glTexCoord2d(0.0,1.0); glVertex2d(-(image.first.width()*PIXEL/2.0),  image.first.height()*PIXEL/2.0 );
     glEnd();
 
     glDisable(GL_BLEND);
@@ -139,8 +132,22 @@ void GLText::createImage(QString &text, GLColor &color)
     picture.save(text + ".png", "PNG");
 
     QImage glPicture = QGLWidget::convertToGLFormat(picture);
+    GLuint textureName;
 
-    _imageMap.insert(createName(text, color), glPicture);
+    glGenTextures(1, &textureName);
+    glBindTexture(GL_TEXTURE_2D, textureName);
+
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+
+    // wrap textur on borders
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, glPicture.width(), glPicture.height(), 0,
+                     GL_RGBA, GL_UNSIGNED_BYTE, glPicture.constBits());
+
+    _imageMap.insert(createName(text, color), qMakePair(glPicture, textureName));
 }
 
 QString GLText::createName(QString &text, GLColor &color)

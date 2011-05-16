@@ -24,20 +24,20 @@ public:
     static float heightOfText(QString text);
 
 private:
-    static void draw(QImage &image, GLVector &position, float angleX, float angleY);
+    static void draw(QPair<QImage, GLuint> &image, GLVector &position, float angleX, float angleY);
 
     static void createImage(QString &text, GLColor &color);
 
     static QString createName(QString &text, GLColor &color);
 
-    static QMap<QString, QImage> initMap();
+    static QMap<QString, QPair<QImage, GLuint> > initMap();
 
     static float initAngel(){ return 0.0f; }
 
     static int longestPart( QStringList &list );
 
 private:
-    static QMap<QString, QImage> _imageMap;
+    static QMap<QString, QPair<QImage, GLuint> > _imageMap;
     static float _angleX;
     static float _angleY;
 };
