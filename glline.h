@@ -16,8 +16,7 @@ protected:
     void glVector();
 
 private:
-    GLVector _point;
-    GLVector _direction;
+    GLVector _line;
 };
 
 #endif // GLLINE_H
