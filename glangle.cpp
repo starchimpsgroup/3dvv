@@ -1,5 +1,5 @@
 #include "glangle.h"
 
-GLAngle::GLAngle( GLColor color, QString objectID, int time ) : GLObject(GLObject::ANGLE, color, objectID, time)
+GLAngle::GLAngle( GLVector * vectorA, GLVector * vectorB, GLColor color, QString objectID, int time ) : GLObject(GLObject::ANGLE_OBJECT, color, objectID, time)
 {
 }

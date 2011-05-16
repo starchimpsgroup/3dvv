@@ -1,12 +1,12 @@
 #include "glpoint.h"
 #include "gltext.h"
 
-GLPoint::GLPoint( GLColor color, QString objectID, int time ) : GLObject(GLObject::POINT, color, objectID, time)
+GLPoint::GLPoint( GLColor color, QString objectID, int time ) : GLObject(GLObject::POINT_OBJECT, color, objectID, time)
 {
     _x = _y = _z = 0.0;
 }
 
-GLPoint::GLPoint( GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time ) : GLObject(GLObject::POINT, color, objectID, time)
+GLPoint::GLPoint( GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time ) : GLObject(GLObject::POINT_OBJECT, color, objectID, time)
 {
     _x = x;
     _y = y;

@@ -25,6 +25,7 @@
 #include "navigation.h"
 #include "preferences.h"
 #include "settings.h"
+#include "navigationlabel.h"
 
 #define TIMERANGE 32
 
@@ -46,6 +47,7 @@ private:
     Navigation       * _navigation;
     Preferences      * _preferences;
     Settings         * _settings;
+    NavigationLabel  * _navigationLabel;
 
     int                _time;
     int                _timeMax;
@@ -63,6 +65,7 @@ private slots:
     void on_actionAbout_3DVV_triggered();
     void on_actionOpen_object_file_triggered();
     void on_actionPreferences_triggered();
+    void on_actionNavigation_triggered(){_navigationLabel->changeStatus();}
 
     void openNavigation(bool open);
     void changeBackgroundColor(GLColor color);

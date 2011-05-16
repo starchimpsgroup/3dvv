@@ -3,7 +3,7 @@
 
 #define MULT 3
 
-GLPlane::GLPlane(GLVector point, GLVector normal, GLColor color, QString objectID, int time) : GLObject(GLObject::PLANE, color, objectID, time)
+GLPlane::GLPlane(GLVector point, GLVector normal, GLColor color, QString objectID, int time) : GLObject(GLObject::PLANE_OBJECT, color, objectID, time)
 {
     _point  = point;
     _normal = normal;

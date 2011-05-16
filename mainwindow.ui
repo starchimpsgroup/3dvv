@@ -55,8 +55,15 @@
     </property>
     <addaction name="actionPreferences"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionNavigation"/>
+   </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -103,6 +110,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionNavigation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Navigation</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
  </widget>

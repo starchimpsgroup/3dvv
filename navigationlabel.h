@@ -10,9 +10,10 @@ class NavigationLabel : public QLabel
 
 public:
     NavigationLabel(QWidget *parent = 0);
+    void changeStatus();
 
 private:
-    void mousePressEvent( QMouseEvent * ev );
+    void mousePressEvent(QMouseEvent *){ changeStatus(); };
 
 private:
     bool _pressed;

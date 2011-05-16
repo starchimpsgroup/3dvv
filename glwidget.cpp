@@ -248,7 +248,7 @@ void GLWidget::setObjectIndex(int index)
     {
         _objects->at(i)->setDraw(true);
 
-        if(_objects->at(i)->type() == GLObject::DELETE)
+        if(_objects->at(i)->type() == GLObject::DELETE_OBJECT)
         {
             _objects->at(i)->draw();
         }

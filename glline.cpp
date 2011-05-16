@@ -3,7 +3,7 @@
 
 #define MULT 10
 
-GLLine::GLLine( GLVector point, GLVector direction, GLColor color, QString objectID, int time ) : GLObject(GLObject::LINE, color, objectID, time)
+GLLine::GLLine( GLVector point, GLVector direction, GLColor color, QString objectID, int time ) : GLObject(GLObject::LINE_OBJECT, color, objectID, time)
 {
     _line = GLVector(point.x(),point.y(),point.z(),direction.x(),direction.y(),direction.z());
 }

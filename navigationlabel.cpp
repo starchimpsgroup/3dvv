@@ -6,7 +6,7 @@ NavigationLabel::NavigationLabel(QWidget *parent) :
     setPixmap(QPixmap(":/navigation/navigation_up.png"));
 }
 
-void NavigationLabel::mousePressEvent( QMouseEvent * ev )
+void NavigationLabel::changeStatus()
 {
     if(_pressed)
     {

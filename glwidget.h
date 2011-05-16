@@ -29,6 +29,7 @@
 #include "glplane.h"
 #include "gldelete.h"
 #include "glline.h"
+#include "glangle.h"
 
 class GLWidget : public QGLWidget
 {

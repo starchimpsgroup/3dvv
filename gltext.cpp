@@ -2,7 +2,6 @@
 
 float GLText::_angleX = GLText::initAngel();
 float GLText::_angleY = GLText::initAngel();
-//QMap<QString, QImage> GLText::_imageMap(GLText::initMap());
 QMap<QString, QPair<QImage, GLuint> > GLText::_imageMap(GLText::initMap());
 
 QMap<QString, QPair<QImage, GLuint> > GLText::initMap()

@@ -10,12 +10,12 @@ class GLObject
 public:
     typedef enum ObjectType
     {
-        ANGLE,
-        DELETE,
-        LINE,
-        PLANE,
-        POINT,
-        VECTOR
+        ANGLE_OBJECT,
+        DELETE_OBJECT,
+        LINE_OBJECT,
+        PLANE_OBJECT,
+        POINT_OBJECT,
+        VECTOR_OBJECT
     }
     ObjectType;
 

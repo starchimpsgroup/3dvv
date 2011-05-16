@@ -21,7 +21,6 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMessageBox>
-#include "navigationlabel.h"
 #include "xml.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -53,10 +52,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_navigation,  SIGNAL(positionChanged(int)),           this, SLOT(setTime(int)));
     QObject::connect(_navigation,  SIGNAL(step(int)),                      this, SLOT(step(int)));
 
-    NavigationLabel * label = new NavigationLabel(this);
-    QObject::connect(label, SIGNAL(pressed(bool)), this, SLOT(openNavigation(bool)));
+    _navigationLabel = new NavigationLabel(this);
+    QObject::connect(_navigationLabel, SIGNAL(pressed(bool)), this, SLOT(openNavigation(bool)));
 
-    ui->statusBar->addPermanentWidget(label);
+    ui->statusBar->addPermanentWidget(_navigationLabel);
 
     setCentralWidget(_view);
     ui->mainToolBar->addWidget(_navigation);
@@ -299,6 +298,7 @@ MainWindow::~MainWindow()
     delete _navigation;
     delete _preferences;
     delete _settings;
+    delete _navigationLabel;
 }
 
 void MainWindow::step(int value)
@@ -355,6 +355,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 void MainWindow::openNavigation(bool open)
 {
     ui->mainToolBar->setVisible(open);
+    ui->actionNavigation->setChecked(open);
 }
 
 void MainWindow::on_actionOpen_object_file_triggered()

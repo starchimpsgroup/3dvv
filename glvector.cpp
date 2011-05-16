@@ -24,19 +24,19 @@
 
 //#define TEST
 
-GLVector::GLVector(GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR, color, objectID, time)
+GLVector::GLVector(GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR_OBJECT, color, objectID, time)
 {
     _sX = _sY = _sZ =
     _eX = _eY = _eZ = 0.0;
 }
 
-GLVector::GLVector(GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR, color, objectID, time)
+GLVector::GLVector(GLdouble x, GLdouble y, GLdouble z, GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR_OBJECT, color, objectID, time)
 {
     _sX =    _sY =    _sZ = 0.0;
     _eX = x; _eY = y; _eZ = z;
 }
 
-GLVector::GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ, GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR, color, objectID, time)
+GLVector::GLVector(GLdouble sX, GLdouble sY, GLdouble sZ, GLdouble eX, GLdouble eY, GLdouble eZ, GLColor color, QString objectID, int time) : GLObject(GLObject::VECTOR_OBJECT, color, objectID, time)
 {
     _sX = sX; _sY = sY; _sZ = sZ;
     _eX = eX; _eY = eY; _eZ = eZ;
