@@ -60,7 +60,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >- Line can be adjust to infinity `*work in progress*`
 >- Display angels, between vectors (default, smaller angle) `*work in progress*`
 
->>- Display angular size (degree / radian) `*untouched*`
+>>- Display angular size (degree / radian) `*work in progress*`
 
 >- Color mapping for objects (RGB / Hex) (default color, if not specify) `*ready*`
 >- Show coordinates (start, end, middle) `*ready*`
