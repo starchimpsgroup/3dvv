@@ -32,8 +32,6 @@ private:
 
     static QMap<QString, QPair<QImage, GLuint> > initMap();
 
-    static float initAngel(){ return 0.0f; }
-
     static int longestPart( QStringList &list );
 
 private:

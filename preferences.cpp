@@ -8,11 +8,13 @@ Preferences::Preferences(QWidget *parent) :
     ui->setupUi(this);
     QObject::connect(this, SIGNAL(rejected()), this, SLOT(abort()));
     _backgroundColorDialog = new QColorDialog(this);
+    _highlightColorDialog  = new QColorDialog(this);
 }
 
 Preferences::~Preferences()
 {
     delete _backgroundColorDialog;
+    delete _highlightColorDialog;
     delete ui;
 }
 
@@ -45,9 +47,9 @@ void Preferences::setBackgroundColorButtonColor(GLColor color, bool save)
     if(save)
         _backgroundColor = color;
 
-    ui->backgroundColorButton->setStyleSheet("background-color: rgb(" + QString::number(color.redDez()) + ", "
+    ui->backgroundColorButton->setStyleSheet("background-color: rgb(" + QString::number(color.redDez())   + ", "
                                                                       + QString::number(color.greenDez()) + ", "
-                                                                      + QString::number(color.blueDez()) + ");");
+                                                                      + QString::number(color.blueDez())  + ");");
 }
 
 void Preferences::setShowObjectIds(int state)
@@ -68,10 +70,68 @@ void Preferences::setShowVectors(int state)
     ui->vectors->setCheckState((Qt::CheckState)state);
 }
 
+void Preferences::on_highlightColorButton_clicked()
+{
+    _highlightColorDialog->exec();
+    QColor selectedColor  = _highlightColorDialog->selectedColor();
+    setHighlightColorButtonColor(selectedColor, false);
+
+    emit changeHighlightColor(selectedColor);
+}
+
+void Preferences::on_highlight_stateChanged(int state)
+{
+    emit showHighlightObjects(state);
+}
+
+void Preferences::on_highlightTimeSpinBox_valueChanged(int i)
+{
+    emit changeHighlightTime(i);
+}
+
+void Preferences::on_highlightRateSpinBox_valueChanged(int i)
+{
+    emit changeHighlightRate(i);
+}
+
+void Preferences::setHighlightColorButtonColor(GLColor color, bool save)
+{
+    if(save)
+        _highlightColor = color;
+
+    ui->highlightColorButton->setStyleSheet("background-color: rgb(" + QString::number(color.redDez())   + ", "
+                                                                     + QString::number(color.greenDez()) + ", "
+                                                                     + QString::number(color.blueDez())  + ");");
+
+}
+
+void Preferences::setHighlightObjects(int state)
+{
+    _highlightObjects = state;
+    ui->highlight->setCheckState((Qt::CheckState)state);
+}
+
+void Preferences::setHighlightTime(int value)
+{
+    _highlightTime = value;
+    ui->highlightTimeSpinBox->setValue(value);
+}
+
+void Preferences::setHighlightRate(int value)
+{
+    _highlightRate = value;
+    ui->highlightRateSpinBox->setValue(value);
+}
+
 void Preferences::abort()
 {
     emit changeBackgroundColor(_backgroundColor);
-    emit showObjectIds(_showObjectIds);
-    emit showCoordinates(_showCoordinates);
-    emit showVectors(_showVectors);
+    emit showObjectIds        (_showObjectIds);
+    emit showCoordinates      (_showCoordinates);
+    emit showVectors          (_showVectors);
+
+    emit changeHighlightColor(_highlightColor);
+    emit showHighlightObjects(_highlightObjects);
+    emit changeHighlightTime (_highlightTime);
+    emit changeHighlightRate (_highlightRate);
 }

@@ -354,11 +354,11 @@ void GLWidget::wheelEvent ( QWheelEvent * we )
 
         if ( we->delta() > 0 )
         {
-            stretchCameraDistance ( 1.1 );
+            stretchCameraDistance ( 0.9 );
         }
         else
         {
-            stretchCameraDistance ( 0.9 );
+            stretchCameraDistance ( 1.1 );
         }
 
         repaint();

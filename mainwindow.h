@@ -55,6 +55,10 @@ private:
     int                _objectPos;
     int                _objectPosSave;
 
+    bool               _highlightObjects;
+    int                _highlightTime;
+    int                _highlightRate;
+
     QList<GLObject *>  _objects;
 
 private:
@@ -73,12 +77,17 @@ private slots:
     void showCoordinates(int state);
     void showVectors(int state);
 
+    void showHighlightObjects(int state);
+    void changeHighlightColor(GLColor color);
+    void changeHighlightTime(int value);
+    void changeHighlightRate(int value);
+
     void play(bool value);
     void setTime(int time);
     void step(int value);
 
 protected:
-    void timerEvent(QTimerEvent *event);
+    void timerEvent(QTimerEvent *);
 };
 
 #endif // MAINWINDOW_H

@@ -10,15 +10,25 @@ public:
     Settings();
     ~Settings();
 
-    void setBackgroundColor(GLColor &color);
+    void    setBackgroundColor(GLColor &color);
     GLColor backgroundColor();
 
     void setShowObjectIds(int state);
     void setShowCoordinates(int state);
     void setShowVectors(int state);
-    int showObjectIds();
-    int showCoordinates();
-    int showVectors();
+    int  showObjectIds();
+    int  showCoordinates();
+    int  showVectors();
+
+    void    setHighlightColor(GLColor &color);
+    GLColor highlightColor();
+
+    void setHighlightObjects(int state);
+    void setHighlightTime(int value);
+    void setHighlightRate(int value);
+    int  highlightObjects();
+    int  highlightTime();
+    int  highlightRate();
 
 private:
     QSettings * _settings;

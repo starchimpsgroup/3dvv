@@ -8,6 +8,15 @@ class GLAngle : public GLObject
 {
 public:
     GLAngle( GLVector * vectorA, GLVector * vectorB, GLColor color, QString objectID, int time );
+
+protected:
+    void glObject();
+
+private:
+    GLVector * _vectorA;
+    GLVector * _vectorB;
+
+    bool _valid;
 };
 
 #endif // GLANGLE_H

@@ -27,7 +27,7 @@ GLPerspective::GLPerspective()
   _Fovy   = 45.0;
   _Aspect = 1.0;
   _Near   = 1.0;
-  _Far    = 100.0;
+  _Far    = 10000.0;
 }
 
 GLPerspective::~GLPerspective()
@@ -125,8 +125,11 @@ void GLPerspective::setViewport(int width, int height){
 void GLPerspective::stretchCameraDistance(double factor)
 {
   GLVector dist = _Camera - _Center;
-  dist = dist * factor;
-  setCamera(_Center + dist);
+  if(factor > 1.0 || (int)dist.length() != 0)
+  {
+      dist = dist * factor;
+      setCamera(_Center + dist);
+  }
 }
 /**
   *Shift the whole scene in y direction

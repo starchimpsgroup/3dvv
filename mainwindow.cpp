@@ -48,6 +48,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_preferences, SIGNAL(showCoordinates(int)),           this, SLOT(showCoordinates(int)));
     QObject::connect(_preferences, SIGNAL(showObjectIds(int)),             this, SLOT(showObjectIds(int)));
     QObject::connect(_preferences, SIGNAL(showVectors(int)),               this, SLOT(showVectors(int)));
+
+    QObject::connect(_preferences, SIGNAL(showHighlightObjects(int)),      this, SLOT(showHighlightObjects(int)));
+    QObject::connect(_preferences, SIGNAL(changeHighlightColor(GLColor)),  this, SLOT(changeHighlightColor(GLColor)));
+    QObject::connect(_preferences, SIGNAL(changeHighlightTime(int)),       this, SLOT(changeHighlightTime(int)));
+    QObject::connect(_preferences, SIGNAL(changeHighlightRate(int)),       this, SLOT(changeHighlightRate(int)));
+
     QObject::connect(_navigation,  SIGNAL(play(bool)),                     this, SLOT(play(bool)));
     QObject::connect(_navigation,  SIGNAL(positionChanged(int)),           this, SLOT(setTime(int)));
     QObject::connect(_navigation,  SIGNAL(step(int)),                      this, SLOT(step(int)));
@@ -63,6 +69,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _timeMax = _time = _objectPos = 0;
     _timeID  = -1;
+
+    _highlightObjects = _settings->highlightObjects();
+    _highlightTime    = _settings->highlightTime();
+    _highlightRate    = _settings->highlightRate();
 
     // Input
 
@@ -126,6 +136,46 @@ MainWindow::MainWindow(QWidget *parent) :
     datei.append(vec);
 
     vec = new GLPoint(2.0f,2.0f,4.0f,GLColor(1.0f,0.0f,0.0f),"TEST", 0);
+    datei.append(vec);
+
+    GLVector * v1 = new GLVector(1,-5,1,2,5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    GLVector * v2 = new GLVector(1,-5,1,1,8,3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    datei.append(v1);
+    datei.append(v2);
+
+    vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
+    datei.append(vec);
+
+    v1 = new GLVector(-5,5,1,1,5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v2 = new GLVector(-5,5,1,1,5,3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    datei.append(v1);
+    datei.append(v2);
+
+    vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
+    datei.append(vec);
+
+    v1 = new GLVector(1,5,-1,-2,-5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v2 = new GLVector(1,5,-1,-1,-6,-3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    datei.append(v1);
+    datei.append(v2);
+
+    vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
+    datei.append(vec);
+
+    v1 = new GLVector(-1,-5,-1,-1,-10,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v2 = new GLVector(-1,-5,-1,-3,-10,-3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    datei.append(v1);
+    datei.append(v2);
+
+    vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
+    datei.append(vec);
+
+    v1 = new GLVector(-5,3,1,-1,10,-5,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v2 = new GLVector(-5,3,1,-3,10,-5,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    datei.append(v1);
+    datei.append(v2);
+
+    vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
     datei.append(vec);
 
     // E
@@ -326,6 +376,18 @@ void MainWindow::updateIndex()
         {
             break;
         }
+
+        int  highlightTime = _time - _objects.at(_objectPos)->time();
+        bool highlightStep = (int)(highlightTime / 250) % 2;
+
+        if(highlightTime <= 1000 && highlightStep)
+        {
+            _objects.at(_objectPos)->setHighlight(true);
+        }
+        else if(!highlightStep)
+        {
+            _objects.at(_objectPos)->setHighlight(false);
+        }
     }
 
     _objectPos--;
@@ -334,9 +396,11 @@ void MainWindow::updateIndex()
     {
         _view->setObjectIndex(_objectPos);
     }
+
+    _view->repaint();
 }
 
-void MainWindow::timerEvent(QTimerEvent *event)
+void MainWindow::timerEvent(QTimerEvent *)
 {
     _time += TIMERANGE;
 
@@ -387,9 +451,14 @@ void MainWindow::on_actionAboutQt_triggered()
 void MainWindow::on_actionPreferences_triggered()
 {
     _preferences->setBackgroundColorButtonColor(_settings->backgroundColor());
-    _preferences->setShowObjectIds(_settings->showObjectIds());
-    _preferences->setShowCoordinates(_settings->showCoordinates());
-    _preferences->setShowVectors(_settings->showVectors());
+    _preferences->setShowObjectIds             (_settings->showObjectIds());
+    _preferences->setShowCoordinates           (_settings->showCoordinates());
+    _preferences->setShowVectors               (_settings->showVectors());
+
+    _preferences->setHighlightColorButtonColor (_settings->highlightColor());
+    _preferences->setHighlightObjects          (_settings->highlightObjects());
+    _preferences->setHighlightTime             (_settings->highlightTime());
+    _preferences->setHighlightRate             (_settings->highlightRate());
     _preferences->exec();
 }
 
@@ -415,6 +484,30 @@ void MainWindow::showVectors(int state)
 {
     _settings->setShowVectors(state);
     _view->setShowVectors(state);
+}
+
+void MainWindow::showHighlightObjects(int state)
+{
+    _settings->setHighlightObjects(state);
+    _highlightObjects = state;
+}
+
+void MainWindow::changeHighlightColor(GLColor color)
+{
+    _settings->setHighlightColor(color);
+    GLObject::setHighlightColor(color);
+}
+
+void MainWindow::changeHighlightTime(int value)
+{
+    _settings->setHighlightTime(value);
+    _highlightTime = value;
+}
+
+void MainWindow::changeHighlightRate(int value)
+{
+    _settings->setHighlightRate(value);
+    _highlightRate = value;
 }
 
 void MainWindow::play(bool value)

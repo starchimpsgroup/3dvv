@@ -1,24 +1,47 @@
 #include "globject.h"
 
+GLColor GLObject::_highlightColor = GLColor(1.0f, 0.0f, 0.0f);
+
 GLObject::GLObject( ObjectType type, GLColor color, QString objectID, int time )
 {
-    _type     = type;
-    _objectID = objectID;
-    _color    = color;
-    _time     = time;
-    _draw     = true;
+    _type      = type;
+    _objectID  = objectID;
+    _color     = color;
+    _time      = time;
+    _draw      = true;
+
+    _highlight = false;
 }
 
 GLObject::GLObject( const GLObject &o )
 {
     if(this != &o)
     {
-        _type     = o.type();
-        _color    = o.color();
-        _objectID = o.id();
-        _time     = o.time();
-        _draw     = o.isDrawing();
+        _type      = o.type();
+        _color     = o.color();
+        _objectID  = o.id();
+        _time      = o.time();
+        _draw      = o.isDrawing();
+
+        _highlight = false;
     }
+}
+
+GLColor GLObject::usedColor()
+{
+    if(_highlight)
+    {
+        return GLObject::highlightColor();
+    }
+    else
+    {
+        return _color;
+    }
+}
+
+void GLObject::setHighlight( bool highlight )
+{
+    _highlight = highlight;
 }
 
 void GLObject::setID( QString objectID )

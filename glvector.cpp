@@ -18,9 +18,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "glvector.h"
-#include "math.h"
 #include <qgl.h>
 #include "gltext.h"
+
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 //#define TEST
 
@@ -185,7 +187,7 @@ void GLVector::glObject()
     glTranslatef(_sX, _sY, _sZ);
 
     glBegin (GL_LINES);
-    glColor3f (_color.redF(), _color.greenF(), _color.blueF());
+    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
     glVertex3f(0.0, 0.0, 0.0);
     glVertex3f(x(), y(), z());
     glEnd ();
@@ -197,23 +199,18 @@ void GLVector::glObject()
         glVertex3f(x(), 0.0, 0.0);
         glVertex3f(x(), y(), z());
 
-        glColor3f (0.0, 0.0, 0.0);
         glVertex3f(0.0, y(), 0.0);
         glVertex3f(x(), y(), z());
 
-        glColor3f (0.0, 0.0, 0.0);
         glVertex3f(0.0, 0.0, z());
         glVertex3f(x(), y(), z());
 
-        glColor3f (0.0, 0.0, 0.0);
         glVertex3f(x(), 0.0, 0.0);
         glVertex3f(x() * len, y() * len, z() * len);
 
-        glColor3f (0.0, 0.0, 0.0);
         glVertex3f(0.0, y(), 0.0);
         glVertex3f(x() * len, y() * len, z() * len);
 
-        glColor3f (0.0, 0.0, 0.0);
         glVertex3f(0.0, 0.0, z());
         glVertex3f(x() * len, y() * len, z() * len);
 
@@ -266,7 +263,7 @@ void GLVector::glObject()
     glRotatef(angleXZ, 0.0, 1.0, 0.0);
     glRotatef(angleYZ, 1.0, 0.0, 0.0);
 
-    glColor3f (_color.redF(), _color.greenF(), _color.blueF());
+    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
     gluCylinder(gluNewQuadric(), 0.1, 0, 0.3, 16, 4);
 
     glRotatef(180, 1.0, 0.0, 0.0);
@@ -282,7 +279,7 @@ void GLVector::glObjectId()
     glTranslatef(_sX, _sY, _sZ);
 
     GLText::draw(_objectID,
-                 _color,
+                 usedColor(),
                  GLVector(x()/2.0, y()/2.0 + GLText::heightOfText(_objectID)/2.0 + 0.15, z()/2.0));
 
     glPopMatrix();
@@ -295,11 +292,11 @@ void GLVector::glCoordinate()
     glTranslatef(_sX, _sY, _sZ);
 
     GLText::draw("(" + QString::number(_sX) + ", " + QString::number(_sY) + ", " + QString::number(_sZ) + ")",
-                 _color,
+                 usedColor(),
                  GLVector(0.0, -0.35, 0.0));
 
     GLText::draw("(" + QString::number(_eX) + ", " + QString::number(_eY) + ", " + QString::number(_eZ) + ")",
-                 _color,
+                 usedColor(),
                  GLVector(x(), y()-0.35, z()));
 
     glPopMatrix();
@@ -313,7 +310,7 @@ void GLVector::glVector()
 
     QString vector = QString::number(x()) + "\n" + QString::number(y()) + "\n" + QString::number(z());
     GLText::draw("(" + vector + ")",
-                 _color,
+                 usedColor(),
                  GLVector(x()/2.0, y()/2.0 - GLText::heightOfText(vector)/2.0 - 0.15, z()/2.0));
 
     glPopMatrix();

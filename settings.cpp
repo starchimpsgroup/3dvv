@@ -51,3 +51,43 @@ int Settings::showVectors()
 {
     return _settings->value("view/vectors", 2).toInt();
 }
+
+void Settings::setHighlightColor(GLColor &color)
+{
+    _settings->setValue("view/highlight/color", color.qcolor());
+}
+
+GLColor Settings::highlightColor()
+{
+    return GLColor(_settings->value("view/highlight/color", GLColor(1.0f, 0.0f, 0.0f).qcolor()).value<QColor>());
+}
+
+void Settings::setHighlightObjects(int state)
+{
+    _settings->setValue("view/highlight/objects", state);
+}
+
+void Settings::setHighlightTime(int value)
+{
+    _settings->setValue("view/highlight/time", value);
+}
+
+void Settings::setHighlightRate(int value)
+{
+    _settings->setValue("view/highlight/rate", value);
+}
+
+int Settings::highlightObjects()
+{
+    return _settings->value("view/highlight/objects", 2).toInt();
+}
+
+int Settings::highlightTime()
+{
+    return _settings->value("view/highlight/time", 1000).toInt();
+}
+
+int Settings::highlightRate()
+{
+    return _settings->value("view/highlight/rate", 2).toInt();
+}

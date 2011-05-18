@@ -1,7 +1,7 @@
 #include "gltext.h"
 
-float GLText::_angleX = GLText::initAngel();
-float GLText::_angleY = GLText::initAngel();
+float GLText::_angleX = 0.0;
+float GLText::_angleY = 0.0;
 QMap<QString, QPair<QImage, GLuint> > GLText::_imageMap(GLText::initMap());
 
 QMap<QString, QPair<QImage, GLuint> > GLText::initMap()
@@ -128,7 +128,7 @@ void GLText::createImage(QString &text, GLColor &color)
         paint.drawText(bracketsWidth,TEXTSIZE*(i+1)+SPACER*i,stringList.at(i));
     }
     paint.end();
-    picture.save(text + ".png", "PNG");
+    //picture.save(text + ".png", "PNG");
 
     QImage glPicture = QGLWidget::convertToGLFormat(picture);
     GLuint textureName;

@@ -46,10 +46,10 @@ GLColor::GLColor( int redI, int greenI, int blueI, int alphaI )
 
 GLColor::GLColor( QColor color )
 {
-    _red   = color.red()   / 255.0;
-    _green = color.green() / 255.0;
-    _blue  = color.blue()  / 255.0;
-    _alpha = color.alpha() / 255.0;
+    _red   = color.redF();
+    _green = color.greenF();
+    _blue  = color.blueF();
+    _alpha = color.alphaF();
 }
 
 const QColor GLColor::qcolor()

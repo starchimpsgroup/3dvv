@@ -22,30 +22,36 @@ public:
     GLObject( ObjectType type, GLColor color = GLColor(), QString objectID = "", int time = 0 );
     GLObject( const GLObject &o );
 
-    void setID    ( QString objectID );
-    void setColor ( GLColor color    );
-    void setColor ( float redF, float greenF, float blueF );
-    void setTime  ( int time         );
-    void setValues( QString objectID, GLColor color = GLColor(), int time = 0 );
-    void setDraw(bool draw);
+    void setID       ( QString objectID );
+    void setColor    ( GLColor color    );
+    void setColor    ( float redF, float greenF, float blueF );
+    void setTime     ( int time         );
+    void setValues   ( QString objectID, GLColor color = GLColor(), int time = 0 );
+    void setDraw     ( bool draw );
+    void setHighlight( bool highlight );
 
-    QString id()     const{ return _objectID; }
-    GLColor color()  const{ return _color;    }
-    int time()       const{ return _time;     }
-    ObjectType type()const{ return _type;     }
+    QString    id()   const{ return _objectID; }
+    GLColor    color()const{ return _color;    }
+    int        time() const{ return _time;     }
+    ObjectType type() const{ return _type;     }
 
-    bool isDrawing() const{ return _draw;     }
+    bool isDrawing()  const{ return _draw;     }
 
     void draw();
     void drawObjectId();
     void drawCoordinate();
     void drawVector();
 
+    static GLColor highlightColor(){ return _highlightColor; }
+    static void setHighlightColor(GLColor &color){ _highlightColor = color; }
+
 protected:
     virtual void glObject() = 0;
     virtual void glObjectId(){}
     virtual void glCoordinate(){}
     virtual void glVector(){}
+
+    GLColor usedColor();
 
 protected:
     QString    _objectID;
@@ -55,6 +61,9 @@ protected:
 private:
     bool       _draw;
     ObjectType _type;
+
+    bool           _highlight;
+    static GLColor _highlightColor;
 };
 
 #endif // GLOBJECT_H
