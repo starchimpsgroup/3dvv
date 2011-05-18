@@ -70,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _timeMax = _time = _objectPos = 0;
     _timeID  = -1;
 
+    GLObject::setHighlightColor(_settings->highlightColor());
     _highlightObjects = _settings->highlightObjects();
     _highlightTime    = _settings->highlightTime();
     _highlightRate    = _settings->highlightRate();
@@ -335,7 +336,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Input
 
-    _navigation->setSliderMaximum(_timeMax);
+    _navigation->setSliderMaximum(_timeMax + _highlightTime);
     _view->setObjects(&_objects);
 
     updateIndex();
@@ -377,14 +378,21 @@ void MainWindow::updateIndex()
             break;
         }
 
-        int  highlightTime = _time - _objects.at(_objectPos)->time();
-        bool highlightStep = (int)(highlightTime / 250) % 2;
-
-        if(highlightTime <= 1000 && highlightStep)
+        if(_highlightObjects)
         {
-            _objects.at(_objectPos)->setHighlight(true);
+            int  highlightTime = _time - _objects.at(_objectPos)->time();
+            bool highlightStep = (int)(highlightTime / (_highlightTime / (_highlightRate*2))) % 2;
+
+            if(highlightTime <= _highlightTime && highlightStep)
+            {
+                _objects.at(_objectPos)->setHighlight(true);
+            }
+            else if(!highlightStep)
+            {
+                _objects.at(_objectPos)->setHighlight(false);
+            }
         }
-        else if(!highlightStep)
+        else
         {
             _objects.at(_objectPos)->setHighlight(false);
         }
@@ -408,7 +416,7 @@ void MainWindow::timerEvent(QTimerEvent *)
 
     _navigation->setSliderPosition(_time);
 
-    if(_time >= _timeMax)
+    if(_time >= _timeMax + _highlightTime)
     {
         killTimer(_timeID);
         _timeID = -1;
@@ -502,6 +510,7 @@ void MainWindow::changeHighlightTime(int value)
 {
     _settings->setHighlightTime(value);
     _highlightTime = value;
+    _navigation->setSliderMaximum(_timeMax + _highlightTime);
 }
 
 void MainWindow::changeHighlightRate(int value)

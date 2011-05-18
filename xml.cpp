@@ -3,6 +3,9 @@
 #include <QDomDocument>
 #include "glpoint.h"
 #include "glvector.h"
+#include "glplane.h"
+#include "gldelete.h"
+#include "glangle.h"
 
 QList<GLObject*> XML::readXML(const QString &path)
 {
@@ -28,6 +31,8 @@ QList<GLObject*> XML::readXML(const QString &path)
                  objectList.append(GLPoint::fromXml(object));
              else if (type == "vector")
                  objectList.append(GLVector::fromXml(object));
+             else if (type == "plane")
+                 objectList.append(GLPlane::fromXml(object));
          }
          node = node.nextSibling();
      }

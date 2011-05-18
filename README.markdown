@@ -36,7 +36,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>>- Point (to be shown as a cross) `*ready*`
 >>>- Vector (for display with peak) `*ready*`
 >>>- Plain `*ready*`
->>>- Line `*work in progress*`
+>>>- Line `*ready*`
 >>>- Angle `*work in progress*`
 
 >>- Coordinates: `*ready*`
@@ -45,7 +45,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>>- Vector, start and end point `*ready*`
 
 >>- Time parameters for film script `*ready*`
->>- Delete object in the script `*untouched*`
+>>- Delete object in the script `*ready*`
 
 - View: `*work in progress*`
 
@@ -54,11 +54,11 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>- Not on every tick a number `*ready*`
 
 >- Camera control (mouse, keyboard) `*work in progress*`
->- Objects highlight temporarily, which are displayed newly (in color or otherwise) `*untouched*`
+>- Objects highlight temporarily, which are displayed newly (in color or otherwise) `*work in progress*`
 >- Object labeling (automatic), font same color as object `*ready*`
 >- Plain can be show (to infinity), semi-transparent `*work in progress*`
 >- Line can be adjust to infinity `*work in progress*`
->- Display angels, between vectors (default, smaller angle) `*untouched*`
+>- Display angels, between vectors (default, smaller angle) `*work in progress*`
 
 >>- Display angular size (degree / radian) `*untouched*`
 

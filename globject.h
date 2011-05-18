@@ -43,7 +43,7 @@ public:
     void drawVector();
 
     static GLColor highlightColor(){ return _highlightColor; }
-    static void setHighlightColor(GLColor &color){ _highlightColor = color; }
+    static void setHighlightColor(GLColor color){ _highlightColor = color; }
 
 protected:
     virtual void glObject() = 0;
