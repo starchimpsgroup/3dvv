@@ -8,6 +8,8 @@ class GLDelete : public GLObject
 public:
     GLDelete(GLObject * object, QString objectID, int time);
 
+    GLObject * object(){ return _object; }
+
 private:
     GLObject * _object;
 

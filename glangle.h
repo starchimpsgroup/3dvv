@@ -9,6 +9,9 @@ class GLAngle : public GLObject
 public:
     GLAngle( GLVector * vectorA, GLVector * vectorB, GLColor color, QString objectID, int time );
 
+    GLVector * vectorA(){ return _vectorA; }
+    GLVector * vectorB(){ return _vectorB; }
+
 protected:
     void glObject();
 

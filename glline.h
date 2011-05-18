@@ -9,6 +9,8 @@ class GLLine : public GLObject
 public:
     GLLine( GLVector point, GLVector direction, GLColor color, QString objectID, int time );
 
+    GLVector line(){ return _line; }
+
 protected:
     void glObject();
     void glObjectId();

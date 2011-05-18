@@ -9,6 +9,9 @@ class GLPlane : public GLObject
 public:
     GLPlane(GLVector point, GLVector normal, GLColor color, QString objectID, int time);
 
+    GLVector point(){ return _point; }
+    GLVector normal(){ return _normal; }
+
     /*!
         \brief The plane fromXML method is used to fetch specified tags from the XML-File.
 

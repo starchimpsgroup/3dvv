@@ -26,7 +26,7 @@ void GLPlane::glObject()
     glRotatef(angleY, 0.0, 1.0, 0.0);
     glRotatef(angleX, 1.0, 0.0, 0.0);
 
-    glColor4f (_color.redF(), _color.greenF(), _color.blueF(), _color.alphaF());
+    glColor4f (usedColor().redF(), usedColor().greenF(), usedColor().blueF(), _color.alphaF());
 
     glEnable(GL_BLEND);
 
@@ -58,7 +58,7 @@ void GLPlane::glObjectId()
     glTranslatef( _point.x(), _point.y(), _point.z() );
 
     GLText::draw(_objectID,
-                 _color,
+                 usedColor(),
                  GLVector(0.0, GLText::heightOfText(_objectID)/2.0 + 0.15, 0.0));
 
     glPopMatrix();
@@ -71,7 +71,7 @@ void GLPlane::glCoordinate()
     glTranslatef( _point.x(), _point.y(), _point.z() );
 
     GLText::draw("(" + QString::number(_point.x()) + ", " + QString::number(_point.y()) + ", " + QString::number(_point.z()) + ")",
-                 _color,
+                 usedColor(),
                  GLVector(0.0, -0.35, 0.0));
 
     glPopMatrix();

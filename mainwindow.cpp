@@ -23,6 +23,8 @@
 #include <QMessageBox>
 #include "xml.h"
 
+#define OUTPUT
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -139,40 +141,40 @@ MainWindow::MainWindow(QWidget *parent) :
     vec = new GLPoint(2.0f,2.0f,4.0f,GLColor(1.0f,0.0f,0.0f),"TEST", 0);
     datei.append(vec);
 
-    GLVector * v1 = new GLVector(1,-5,1,2,5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
-    GLVector * v2 = new GLVector(1,-5,1,1,8,3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    GLVector * v1 = new GLVector(1,-5,1,2,5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest1", 0);
+    GLVector * v2 = new GLVector(1,-5,1,1,8,3,GLColor(1.0f,0.5f,0.0f),"AngleTest2", 0);
     datei.append(v1);
     datei.append(v2);
 
     vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
     datei.append(vec);
 
-    v1 = new GLVector(-5,5,1,1,5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
-    v2 = new GLVector(-5,5,1,1,5,3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v1 = new GLVector(-5,5,1,1,5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest3", 0);
+    v2 = new GLVector(-5,5,1,1,5,3,GLColor(1.0f,0.5f,0.0f),"AngleTest4", 0);
     datei.append(v1);
     datei.append(v2);
 
     vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
     datei.append(vec);
 
-    v1 = new GLVector(1,5,-1,-2,-5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
-    v2 = new GLVector(1,5,-1,-1,-6,-3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v1 = new GLVector(1,5,-1,-2,-5,0,GLColor(1.0f,0.5f,0.0f),"AngleTest5", 0);
+    v2 = new GLVector(1,5,-1,-1,-6,-3,GLColor(1.0f,0.5f,0.0f),"AngleTest6", 0);
     datei.append(v1);
     datei.append(v2);
 
     vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
     datei.append(vec);
 
-    v1 = new GLVector(-1,-5,-1,-1,-10,0,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
-    v2 = new GLVector(-1,-5,-1,-3,-10,-3,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v1 = new GLVector(-1,-5,-1,-1,-10,0,GLColor(1.0f,0.5f,0.0f),"AngleTest7", 0);
+    v2 = new GLVector(-1,-5,-1,-3,-10,-3,GLColor(1.0f,0.5f,0.0f),"AngleTest8", 0);
     datei.append(v1);
     datei.append(v2);
 
     vec = new GLAngle(v1, v2, GLColor(1.0f,0.0f,0.5f), "Angle", 0);
     datei.append(vec);
 
-    v1 = new GLVector(-5,3,1,-1,10,-5,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
-    v2 = new GLVector(-5,3,1,-3,10,-5,GLColor(1.0f,0.5f,0.0f),"AngleTest", 0);
+    v1 = new GLVector(-5,3,1,-1,10,-5,GLColor(1.0f,0.5f,0.0f),"AngleTest9", 0);
+    v2 = new GLVector(-5,3,1,-3,10,-5,GLColor(1.0f,0.5f,0.0f),"AngleTest10", 0);
     datei.append(v1);
     datei.append(v2);
 
@@ -396,6 +398,76 @@ void MainWindow::updateIndex()
         {
             _objects.at(_objectPos)->setHighlight(false);
         }
+
+#ifdef OUTPUT
+        if(_objects.at(_objectPos)->type() == GLObject::VECTOR_OBJECT)
+        {
+            GLVector * vec = (GLVector *)(_objects.at(_objectPos));
+
+            qDebug("<object type=\"vector\" id=\"%s\">", qPrintable(vec->id()));
+                    qDebug("\t<point x=\"%f\" y=\"%f\" z=\"%f\"/>", vec->sX(), vec->sY(), vec->sZ());
+                    qDebug("\t<point x=\"%f\" y=\"%f\" z=\"%f\"/>", vec->eX(), vec->eY(), vec->eZ());
+                    qDebug("\t<color r=\"%x\" g=\"%x\" b=\"%x\" a=\"%x\"/>", vec->color().redDez(), vec->color().greenDez(), vec->color().blueDez(), vec->color().alphaDez());
+                    qDebug("\t<time>%i</time>", vec->time());
+            qDebug("</object>");
+        }
+        else
+        if(_objects.at(_objectPos)->type() == GLObject::ANGLE_OBJECT)
+        {
+            GLAngle * vec = (GLAngle *)(_objects.at(_objectPos));
+
+            qDebug("<object type=\"angle\" id=\"%s\">", qPrintable(vec->id()));
+                    qDebug("\t<object  id=\"%s\"/>", qPrintable(vec->vectorA()->id()));
+                    qDebug("\t<object  id=\"%s\"/>", qPrintable(vec->vectorB()->id()));
+                    qDebug("\t<time>%i</time>", vec->time());
+            qDebug("</object>");
+        }
+        else
+        if(_objects.at(_objectPos)->type() == GLObject::DELETE_OBJECT)
+        {
+            GLDelete * vec = (GLDelete *)(_objects.at(_objectPos));
+
+            qDebug("<object type=\"delete\" id=\"%s\">", qPrintable(vec->id()));
+                    qDebug("\t<object  id=\"%s\"/>", qPrintable(vec->object()->id()));
+                    qDebug("\t<time>%i</time>", vec->time());
+            qDebug("</object>");
+        }
+        else
+        if(_objects.at(_objectPos)->type() == GLObject::POINT_OBJECT)
+        {
+            GLPoint * vec = (GLPoint *)(_objects.at(_objectPos));
+
+            qDebug("<object type=\"point\" id=\"%s\">", qPrintable(vec->id()));
+                    qDebug("\t<point x=\"%f\" y=\"%f\" z=\"%f\"/>", vec->x(), vec->y(), vec->z());
+                    qDebug("\t<color r=\"%x\" g=\"%x\" b=\"%x\" a=\"%x\"/>", vec->color().redDez(), vec->color().greenDez(), vec->color().blueDez(), vec->color().alphaDez());
+                    qDebug("\t<time>%i</time>", vec->time());
+            qDebug("</object>");
+        }
+        else
+        if(_objects.at(_objectPos)->type() == GLObject::PLANE_OBJECT)
+        {
+            GLPlane * vec = (GLPlane *)(_objects.at(_objectPos));
+
+            qDebug("<object type=\"plane\" id=\"%s\">", qPrintable(vec->id()));
+                    qDebug("\t<point x=\"%f\" y=\"%f\" z=\"%f\"/>", vec->point().x(), vec->point().y(), vec->point().z());
+                    qDebug("\t<point x=\"%f\" y=\"%f\" z=\"%f\"/>", vec->normal().x(), vec->normal().y(), vec->normal().z());
+                    qDebug("\t<color r=\"%x\" g=\"%x\" b=\"%x\" a=\"%x\"/>", vec->color().redDez(), vec->color().greenDez(), vec->color().blueDez(), vec->color().alphaDez());
+                    qDebug("\t<time>%i</time>", vec->time());
+            qDebug("</object>");
+        }
+        else
+        if(_objects.at(_objectPos)->type() == GLObject::LINE_OBJECT)
+        {
+            GLLine * vec = (GLLine *)(_objects.at(_objectPos));
+
+            qDebug("<object type=\"line\" id=\"%s\">", qPrintable(vec->id()));
+                    qDebug("\t<point x=\"%f\" y=\"%f\" z=\"%f\"/>", vec->line().sX(), vec->line().sY(), vec->line().sZ());
+                    qDebug("\t<point x=\"%f\" y=\"%f\" z=\"%f\"/>", vec->line().eX(), vec->line().eY(), vec->line().eZ());
+                    qDebug("\t<color r=\"%x\" g=\"%x\" b=\"%x\" a=\"%x\"/>", vec->color().redDez(), vec->color().greenDez(), vec->color().blueDez(), vec->color().alphaDez());
+                    qDebug("\t<time>%i</time>", vec->time());
+            qDebug("</object>");
+        }
+#endif
     }
 
     _objectPos--;

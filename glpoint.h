@@ -10,6 +10,10 @@ public:
     GLPoint( GLColor color = GLColor(), QString objectID = "", int time = 0 );
     GLPoint( GLdouble x, GLdouble y, GLdouble z, GLColor color = GLColor(), QString objectID = "", int time = 0 );
 
+    GLdouble x(){ return _x; }
+    GLdouble y(){ return _y; }
+    GLdouble z(){ return _z; }
+
     /*!
         \brief The point fromXML method is used to fetch specified tags from the XML-File.
 

@@ -20,7 +20,7 @@ void GLLine::glObject()
 
     glBegin(GL_LINES);
 
-    glColor3f (_color.redF(), _color.greenF(), _color.blueF());
+    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
     glVertex3f(0.0,0.0,0.0);
     glVertex3f(_line.x() * MULT, _line.y() * MULT, _line.z() * MULT);
 
@@ -39,7 +39,7 @@ void GLLine::glObjectId()
     glTranslatef(_line.sX(), _line.sY(), _line.sZ());
 
     GLText::draw(_objectID,
-                 _color,
+                 usedColor(),
                  GLVector(_line.x()/2.0, _line.y()/2.0 + GLText::heightOfText(_objectID)/2.0 + 0.15, _line.z()/2.0));
 
     glPopMatrix();
@@ -52,11 +52,11 @@ void GLLine::glCoordinate()
     glTranslatef(_line.sX(), _line.sY(), _line.sZ());
 
     GLText::draw("(" + QString::number(_line.sX()) + ", " + QString::number(_line.sY()) + ", " + QString::number(_line.sZ()) + ")",
-                 _color,
+                 usedColor(),
                  GLVector(0.0, -0.35, 0.0));
 
     GLText::draw("(" + QString::number(_line.eX()) + ", " + QString::number(_line.eY()) + ", " + QString::number(_line.eZ()) + ")",
-                 _color,
+                 usedColor(),
                  GLVector(_line.x(), _line.y()-0.35, _line.z()));
 
     glPopMatrix();
@@ -70,7 +70,7 @@ void GLLine::glVector()
 
     QString vector = QString::number(_line.x()) + "\n" + QString::number(_line.y()) + "\n" + QString::number(_line.z());
     GLText::draw("(" + vector + ")",
-                 _color,
+                 usedColor(),
                  GLVector(_line.x()/2.0, _line.y()/2.0 - GLText::heightOfText(vector)/2.0 - 0.15, _line.z()/2.0));
 
     glPopMatrix();

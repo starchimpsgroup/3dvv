@@ -21,7 +21,7 @@ void GLPoint::glObject()
 
     glBegin(GL_LINES);
 
-    glColor3f (_color.redF(), _color.greenF(), _color.blueF());
+    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
     glVertex3f(  0.1,  0.1,  0.0 );
     glVertex3f( -0.1, -0.1,  0.0 );
 
@@ -46,7 +46,7 @@ void GLPoint::glObjectId()
     glTranslatef( _x, _y, _z );
 
     GLText::draw(_objectID,
-                 _color,
+                 usedColor(),
                  GLVector(0.0, GLText::heightOfText(_objectID)/2.0 + 0.15, 0.0));
 
     glPopMatrix();
@@ -59,7 +59,7 @@ void GLPoint::glCoordinate()
     glTranslatef( _x, _y, _z );
 
     GLText::draw("(" + QString::number(_x) + ", " + QString::number(_y) + ", " + QString::number(_z) + ")",
-                 _color,
+                 usedColor(),
                  GLVector(0.0, -0.35, 0.0));
 
     glPopMatrix();
