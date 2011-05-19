@@ -12,6 +12,8 @@ public:
     GLVector * vectorA(){ return _vectorA; }
     GLVector * vectorB(){ return _vectorB; }
 
+    static GLAngle * fromXml(const QDomElement &object, QList<GLObject*> &objects);
+
 protected:
     void glObject();
 

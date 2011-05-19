@@ -449,6 +449,7 @@ void MainWindow::step(int value)
         _view->setObjectIndex(_objectPos += value);
         _view->repaint();
         _navigation->setSliderPosition(_time = _objects.at(_objectPos)->time());
+        updateStatusBar();
     }
 }
 
@@ -505,8 +506,9 @@ void MainWindow::updateIndex()
             GLAngle * vec = (GLAngle *)(_objects.at(_objectPos));
 
             qDebug("<object type=\"angle\" id=\"%s\">", qPrintable(vec->id()));
-                    qDebug("\t<object  id=\"%s\"/>", qPrintable(vec->vectorA()->id()));
-                    qDebug("\t<object  id=\"%s\"/>", qPrintable(vec->vectorB()->id()));
+                    qDebug("\t<object id=\"%s\"/>", qPrintable(vec->vectorA()->id()));
+                    qDebug("\t<object id=\"%s\"/>", qPrintable(vec->vectorB()->id()));
+                    qDebug("\t<color r=\"%x\" g=\"%x\" b=\"%x\" a=\"%x\"/>", vec->color().redDez(), vec->color().greenDez(), vec->color().blueDez(), vec->color().alphaDez());
                     qDebug("\t<time>%i</time>", vec->time());
             qDebug("</object>");
         }
@@ -516,7 +518,7 @@ void MainWindow::updateIndex()
             GLDelete * vec = (GLDelete *)(_objects.at(_objectPos));
 
             qDebug("<object type=\"delete\" id=\"%s\">", qPrintable(vec->id()));
-                    qDebug("\t<object  id=\"%s\"/>", qPrintable(vec->object()->id()));
+                    qDebug("\t<object id=\"%s\"/>", qPrintable(vec->object()->id()));
                     qDebug("\t<time>%i</time>", vec->time());
             qDebug("</object>");
         }
@@ -566,6 +568,7 @@ void MainWindow::updateIndex()
     }
 
     _view->repaint();
+    updateStatusBar();
 }
 
 void MainWindow::timerEvent(QTimerEvent *)
@@ -616,15 +619,11 @@ void MainWindow::on_actionOpen_object_file_triggered()
     qDeleteAll(_objects);
     _objects = XML::readXML(fileName);
 
+    //qSort(_objects.begin(), _objects.end(), caseInsensitiveLessThanTime);
+
     bool shift = false;
     int last = 0;
     GLObject * temp;
-
-    QProgressDialog progress("Sort Objects...", "Cancel", 0, _objects.size() * _objects.size());
-    progress.setCancelButton(0);
-    progress.show();
-
-    qDebug("max: %d", progress.maximum());
 
     for(int i = 0; i < _objects.size(); i++)
     {
@@ -638,8 +637,6 @@ void MainWindow::on_actionOpen_object_file_triggered()
 
                 shift         = true;
             }
-
-            progress.setValue(j + i*_objects.size());
         }
 
         if(!shift)
@@ -650,26 +647,33 @@ void MainWindow::on_actionOpen_object_file_triggered()
         last++;
     }
 
-    progress.setValue(_objects.size() * _objects.size());
-
-    qDebug("Count: %d",_objects.count());
-
     foreach (GLObject *object, _objects)
     {
         if(_timeMax < object->time())
             _timeMax = object->time();
-
-        qDebug("ID: %s", qPrintable( object->id()));
     }
 
     _navigation->setSliderPosition(_time);
     _navigation->setSliderMaximum(time());
     _view->setObjects(&_objects);
 
-    qDebug("timeMax: %d", _timeMax);
-
     updateIndex();
 }
+
+void MainWindow::updateStatusBar()
+{
+    int t = _time;
+    if(t > time())
+        t= time();
+
+    ui->statusBar->showMessage(QString::number(_objectPos+1) + "/" + QString::number(_objects.count()) + " Objects, " +
+                               QString::number(t) + "/" + QString::number(time()) + "msec Playtime");
+}
+
+/*bool MainWindow::caseInsensitiveLessThanTime(const GLObject * objectA, const GLObject * objectB)
+{
+    return objectA->time() < objectB->time();
+}*/
 
 void MainWindow::on_actionAbout_3DVV_triggered()
 {
@@ -739,6 +743,7 @@ void MainWindow::changeHighlightTime(int value)
     _settings->setHighlightTime(value);
     _highlightTime = value;
     _navigation->setSliderMaximum(time());
+    updateStatusBar();
 }
 
 void MainWindow::changeHighlightRate(int value)

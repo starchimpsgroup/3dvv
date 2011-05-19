@@ -10,11 +10,13 @@ public:
 
     GLObject * object(){ return _object; }
 
+    static GLDelete * fromXml(const QDomElement &object, QList<GLObject*> &objects);
+
 private:
     GLObject * _object;
 
 protected:
-    virtual void glObject(){ _object->setDraw(false); };
+    virtual void glObject(){ if(_object != 0){ _object->setDraw(false); } };
 };
 
 #endif // GLDELETE_H

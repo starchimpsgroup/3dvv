@@ -7,6 +7,7 @@
 #include "glplane.h"
 #include "gldelete.h"
 #include "glangle.h"
+#include "glline.h"
 
 QList<GLObject*> XML::readXML(const QString &path)
 {
@@ -30,8 +31,6 @@ QList<GLObject*> XML::readXML(const QString &path)
     QList<GLObject*> objectList;
     QDomNode node = root.firstChild();
 
-    qDebug("size: %i",root.childNodes().size());
-
     QProgressDialog progress("Read XML-File...", "Cancel", 0, root.childNodes().size());
     progress.setCancelButton(0);
     progress.show();
@@ -52,6 +51,12 @@ QList<GLObject*> XML::readXML(const QString &path)
                 objectList.append(GLVector::fromXml(object));
             else if (type == "plane")
                 objectList.append(GLPlane::fromXml(object));
+            else if (type == "line")
+                objectList.append(GLLine::fromXml(object));
+            else if (type == "angle")
+                objectList.append(GLAngle::fromXml(object, objectList));
+            else if (type == "delete")
+                objectList.append(GLDelete::fromXml(object, objectList));
 
         }
         node = node.nextSibling();

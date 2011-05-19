@@ -114,7 +114,7 @@ GLPlane * GLPlane::fromXml(const QDomElement &object)
 
     int time = 0;
     QDomNodeList times = object.elementsByTagName("time");
-    if (!colors.isEmpty())
+    if (!times.isEmpty())
     {
         QDomElement timeNode = times.at(0).toElement();
         time = timeNode.text().toInt();

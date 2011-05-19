@@ -11,6 +11,8 @@ public:
 
     GLVector line(){ return _line; }
 
+    static GLLine * fromXml(const QDomElement &object);
+
 protected:
     void glObject();
     void glObjectId();

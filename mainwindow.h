@@ -21,6 +21,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QThread>
 #include "glwidget.h"
 #include "navigation.h"
 #include "preferences.h"
@@ -64,6 +65,8 @@ private:
 private:
     void updateIndex();
     int  time(){ return _timeMax + _highlightTime; }
+    void updateStatusBar();
+    //static bool caseInsensitiveLessThanTime(const GLObject * objectA, const GLObject * objectB);
 
 private slots:
     void on_actionAboutQt_triggered();

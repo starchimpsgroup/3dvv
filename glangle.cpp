@@ -9,7 +9,9 @@ GLAngle::GLAngle( GLVector * vectorA, GLVector * vectorB, GLColor color, QString
     _vectorA = vectorA;
     _vectorB = vectorB;
 
-    if(_vectorA       != _vectorB       &&
+    if(_vectorA       != 0              &&
+       _vectorB       != 0              &&
+       _vectorA       != _vectorB       &&
        _vectorA->sX() == _vectorB->sX() &&
        _vectorA->sY() == _vectorB->sY() &&
        _vectorA->sZ() == _vectorB->sZ() )
@@ -67,4 +69,65 @@ void GLAngle::glObject()
 
         glPopMatrix();
     }
+}
+
+GLAngle * GLAngle::fromXml(const QDomElement &object, QList<GLObject*> &objects)
+{
+    if (object.isNull() || object.attribute("type") != "angle")
+        return NULL;
+
+    QString id = object.attribute("id");
+
+    GLVector * vectorA = 0;
+    GLVector * vectorB = 0;
+
+    QDomNodeList angleObjects = object.elementsByTagName("object");
+    if (angleObjects.count() == 2)
+    {
+        QDomElement objNode = angleObjects.at(0).toElement();
+        QString id = objNode.attribute("id");
+
+        foreach(GLObject * o, objects)
+        {
+            if(o->id() == id && o->type() == GLObject::VECTOR_OBJECT)
+            {
+                vectorA = (GLVector *)o;
+                break;
+            }
+        }
+
+        objNode = angleObjects.at(1).toElement();
+        id = objNode.attribute("id");
+
+        foreach(GLObject * o, objects)
+        {
+            if(o->id() == id && o->type() == GLObject::VECTOR_OBJECT)
+            {
+                vectorB = (GLVector *)o;
+                break;
+            }
+        }
+    }
+
+    uchar r,g,b,a;
+
+    QDomNodeList colors = object.elementsByTagName("color");
+    if (!colors.isEmpty())
+    {
+        QDomElement colorNode = colors.at(0).toElement();
+        r = (uchar)colorNode.attribute("r").toUShort(NULL, 16);
+        g = (uchar)colorNode.attribute("g").toUShort(NULL, 16);
+        b = (uchar)colorNode.attribute("b").toUShort(NULL, 16);
+        a = (uchar)colorNode.attribute("a").toUShort(NULL, 16);
+    }
+
+    int time = 0;
+    QDomNodeList times = object.elementsByTagName("time");
+    if (!times.isEmpty())
+    {
+        QDomElement timeNode = times.at(0).toElement();
+        time = timeNode.text().toInt();
+    }
+
+    return new GLAngle(vectorA,vectorB,GLColor(r,g,b,a),id,time);
 }

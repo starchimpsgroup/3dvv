@@ -75,3 +75,49 @@ void GLLine::glVector()
 
     glPopMatrix();
 }
+
+GLLine * GLLine::fromXml(const QDomElement &object)
+{
+    if (object.isNull() || object.attribute("type") != "line")
+        return NULL;
+
+    QString id = object.attribute("id");
+
+    GLVector pointVec;
+    GLVector directionVec;
+
+    QDomNodeList points = object.elementsByTagName("point");
+    if (points.count() == 2)
+    {
+        QDomElement point = points.at(0).toElement();
+        pointVec = GLVector(point.attribute("x").toDouble(),
+                            point.attribute("y").toDouble(),
+                            point.attribute("z").toDouble());
+        point = points.at(1).toElement();
+        directionVec = GLVector(point.attribute("x").toDouble(),
+                                point.attribute("y").toDouble(),
+                                point.attribute("z").toDouble());
+    }
+
+    uchar r,g,b,a;
+
+    QDomNodeList colors = object.elementsByTagName("color");
+    if (!colors.isEmpty())
+    {
+        QDomElement colorNode = colors.at(0).toElement();
+        r = (uchar)colorNode.attribute("r").toUShort(NULL, 16);
+        g = (uchar)colorNode.attribute("g").toUShort(NULL, 16);
+        b = (uchar)colorNode.attribute("b").toUShort(NULL, 16);
+        a = (uchar)colorNode.attribute("a").toUShort(NULL, 16);
+    }
+
+    int time = 0;
+    QDomNodeList times = object.elementsByTagName("time");
+    if (!times.isEmpty())
+    {
+        QDomElement timeNode = times.at(0).toElement();
+        time = timeNode.text().toInt();
+    }
+
+    return new GLLine(pointVec,directionVec,GLColor(r,g,b,a),id,time);
+}
