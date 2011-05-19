@@ -43,6 +43,8 @@ public:
 
     ~GLWidget();
 
+    void reset();
+
     void setBackgroundColor(GLColor color);
     void setShowObjectIds(bool value);
     void setShowCoordinates(bool value);

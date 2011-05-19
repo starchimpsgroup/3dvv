@@ -59,7 +59,18 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuGo_to">
+     <property name="title">
+      <string>Go to script  ...</string>
+     </property>
+     <addaction name="actionScript_start"/>
+     <addaction name="actionScript_end"/>
+    </widget>
     <addaction name="actionNavigation"/>
+    <addaction name="separator"/>
+    <addaction name="menuGo_to"/>
+    <addaction name="separator"/>
+    <addaction name="actionReset_camera_position"/>
    </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuEdit"/>
@@ -121,6 +132,30 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionReset_camera_position">
+   <property name="text">
+    <string>Reset camera position</string>
+   </property>
+   <property name="shortcut">
+    <string>Space</string>
+   </property>
+  </action>
+  <action name="actionScript_start">
+   <property name="text">
+    <string>... start</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionScript_end">
+   <property name="text">
+    <string>... end</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
  </widget>

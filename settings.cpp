@@ -12,6 +12,16 @@ Settings::~Settings()
     delete _settings;
 }
 
+void Settings::storeGeometry(QByteArray array)
+{
+    _settings->setValue("view/geometry", array);
+}
+
+QByteArray Settings::restoreGeometry()
+{
+    return _settings->value("view/geometry").toByteArray();
+}
+
 void Settings::setBackgroundColor(GLColor &color)
 {
     _settings->setValue("view/backgroundColor", color.qcolor());

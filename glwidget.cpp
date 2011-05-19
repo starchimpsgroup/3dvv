@@ -102,134 +102,9 @@ void GLWidget::paintGL()
         object->draw();
     }
 
-    /**
-      * Tests
-      */
     //drawCornerMarks();
 
-    // bsp
-
-    /*GLVector v1(3,2,-3);
-    v1.setColor(0.5,1.0,0.0);
-    v1.draw();
-
-    GLVector v2(3,2,-3,4,4,-3);
-    v2.setColor(1.0,0.5,0.0);
-    v2.draw();
-
-    GLVector v3(4,4,-3);
-    v3.setColor(0.0,0.5,1.0);
-    v3.draw();*/
-
-    //test
-
-    /*GLVector t(1,2,2);
-    t.setColor(1,0,1);
-    t.draw();
-
-    GLVector t2(1,2,2,4,5,6);
-    t2.setColor(0.5,0,1);
-    t2.draw();
-
-    GLVector t3(-1,2,2);
-    t3.setColor(1,0,1);
-    t3.draw();
-
-    GLVector t4(1,-2,2);
-    t4.setColor(1,0,1);
-    t4.draw();
-
-    GLVector t5(1,2,-2);
-    t5.setColor(1,0,1);
-    t5.draw();
-
-    GLVector t6(-1,-2,2);
-    t6.setColor(1,0,1);
-    t6.draw();
-
-    GLVector t7(1,-2,-2);
-    t7.setColor(1,0,1);
-    t7.draw();
-
-    GLVector t8(-1,2,-2);
-    t8.setColor(1,0,1);
-    t8.draw();
-
-    GLVector t9(-1,-2,-2);
-    t9.setColor(1,0,1);
-    t9.draw();
-
-    GLVector t10(0,-2,-2);
-    t10.setColor(1,0,1);
-    t10.draw();
-
-    GLVector t10a(0,2,-2);
-    t10a.setColor(1,0,1);
-    t10a.draw();
-
-    GLVector t10b(0,-2,2);
-    t10b.setColor(1,0,1);
-    t10b.draw();
-
-    GLVector t10c(0,2,2);
-    t10c.setColor(1,0,1);
-    t10c.draw();
-
-    GLVector t11(0,0,-2);
-    t11.setColor(1,0,1);
-    t11.draw();
-
-    GLVector t11a(0,0,2);
-    t11a.setColor(1,0,1);
-    t11a.draw();
-
-    GLVector t12(0,-2,0);
-    t12.setColor(1,0,1);
-    t12.draw();
-
-    GLVector t12a(0,2,0);
-    t12a.setColor(1,0,1);
-    t12a.draw();
-
-    GLVector t13(-2,0,0);
-    t13.setColor(1,0,1);
-    t13.draw();
-
-    GLVector t13a(2,0,0);
-    t13a.setColor(1,0,1);
-    t13a.draw();
-
-    /*GLVector tx(-1,-2,3,2,0,0);
-    tx.setColor(1,0,1);
-    tx.draw();
-
-    /*GLVector tx1(5,5,5,0,0,0);
-    tx1.setColor(1,0,1);
-    tx1.draw();*/
-
-    /*GLVector tx2(3,3,3,3,-3,-3);
-    tx2.setColor(1,0,1);
-    tx2.draw();
-
-    /*GLVector t14(0,0,0);
-    t14.setColor(1,0,1);
-    t14.draw();*/
-
-    /*GLPoint p1( 3.0, 3.0, 3.0 );
-    p1.setColor(0.5,0.5,0.5);
-    p1.draw();
-
-    GLPoint p2( -3.0, 3.0, 3.0 );
-    p2.setColor(0.5,0.5,0.0);
-    p2.draw();
-
-    /**
-      * Tests /
-      */
-
     glFlush();
-
-    //_navigation->repaint();
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -284,11 +159,11 @@ void GLWidget::keyPressEvent ( QKeyEvent * ke )
             // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftRight" ) );
             break;
         case Qt::Key_Up:
-            shiftSceneUpDown ( -1 );
+            shiftSceneUpDown ( 1 );
             // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftUp" ) );
             break;
         case Qt::Key_Down:
-            shiftSceneUpDown ( 1 );
+            shiftSceneUpDown ( -1 );
             // qDebug ( "Key: %s",qPrintable ( ( QString ) "ShiftDown" ) );
             break;
         case Qt::Key_W:
@@ -329,14 +204,15 @@ void GLWidget::keyPressEvent ( QKeyEvent * ke )
             // qDebug ( "Key: %s",qPrintable ( ( QString ) "PageDown" ) );
             stretchCameraDistance ( 0.9 );
             break;
-        case Qt::Key_Space:
-            // qDebug ( "Key: %s",qPrintable ( ( QString ) "Reset" ) );
-            _perspective->reset();
-            repaint();
-            break;
         }
     }
 
+    repaint();
+}
+
+void GLWidget::reset()
+{
+    _perspective->reset();
     repaint();
 }
 

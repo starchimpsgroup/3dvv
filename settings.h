@@ -30,6 +30,9 @@ public:
     int  highlightTime();
     int  highlightRate();
 
+    void storeGeometry(QByteArray array);
+    QByteArray restoreGeometry();
+
 private:
     QSettings * _settings;
 };

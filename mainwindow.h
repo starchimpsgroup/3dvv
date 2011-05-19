@@ -63,6 +63,7 @@ private:
 
 private:
     void updateIndex();
+    int  time(){ return _timeMax + _highlightTime; }
 
 private slots:
     void on_actionAboutQt_triggered();
@@ -70,6 +71,9 @@ private slots:
     void on_actionOpen_object_file_triggered();
     void on_actionPreferences_triggered();
     void on_actionNavigation_triggered(){_navigationLabel->changeStatus();}
+    void on_actionReset_camera_position_triggered(){ _view->reset(); }
+    void on_actionScript_start_triggered();
+    void on_actionScript_end_triggered();
 
     void openNavigation(bool open);
     void changeBackgroundColor(GLColor color);

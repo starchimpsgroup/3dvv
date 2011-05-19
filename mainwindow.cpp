@@ -21,9 +21,10 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QProgressDialog>
 #include "xml.h"
 
-#define OUTPUT
+//#define OUTPUT
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -77,11 +78,14 @@ MainWindow::MainWindow(QWidget *parent) :
     _highlightTime    = _settings->highlightTime();
     _highlightRate    = _settings->highlightRate();
 
+    restoreGeometry(_settings->restoreGeometry());
+
     // Input
 
-    QList<GLObject *>  datei;
-    GLObject * vec;
+    //QList<GLObject *>  datei;
+    //GLObject * vec;
 
+    /*
     // Point
     vec = new GLPoint(2.0f,2.0f,2.0f,GLColor(1.0f,0.0f,0.0f),"Point", 0);
     datei.append(vec);
@@ -328,7 +332,89 @@ MainWindow::MainWindow(QWidget *parent) :
     vec = new GLVector(16,0,0,13,0,0,E2,"E2", 3000);
     datei.append(vec);
 
-    foreach(GLObject * vec, datei)
+    // +++++++
+
+    vec = new GLVector(3,2,-3,GLColor(1.0f, 0.0f, 1.0f), "first");
+    datei.append(vec);
+
+    vec = new GLVector(3,2,-3,4,4,-3,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(4,4,-3,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    //test
+
+    vec = new GLVector(1,2,2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(1,2,2,4,5,6,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(-1,2,2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(1,-2,2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(1,2,-2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(-1,-2,2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(1,-2,-2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(-1,2,-2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(-1,-2,-2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,-2,-2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,2,-2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,-2,2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,2,2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,0,-2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,0,2,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,-2,0,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,2,0,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(-2,0,0,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(2,0,0,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(-1,-2,3,2,0,0,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(5,5,5,0,0,0,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(3,3,3,3,-3,-3,GLColor(1.0f, 0.0f, 1.0f));
+    datei.append(vec);
+
+    vec = new GLVector(0,0,0,GLColor(1.0f, 0.0f, 1.0f), "last");
+    datei.append(vec);*/
+
+    /*foreach(GLObject * vec, datei)
     {
         _objects.append(vec);
 
@@ -338,14 +424,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Input
 
-    _navigation->setSliderMaximum(_timeMax + _highlightTime);
+    _navigation->setSliderMaximum(time());
     _view->setObjects(&_objects);
 
-    updateIndex();
+    updateIndex();*/
 }
 
 MainWindow::~MainWindow()
 {
+    _settings->storeGeometry(saveGeometry());
+
     delete ui;
     delete _view;
     delete _navigation;
@@ -488,12 +576,26 @@ void MainWindow::timerEvent(QTimerEvent *)
 
     _navigation->setSliderPosition(_time);
 
-    if(_time >= _timeMax + _highlightTime)
+    if(_time >= time())
     {
         killTimer(_timeID);
         _timeID = -1;
         _navigation->pause();
     }
+}
+
+void MainWindow::on_actionScript_start_triggered()
+{
+    _time = 0;
+    updateIndex();
+    _navigation->setSliderPosition(_time);
+}
+
+void MainWindow::on_actionScript_end_triggered()
+{
+    _time = time();
+    updateIndex();
+    _navigation->setSliderPosition(_time);
 }
 
 void MainWindow::openNavigation(bool open)
@@ -504,15 +606,69 @@ void MainWindow::openNavigation(bool open)
 
 void MainWindow::on_actionOpen_object_file_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "File open", QApplication::applicationDirPath(), "XML files (*.xml);;All files (*)");
-    QList<GLObject*> objects = XML::readXML(fileName);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("File open"), QApplication::applicationDirPath(), "XML files (*.xml);;All files (*)");
+    if(fileName.isEmpty())
+        return;
 
-    qDebug("Count: %d",objects.count());
+    play(false);
+    _timeMax = _time = _objectPos = 0;
 
-    foreach (GLObject *object, objects)
+    qDeleteAll(_objects);
+    _objects = XML::readXML(fileName);
+
+    bool shift = false;
+    int last = 0;
+    GLObject * temp;
+
+    QProgressDialog progress("Sort Objects...", "Cancel", 0, _objects.size() * _objects.size());
+    progress.setCancelButton(0);
+    progress.show();
+
+    qDebug("max: %d", progress.maximum());
+
+    for(int i = 0; i < _objects.size(); i++)
     {
+        for(int j = 1; j < _objects.size() - last; j++)
+        {
+            if(_objects[j-1]->time() > _objects[j]->time())
+            {
+                temp          = _objects[j-1];
+                _objects[j-1] = _objects[j];
+                _objects[j]   = temp;
+
+                shift         = true;
+            }
+
+            progress.setValue(j + i*_objects.size());
+        }
+
+        if(!shift)
+            break;
+
+        shift = false;
+
+        last++;
+    }
+
+    progress.setValue(_objects.size() * _objects.size());
+
+    qDebug("Count: %d",_objects.count());
+
+    foreach (GLObject *object, _objects)
+    {
+        if(_timeMax < object->time())
+            _timeMax = object->time();
+
         qDebug("ID: %s", qPrintable( object->id()));
     }
+
+    _navigation->setSliderPosition(_time);
+    _navigation->setSliderMaximum(time());
+    _view->setObjects(&_objects);
+
+    qDebug("timeMax: %d", _timeMax);
+
+    updateIndex();
 }
 
 void MainWindow::on_actionAbout_3DVV_triggered()
@@ -582,7 +738,7 @@ void MainWindow::changeHighlightTime(int value)
 {
     _settings->setHighlightTime(value);
     _highlightTime = value;
-    _navigation->setSliderMaximum(_timeMax + _highlightTime);
+    _navigation->setSliderMaximum(time());
 }
 
 void MainWindow::changeHighlightRate(int value)

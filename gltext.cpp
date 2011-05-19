@@ -12,12 +12,15 @@ QMap<QString, QPair<QImage, GLuint> > GLText::initMap()
 
 void GLText::draw( QString text, GLColor color, GLVector position )
 {
-    if(!_imageMap.contains(createName(text, color)))
+    if(!text.isEmpty())
     {
-        createImage(text, color);
-    }
+        if(!_imageMap.contains(createName(text, color)))
+        {
+            createImage(text, color);
+        }
 
-    draw(_imageMap[createName(text, color)], position, _angleX, _angleY);
+        draw(_imageMap[createName(text, color)], position, _angleX, _angleY);
+    }
 }
 
 void GLText::draw( QString text, GLColor color, GLVector position, float angleX, float angleY )

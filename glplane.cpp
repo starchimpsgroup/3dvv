@@ -87,7 +87,7 @@ GLPlane * GLPlane::fromXml(const QDomElement &object)
     GLVector pointVec;
     GLVector normalVec;
 
-    QDomNodeList points = object.elementsByTagName("points");
+    QDomNodeList points = object.elementsByTagName("point");
     if (points.count() == 2)
     {
         QDomElement point = points.at(0).toElement();
