@@ -1,7 +1,7 @@
 #include "glline.h"
 #include "gltext.h"
 
-#define MULT 10
+#define MULT 30
 
 GLLine::GLLine( GLVector point, GLVector direction, GLColor color, QString objectID, int time ) : GLObject(GLObject::LINE_OBJECT, color, objectID, time)
 {

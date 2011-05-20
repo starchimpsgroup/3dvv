@@ -4,7 +4,7 @@
 
 GLCoordinateAxes::GLCoordinateAxes()
 {
-    GLCoordinateAxes::Range range = {-80,80};
+    GLCoordinateAxes::Range range = {-200,200};
 
     setRanges( range, range, range );
     setDefaultColors();

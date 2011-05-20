@@ -9,8 +9,14 @@
 #include "glangle.h"
 #include "glline.h"
 
+bool    XML::_error     = false;
+QString XML::_errorText = "";
+
 QList<GLObject*> XML::readXML(const QString &path)
 {
+    _error     = false;
+    _errorText = "";
+
     QDomDocument doc("vd");
     QFile file(path);
 
@@ -59,7 +65,20 @@ QList<GLObject*> XML::readXML(const QString &path)
                 objectList.append(GLDelete::fromXml(object, objectList));
 
         }
-        node = node.nextSibling();
+
+        for(int i = 0; i < objectList.size()-1; i++)
+        {
+            if(objectList.at(i)->id() == objectList.last()->id())
+            {
+                _error     = true;
+                _errorText = "Another object with this id was found!<br/>"
+                             "Line: " + QString::number(node.lineNumber()) + ", ID: " + objectList.last()->id();
+                qDeleteAll(objectList);
+                return QList<GLObject*>();
+            }
+        }
+
+        node = node.nextSibling();        
         count++;
     }
 

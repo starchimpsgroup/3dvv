@@ -14,6 +14,12 @@ public:
      *  \return The method returns an objectList.
      */
     static QList<GLObject*> readXML(const QString &path);
+    static bool    error()    { return _error;     }
+    static QString errorText(){ return _errorText; }
+
+private:
+    static bool    _error;
+    static QString _errorText;
 };
 
 #endif // XML_H

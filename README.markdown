@@ -26,12 +26,12 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >- Supports Linux `*ready*`
 >- C++ (Qt), OpenGL `*ready*`
 
-- File / Script (XML) to represent objects (created by the user) `*work in progress*`
+- File / Script (XML) to represent objects (created by the user) `*ready*`
 
->- Object has: `*work in progress*`
+>- Object has: `*ready*`
 
->>- ObjectID or unique name `*work in progress*`
->>- ObjectTyp: `*work in progress*`
+>>- ObjectID or unique name `*ready*`
+>>- ObjectTyp: `*ready*`
 
 >>>- Point (to be shown as a cross) `*ready*`
 >>>- Vector (for display with peak) `*ready*`
@@ -54,7 +54,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>- Not on every tick a number `*ready*`
 
 >- Camera control (mouse, keyboard) `*work in progress*`
->- Objects highlight temporarily, which are displayed newly (in color or otherwise) `*work in progress*`
+>- Objects highlight temporarily, which are displayed newly (in color or otherwise) `*ready*`
 >- Object labeling (automatic), font same color as object `*ready*`
 >- Plain can be show (to infinity), semi-transparent `*work in progress*`
 >- Line can be adjust to infinity `*work in progress*`

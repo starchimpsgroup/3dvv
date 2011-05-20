@@ -119,21 +119,24 @@ void GLWidget::setObjectIndex(int index)
     QList<GLObject *> objectsNormal;
     QList<GLObject *> objectsTransparent;
 
-    for(int i = 0; i <= _objectIndex; i++)
+    if(!_objects->isEmpty())
     {
-        _objects->at(i)->setDraw(true);
+        for(int i = 0; i <= _objectIndex; i++)
+        {
+            _objects->at(i)->setDraw(true);
 
-        if(_objects->at(i)->type() == GLObject::DELETE_OBJECT)
-        {
-            _objects->at(i)->draw();
-        }
-        else if(_objects->at(i)->color().isTransparent())
-        {
-            objectsTransparent.append(_objects->at(i));
-        }
-        else
-        {
-            objectsNormal.append(_objects->at(i));
+            if(_objects->at(i)->type() == GLObject::DELETE_OBJECT)
+            {
+                _objects->at(i)->draw();
+            }
+            else if(_objects->at(i)->color().isTransparent())
+            {
+                objectsTransparent.append(_objects->at(i));
+            }
+            else
+            {
+                objectsNormal.append(_objects->at(i));
+            }
         }
     }
 

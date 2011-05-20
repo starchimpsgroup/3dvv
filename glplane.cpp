@@ -88,16 +88,21 @@ GLPlane * GLPlane::fromXml(const QDomElement &object)
     GLVector normalVec;
 
     QDomNodeList points = object.elementsByTagName("point");
-    if (points.count() == 2)
+    if (!points.isEmpty())
     {
         QDomElement point = points.at(0).toElement();
         pointVec = GLVector(point.attribute("x").toDouble(),
                             point.attribute("y").toDouble(),
                             point.attribute("z").toDouble());
-        point = points.at(1).toElement();
-        normalVec = GLVector(point.attribute("x").toDouble(),
-                             point.attribute("y").toDouble(),
-                             point.attribute("z").toDouble());
+    }
+
+    QDomNodeList normals = object.elementsByTagName("normal");
+    if (!normals.isEmpty())
+    {
+        QDomElement normal = normals.at(0).toElement();
+        normalVec = GLVector(normal.attribute("x").toDouble(),
+                             normal.attribute("y").toDouble(),
+                             normal.attribute("z").toDouble());
     }
 
     uchar r,g,b,a;
