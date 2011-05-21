@@ -21,10 +21,21 @@ QList<GLObject*> XML::readXML(const QString &path)
     QFile file(path);
 
     if (!file.open(QIODevice::ReadOnly))
-        return QList<GLObject*>();
-
-    if (!doc.setContent(&file))
     {
+        _error     = true;
+        _errorText = "Can not open XML-File!";
+        return QList<GLObject*>();
+    }
+
+    QString xmlError;
+    int     xmlErrorLine;
+
+    if (!doc.setContent(&file,false,&xmlError,&xmlErrorLine))
+    {
+        _error     = true;
+        _errorText = "XML parser error: " + xmlError + "<br/>"
+                     "Line: " + QString::number(xmlErrorLine);
+
         file.close();
         return QList<GLObject*>();
     }
@@ -32,7 +43,11 @@ QList<GLObject*> XML::readXML(const QString &path)
     QDomElement root = doc.documentElement();
 
     if( root.tagName() != "vd" )
+    {
+        _error     = true;
+        _errorText = "XML root tag is not valid!";
         return QList<GLObject*>();
+    }
 
     QList<GLObject*> objectList;
     QDomNode node = root.firstChild();
