@@ -277,35 +277,32 @@ void GLWidget::shiftSceneForwardBackward ( double distance )
 
 void GLWidget::mouseMoveEvent ( QMouseEvent * me )
 {
-    if ( me->modifiers() & Qt::AltModifier )
+    // qDebug ( "Mouse: Alt" );
+
+    int x = abs ( _x - me->x() );
+    int y = abs ( _y - me->y() );
+
+    if ( _x < me->x() )
     {
-        // qDebug ( "Mouse: Alt" );
-
-        int x = abs ( _x - me->x() );
-        int y = abs ( _y - me->y() );
-
-        if ( _x < me->x() )
-        {
-            x *= ( -1 );
-            //qDebug ( "Double: %s", qPrintable ( QString::number ( x ) ) );
-        }
-
-        if ( _y > me->y() )
-        {
-            y *= ( -1 );
-            //qDebug ( "Double: %s", qPrintable ( QString::number ( y ) ) );
-        }
-
-        turnCameraLeftRight ( x );
-        turnCameraUpDown ( y );
-
-        _x = me->x();
-        _y = me->y();
-
-        // qDebug ( "Mouse: LeftButton" );
-
-        repaint();
+        x *= ( -1 );
+        //qDebug ( "Double: %s", qPrintable ( QString::number ( x ) ) );
     }
+
+    if ( _y > me->y() )
+    {
+        y *= ( -1 );
+        //qDebug ( "Double: %s", qPrintable ( QString::number ( y ) ) );
+    }
+
+    turnCameraLeftRight ( x );
+    turnCameraUpDown ( y );
+
+    _x = me->x();
+    _y = me->y();
+
+    // qDebug ( "Mouse: LeftButton" );
+
+    repaint();
 }
 
 void GLWidget::setBackgroundColor(GLColor color)

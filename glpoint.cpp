@@ -19,9 +19,11 @@ void GLPoint::glObject()
 
     glTranslatef( _x, _y, _z );
 
+    glEnable(GL_BLEND);
+
     glBegin(GL_LINES);
 
-    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
+    glColor4f (usedColor().redF(), usedColor().greenF(), usedColor().blueF(), _color.alphaF());
     glVertex3f(  0.1,  0.1,  0.0 );
     glVertex3f( -0.1, -0.1,  0.0 );
 
@@ -35,6 +37,8 @@ void GLPoint::glObject()
     glVertex3f(  0.0,  0.1, -0.1 );
 
     glEnd();
+
+    glDisable(GL_BLEND);
 
     glPopMatrix();
 }

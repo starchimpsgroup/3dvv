@@ -18,9 +18,11 @@ void GLLine::glObject()
                  _line.sY() + _line.y()/2.0,
                  _line.sZ() + _line.z()/2.0);
 
+    glEnable(GL_BLEND);
+
     glBegin(GL_LINES);
 
-    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
+    glColor4f (usedColor().redF(), usedColor().greenF(), usedColor().blueF(), _color.alphaF());
     glVertex3f(0.0,0.0,0.0);
     glVertex3f(_line.x() * MULT, _line.y() * MULT, _line.z() * MULT);
 
@@ -28,6 +30,8 @@ void GLLine::glObject()
     glVertex3f(line.x() * MULT, line.y() * MULT, line.z() * MULT);
 
     glEnd();
+
+    glDisable(GL_BLEND);
 
     glPopMatrix();
 }

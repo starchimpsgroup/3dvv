@@ -186,11 +186,15 @@ void GLVector::glObject()
 
     glTranslatef(_sX, _sY, _sZ);
 
+    glEnable(GL_BLEND);
+
     glBegin (GL_LINES);
-    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
+    glColor4f (usedColor().redF(), usedColor().greenF(), usedColor().blueF(), _color.alphaF());
     glVertex3f(0.0, 0.0, 0.0);
     glVertex3f(x(), y(), z());
     glEnd ();
+
+    glDisable(GL_BLEND);
 
 #ifdef TEST
         glBegin (GL_LINES);
@@ -263,11 +267,15 @@ void GLVector::glObject()
     glRotatef(angleXZ, 0.0, 1.0, 0.0);
     glRotatef(angleYZ, 1.0, 0.0, 0.0);
 
-    glColor3f (usedColor().redF(), usedColor().greenF(), usedColor().blueF());
+    glEnable(GL_BLEND);
+
+    glColor4f (usedColor().redF(), usedColor().greenF(), usedColor().blueF(), _color.alphaF());
     gluCylinder(gluNewQuadric(), 0.1, 0, 0.3, 16, 4);
 
     glRotatef(180, 1.0, 0.0, 0.0);
     gluDisk(gluNewQuadric(), 0, 0.1, 16, 4);
+
+    glDisable(GL_BLEND);
 
     glPopMatrix();
 }

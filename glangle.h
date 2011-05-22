@@ -16,6 +16,8 @@ public:
 
 protected:
     void glObject();
+    void glObjectId();
+    void glCoordinate();
 
 private:
     GLVector * _vectorA;
