@@ -157,7 +157,9 @@ void MainWindow::updateIndex()
             GLAngle * vec = (GLAngle *)(_objects.at(_objectPos));
 
             qDebug("<object type=\"angle\" id=\"%s\">", qPrintable(vec->id()));
+                    if(vec->vectorA() != 0)
                     qDebug("\t<object id=\"%s\"/>", qPrintable(vec->vectorA()->id()));
+                    if(vec->vectorB() != 0)
                     qDebug("\t<object id=\"%s\"/>", qPrintable(vec->vectorB()->id()));
                     qDebug("\t<color r=\"%x\" g=\"%x\" b=\"%x\" a=\"%x\"/>", vec->color().redDez(), vec->color().greenDez(), vec->color().blueDez(), vec->color().alphaDez());
                     qDebug("\t<time>%i</time>", vec->time());
@@ -169,6 +171,7 @@ void MainWindow::updateIndex()
             GLDelete * vec = (GLDelete *)(_objects.at(_objectPos));
 
             qDebug("<object type=\"delete\" id=\"%s\">", qPrintable(vec->id()));
+                    if(vec->object() != 0)
                     qDebug("\t<object id=\"%s\"/>", qPrintable(vec->object()->id()));
                     qDebug("\t<time>%i</time>", vec->time());
             qDebug("</object>");

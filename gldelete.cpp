@@ -7,10 +7,10 @@ GLDelete::GLDelete(GLObject * object, QString objectID, int time) : GLObject(GLO
 
 GLDelete * GLDelete::fromXml(const QDomElement &object, QList<GLObject*> &objects)
 {
-    if (object.isNull() || object.attribute("type") != "delete")
+    if (object.isNull() || object.attribute("type","") != "delete")
         return NULL;
 
-    QString id = object.attribute("id");
+    QString id = object.attribute("id","");
 
     GLObject * obj = 0;
 
@@ -18,7 +18,7 @@ GLDelete * GLDelete::fromXml(const QDomElement &object, QList<GLObject*> &object
     if (! objObjects.isEmpty())
     {
         QDomElement objNode = objObjects.at(0).toElement();
-        QString id = objNode.attribute("id");
+        QString id = objNode.attribute("id", "");
 
         foreach(GLObject * o, objects)
         {

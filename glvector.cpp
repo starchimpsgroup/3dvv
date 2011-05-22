@@ -319,10 +319,10 @@ void GLVector::glVector()
 GLVector * GLVector::fromXml(const QDomElement &object)
 {
 
-    if (object.isNull() || object.attribute("type") != "vector")
+    if (object.isNull() || object.attribute("type","") != "vector")
         return NULL;
 
-    QString id = object.attribute("id");
+    QString id = object.attribute("id","");
 
     GLdouble sx = 0.0;
     GLdouble sy = 0.0;
@@ -336,26 +336,25 @@ GLVector * GLVector::fromXml(const QDomElement &object)
     if (points.count() == 2)
     {
         QDomElement point = points.at(0).toElement();
-        sx = point.attribute("x").toDouble();
-        sy = point.attribute("y").toDouble();
-        sz = point.attribute("z").toDouble();
+        sx = point.attribute("x","0").toDouble();
+        sy = point.attribute("y","0").toDouble();
+        sz = point.attribute("z","0").toDouble();
         point = points.at(1).toElement();
-        ex = point.attribute("x").toDouble();
-        ey = point.attribute("y").toDouble();
-        ez = point.attribute("z").toDouble();
+        ex = point.attribute("x","0").toDouble();
+        ey = point.attribute("y","0").toDouble();
+        ez = point.attribute("z","0").toDouble();
     }
 
-    GLColor color;
+    uchar r=0,g=0,b=0,a=255;
 
     QDomNodeList colors = object.elementsByTagName("color");
     if (!colors.isEmpty())
     {
         QDomElement colorNode = colors.at(0).toElement();
-        uchar r = (uchar)colorNode.attribute("r").toUShort(NULL, 16);
-        uchar g = (uchar)colorNode.attribute("g").toUShort(NULL, 16);
-        uchar b = (uchar)colorNode.attribute("b").toUShort(NULL, 16);
-        uchar a = (uchar)colorNode.attribute("a").toUShort(NULL, 16);
-        color = GLColor(r,g,b,a);
+        r = (uchar)colorNode.attribute("r","0").toUShort(NULL, 16);
+        g = (uchar)colorNode.attribute("g","0").toUShort(NULL, 16);
+        b = (uchar)colorNode.attribute("b","0").toUShort(NULL, 16);
+        a = (uchar)colorNode.attribute("a","ff").toUShort(NULL, 16);
     }
 
     int time = 0;
@@ -366,5 +365,5 @@ GLVector * GLVector::fromXml(const QDomElement &object)
         time = timeNode.text().toInt();
     }
 
-    return new GLVector(sx,sy,sz,ex,ey,ez,color,id,time);
+    return new GLVector(sx,sy,sz,ex,ey,ez,GLColor(r,g,b,a),id,time);
 }

@@ -53,8 +53,8 @@ void GLAngle::glObject()
 
         //qDebug("angel: %f", angleZ);
 
-        //
-        glRotatef(angleX, 1.0, 0.0, 0.0);glRotatef(angleZ, 0.0, 0.0, 1.0);
+        glRotatef(angleX, 1.0, 0.0, 0.0);
+        glRotatef(angleZ, 0.0, 0.0, 1.0);
 
         glBegin(GL_LINE_STRIP);
         glColor3f (_color.redF(), _color.greenF(), _color.blueF());
@@ -73,10 +73,10 @@ void GLAngle::glObject()
 
 GLAngle * GLAngle::fromXml(const QDomElement &object, QList<GLObject*> &objects)
 {
-    if (object.isNull() || object.attribute("type") != "angle")
+    if (object.isNull() || object.attribute("type","") != "angle")
         return NULL;
 
-    QString id = object.attribute("id");
+    QString id = object.attribute("id","");
 
     GLVector * vectorA = 0;
     GLVector * vectorB = 0;
@@ -85,7 +85,7 @@ GLAngle * GLAngle::fromXml(const QDomElement &object, QList<GLObject*> &objects)
     if (angleObjects.count() == 2)
     {
         QDomElement objNode = angleObjects.at(0).toElement();
-        QString id = objNode.attribute("id");
+        QString id = objNode.attribute("id","");
 
         foreach(GLObject * o, objects)
         {
@@ -97,7 +97,7 @@ GLAngle * GLAngle::fromXml(const QDomElement &object, QList<GLObject*> &objects)
         }
 
         objNode = angleObjects.at(1).toElement();
-        id = objNode.attribute("id");
+        id = objNode.attribute("id","");
 
         foreach(GLObject * o, objects)
         {
@@ -109,16 +109,16 @@ GLAngle * GLAngle::fromXml(const QDomElement &object, QList<GLObject*> &objects)
         }
     }
 
-    uchar r,g,b,a;
+    uchar r=0,g=0,b=0,a=255;
 
     QDomNodeList colors = object.elementsByTagName("color");
     if (!colors.isEmpty())
     {
         QDomElement colorNode = colors.at(0).toElement();
-        r = (uchar)colorNode.attribute("r").toUShort(NULL, 16);
-        g = (uchar)colorNode.attribute("g").toUShort(NULL, 16);
-        b = (uchar)colorNode.attribute("b").toUShort(NULL, 16);
-        a = (uchar)colorNode.attribute("a").toUShort(NULL, 16);
+        r = (uchar)colorNode.attribute("r","0").toUShort(NULL, 16);
+        g = (uchar)colorNode.attribute("g","0").toUShort(NULL, 16);
+        b = (uchar)colorNode.attribute("b","0").toUShort(NULL, 16);
+        a = (uchar)colorNode.attribute("a","ff").toUShort(NULL, 16);
     }
 
     int time = 0;
