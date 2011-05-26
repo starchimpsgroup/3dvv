@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #include "globject.h"
 
 GLColor GLObject::_highlightColor = GLColor(1.0f, 0.0f, 0.0f);
@@ -54,9 +58,9 @@ void GLObject::setColor( GLColor color )
     _color    = color;
 }
 
-void GLObject::setColor( float redF, float greenF, float blueF )
+void GLObject::setColor( float redF, float greenF, float blueF, float alphaF )
 {
-    _color.setColorsF(redF, greenF, blueF);
+    _color.setColorsF(redF, greenF, blueF, alphaF);
 }
 
 void GLObject::setTime( int time )

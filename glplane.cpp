@@ -1,7 +1,11 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #include "glplane.h"
 #include "gltext.h"
 
-#define MULT 3
+#define MULT 300
 
 GLPlane::GLPlane(GLVector point, GLVector normal, GLColor color, QString objectID, int time) : GLObject(GLObject::PLANE_OBJECT, color, objectID, time)
 {

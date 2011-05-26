@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #include "gldelete.h"
 
 GLDelete::GLDelete(GLObject * object, QString objectID, int time) : GLObject(GLObject::DELETE_OBJECT, GLColor(), objectID, time)

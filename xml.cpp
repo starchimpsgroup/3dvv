@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #include "xml.h"
 #include <QFile>
 #include <QDomDocument>
@@ -78,6 +82,12 @@ QList<GLObject*> XML::readXML(const QString &path)
                 objectList.append(GLAngle::fromXml(object, objectList));
             else if (type == "delete")
                 objectList.append(GLDelete::fromXml(object, objectList));
+            else
+            {
+                _error     = true;
+                _errorText = "Object type not found!<br/>"
+                             "Line: " + QString::number(node.lineNumber()) + ", Type: " + type;
+            }
 
         }
 

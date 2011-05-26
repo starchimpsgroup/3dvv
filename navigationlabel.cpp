@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #include "navigationlabel.h"
 
 NavigationLabel::NavigationLabel(QWidget *parent) :

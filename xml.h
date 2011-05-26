@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #ifndef XML_H
 #define XML_H
 #include <QList>

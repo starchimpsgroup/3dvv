@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #include "glangle.h"
 #include "gltext.h"
 
@@ -9,17 +13,52 @@
 
 GLAngle::GLAngle( GLVector * vectorA, GLVector * vectorB, GLColor color, QString objectID, int time ) : GLObject(GLObject::ANGLE_OBJECT, color, objectID, time)
 {
-    _vectorA = vectorA;
-    _vectorB = vectorB;
-
-    if(_vectorA       != 0              &&
-       _vectorB       != 0              &&
-       _vectorA       != _vectorB       &&
-       _vectorA->sX() == _vectorB->sX() &&
-       _vectorA->sY() == _vectorB->sY() &&
-       _vectorA->sZ() == _vectorB->sZ() )
+    if(   vectorA       != 0             &&
+          vectorB       != 0             &&
+          vectorA       != vectorB       &&
+       ( (vectorA->sX() == vectorB->sX() && vectorA->sY() == vectorB->sY() && vectorA->sZ() == vectorB->sZ()) ||
+         (vectorA->eX() == vectorB->eX() && vectorA->eY() == vectorB->eY() && vectorA->eZ() == vectorB->eZ()) ||
+         (vectorA->eX() == vectorB->sX() && vectorA->eY() == vectorB->sY() && vectorA->eZ() == vectorB->sZ()) ||
+         (vectorA->sX() == vectorB->eX() && vectorA->sY() == vectorB->eY() && vectorA->sZ() == vectorB->eZ()) ))
     {
         _valid = true;
+
+        if(vectorA->eX() == vectorB->sX() && vectorA->eY() == vectorB->sY() && vectorA->eZ() == vectorB->sZ())
+        {
+            _vectorA = GLVector(vectorA->eX(),vectorA->eY(),vectorA->eZ(),vectorA->sX(),vectorA->sY(),vectorA->sZ());
+            _vectorB = GLVector(*vectorB);
+        }
+        else if(vectorA->eX() == vectorB->eX() && vectorA->eY() == vectorB->eY() && vectorA->eZ() == vectorB->eZ())
+        {
+            _vectorA = GLVector(vectorA->eX(),vectorA->eY(),vectorA->eZ(),vectorA->sX(),vectorA->sY(),vectorA->sZ());
+            _vectorB = GLVector(vectorB->eX(),vectorB->eY(),vectorB->eZ(),vectorB->sX(),vectorB->sY(),vectorB->sZ());
+        }
+        else if(vectorA->sX() == vectorB->eX() && vectorA->sY() == vectorB->eY() && vectorA->sZ() == vectorB->eZ())
+        {
+            _vectorA = GLVector(*vectorA);
+            _vectorB = GLVector(vectorB->eX(),vectorB->eY(),vectorB->eZ(),vectorB->sX(),vectorB->sY(),vectorB->sZ());
+        }
+        else
+        {
+            _vectorA = GLVector(*vectorA);
+            _vectorB = GLVector(*vectorB);
+        }
+
+        _vectorLeft  = GLVector(_vectorA.x() * LEN,_vectorA.y() * LEN,_vectorA.z() * LEN);
+        _vectorRight = GLVector(_vectorB.x() * LEN,_vectorB.y() * LEN,_vectorB.z() * LEN);
+
+        if(_vectorLeft.length() > _vectorRight.length())
+        {
+            double h = _vectorLeft.length()/_vectorRight.length();
+            _vectorLeft = _vectorLeft / h;
+        }
+        else if(_vectorLeft.length() < _vectorRight.length())
+        {
+            double h = _vectorRight.length()/_vectorLeft.length();
+            _vectorRight = _vectorRight / h;
+        }
+
+        _vectorMid = ((_vectorLeft  + _vectorRight)/2.0)*1.1;
     }
     else
     {
@@ -33,27 +72,12 @@ void GLAngle::glObject()
     {
         glPushMatrix();
 
-        glTranslatef(_vectorA->sX(), _vectorA->sY(), _vectorA->sZ());
+        glTranslatef(_vectorA.sX(), _vectorA.sY(), _vectorA.sZ());
 
         glEnable(GL_BLEND);
 
-        GLVector left(_vectorA->x() * LEN,_vectorA->y() * LEN,_vectorA->z() * LEN);
-        GLVector right(_vectorB->x() * LEN,_vectorB->y() * LEN,_vectorB->z() * LEN);
-
-        if(left.length() > right.length())
-        {
-            double h = left.length()/right.length();
-            left = left / h;
-        }
-        else if(left.length() < right.length())
-        {
-            double h = right.length()/left.length();
-            right = right / h;
-        }
-
-        GLVector mid      = ((left  + right)/2.0)*1.1;
-        GLVector midLeft  = ((left  + mid)  /2.0)*1.03;
-        GLVector midRight = ((right + mid)  /2.0)*1.03;
+        GLVector midLeft  = ((_vectorLeft  + _vectorMid)  /2.0)*1.03;
+        GLVector midRight = ((_vectorRight + _vectorMid)  /2.0)*1.03;
 
         glColor4f (usedColor().redF(), usedColor().greenF(), usedColor().blueF(), _color.alphaF());
 
@@ -61,15 +85,15 @@ void GLAngle::glObject()
 
         glVertex3f(0.0,0.0,0.0);
 
-        glVertex3f(left.x(),left.y(),left.z());
+        glVertex3f(_vectorLeft.x(),_vectorLeft.y(),_vectorLeft.z());
 
         glVertex3f(midLeft.x(),midLeft.y(),midLeft.z());
 
-        glVertex3f(mid.x(),mid.y(),mid.z());
+        glVertex3f(_vectorMid.x(),_vectorMid.y(),_vectorMid.z());
 
         glVertex3f(midRight.x(),midRight.y(),midRight.z());
 
-        glVertex3f(right.x(),right.y(),right.z());
+        glVertex3f(_vectorRight.x(),_vectorRight.y(),_vectorRight.z());
 
         glVertex3f(0.0,0.0,0.0);
 
@@ -79,81 +103,21 @@ void GLAngle::glObject()
 
         glVertex3f(0.0,0.0,0.0);
 
-        glVertex3f(right.x(),right.y(),right.z());
+        glVertex3f(_vectorRight.x(),_vectorRight.y(),_vectorRight.z());
 
         glVertex3f(midRight.x(),midRight.y(),midRight.z());
 
-        glVertex3f(mid.x(),mid.y(),mid.z());
+        glVertex3f(_vectorMid.x(),_vectorMid.y(),_vectorMid.z());
 
         glVertex3f(midLeft.x(),midLeft.y(),midLeft.z());
 
-        glVertex3f(left.x(),left.y(),left.z());
+        glVertex3f(_vectorLeft.x(),_vectorLeft.y(),_vectorLeft.z());
 
         glVertex3f(0.0,0.0,0.0);
 
         glEnd();
 
         glDisable(GL_BLEND);
-
-        // #####
-
-        //glTranslatef(_vectorA->sX(), _vectorA->sY(), _vectorA->sZ());
-
-        /*GLText::draw(_objectID,
-                     _color,
-                     GLVector(_line.x()/2.0, _line.y()/2.0 + GLText::heightOfText(_objectID)/2.0 + 0.15, _line.z()/2.0));*/
-
-        /*double angle  = _vectorA->angle(*_vectorB)+1;
-        double angleY = v_X.angle(GLVector(_vectorA->x(),0.0,_vectorA->z()));
-
-        if(_vectorA->y() < 0.0)
-            angleY *= -1;
-
-        //double angleZ = v_X.angle(GLVector(_vectorA->x(),_vectorA->y(),0.0));
-        double angleZ = _vectorA->angle(GLVector(_vectorA->x(),0.0,_vectorA->z()));
-
-        if(_vectorA->y() < 0.0)
-           angleZ *= -1;
-
-        //GLVector end(_vectorA->eX(),_vectorA->eY(),_vectorA->eZ(),_vectorB->eX(),_vectorB->eY(),_vectorB->eZ());
-
-        //double angleX = end.angle(GLVector(end.x(),0.0,end.z())) + 90.0;
-        double angleX = 90.0;
-
-        //angleX = 360 - angleX;
-        //angleX *= -1;
-
-        glRotatef(angleY, 0.0, 1.0, 0.0);
-        glRotatef(angleZ, 0.0, 0.0, 1.0);
-        //glRotatef(angleX, 1.0, 0.0, 0.0);
-
-        glBegin (GL_LINES);
-
-        glVertex3f (0,0,0);
-        glVertex3f (1,0,0);
-
-        glVertex3f (0,0,0);
-        glVertex3f (0,1,0);
-
-        glVertex3f (0,0,0);
-        glVertex3f (0,0,1);
-
-        glEnd ();
-
-        glEnable(GL_BLEND);
-
-        glBegin(GL_LINE_STRIP);
-        glColor4f (usedColor().redF(), usedColor().greenF(), usedColor().blueF(), _color.alphaF());
-
-        float f = 0.0;
-        for(int i = 0; i <= angle; i++)
-        {
-            glVertex3f(cos(f),sin(f),0);
-            f += (2*M_PI/360);
-        }
-        glEnd();
-
-        glDisable(GL_BLEND);*/
 
         glPopMatrix();
     }
@@ -165,9 +129,7 @@ void GLAngle::glObjectId()
     {
         glPushMatrix();
 
-        glTranslatef( _vectorA->sX(), _vectorA->sY(), _vectorA->sZ() );
-        GLVector mid = (*_vectorA + *_vectorB) * LEN/2.0;
-        glTranslated( mid.x(), mid.y(), mid.z() );
+        glTranslatef( _vectorA.sX()+_vectorMid.x(), _vectorA.sY()+_vectorMid.y(), _vectorA.sZ()+_vectorMid.z() );
 
         GLText::draw(_objectID,
                      usedColor(),
@@ -183,11 +145,9 @@ void GLAngle::glCoordinate()
     {
         glPushMatrix();
 
-        glTranslatef( _vectorA->sX(), _vectorA->sY(), _vectorA->sZ() );
-        GLVector mid = (*_vectorA + *_vectorB) * LEN/2.0;
-        glTranslated( mid.x(), mid.y(), mid.z() );
+        glTranslatef( _vectorA.sX()+_vectorMid.x(), _vectorA.sY()+_vectorMid.y(), _vectorA.sZ()+_vectorMid.z() );
 
-        GLText::draw( QString::number(_vectorA->angle(*_vectorB)),
+        GLText::draw( QString::number(_vectorA.angle(_vectorB),'d',2) + '°',
                      usedColor(),
                      GLVector(0.0, -0.35, 0.0));
 
@@ -242,7 +202,7 @@ GLAngle * GLAngle::fromXml(const QDomElement &object, QList<GLObject*> &objects)
         r = (uchar)colorNode.attribute("r","0").toUShort(NULL, 16);
         g = (uchar)colorNode.attribute("g","0").toUShort(NULL, 16);
         b = (uchar)colorNode.attribute("b","0").toUShort(NULL, 16);
-        a = (uchar)colorNode.attribute("a","d7").toUShort(NULL, 16);
+        a = (uchar)colorNode.attribute("a","64").toUShort(NULL, 16);
     }
 
     int time = 0;

@@ -1,3 +1,7 @@
+/***************************************************************************
+ *   Copyright (C) 2011 by Christian Ernst & Kai Wellmann                  *
+ *   info@skynet-gfx.de                                                    *
+ ***************************************************************************/
 #ifndef NAVIGATIONLABEL_H
 #define NAVIGATIONLABEL_H
 
@@ -13,7 +17,7 @@ public:
     void changeStatus();
 
 private:
-    void mousePressEvent(QMouseEvent *){ changeStatus(); };
+    void mousePressEvent(QMouseEvent *){ changeStatus(); }
 
 private:
     bool _pressed;

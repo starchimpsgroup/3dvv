@@ -7,4 +7,7 @@
         <file>navigation_down.png</file>
         <file>navigation_up.png</file>
     </qresource>
+    <qresource prefix="/icon">
+        <file>3dvv_ico.png</file>
+    </qresource>
 </RCC>

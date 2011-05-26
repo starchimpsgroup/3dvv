@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Qt 3D Vector Viewer</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="Resouces/resouces.qrc">
+    <normaloff>:/icon/3dvv_ico.png</normaloff>:/icon/3dvv_ico.png</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
@@ -160,7 +164,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="Resouces/resouces.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionClose</sender>
