@@ -7,7 +7,6 @@
 
 #include "globject.h"
 #include "glvector.h"
-// bogenmaß !!
 
 //! The Angle class.
 /*!

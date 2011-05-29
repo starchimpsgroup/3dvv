@@ -4,9 +4,20 @@
  ***************************************************************************/
 #include "gldelete.h"
 
-GLDelete::GLDelete(GLObject * object, QString objectID, int time) : GLObject(GLObject::DELETE_OBJECT, GLColor(), objectID, time)
+GLDelete::GLDelete(QList<GLObject *> objects, QString objectID, int time) : GLObject(GLObject::DELETE_OBJECT, GLColor(), objectID, time)
 {
-    _object = object;
+    _objects = objects;
+}
+
+void GLDelete::glObject()
+{
+    if(!_objects.isEmpty())
+    {
+        foreach(GLObject * o, _objects)
+        {
+            o->setDraw(false);
+        }
+    }
 }
 
 GLDelete * GLDelete::fromXml(const QDomElement &object, QList<GLObject*> &objects)
@@ -16,20 +27,31 @@ GLDelete * GLDelete::fromXml(const QDomElement &object, QList<GLObject*> &object
 
     QString id = object.attribute("id","");
 
-    GLObject * obj = 0;
+    GLObject * obj;
+    QList<GLObject *> objList;
 
     QDomNodeList objObjects = object.elementsByTagName("object");
     if (! objObjects.isEmpty())
     {
-        QDomElement objNode = objObjects.at(0).toElement();
-        QString id = objNode.attribute("id", "");
-
-        foreach(GLObject * o, objects)
+        for(int i = 0; i < objObjects.size(); i++)
         {
-            if(o->id() == id && o->type() == GLObject::VECTOR_OBJECT)
+            obj = 0;
+
+            QDomElement objNode = objObjects.at(i).toElement();
+            QString id = objNode.attribute("id", "");
+
+            foreach(GLObject * o, objects)
             {
-                obj = o;
-                break;
+                if(o->id() == id && o->type() == GLObject::VECTOR_OBJECT)
+                {
+                    obj = o;
+                    break;
+                }
+            }
+
+            if(obj != 0)
+            {
+                objList.append(obj);
             }
         }
     }
@@ -42,5 +64,5 @@ GLDelete * GLDelete::fromXml(const QDomElement &object, QList<GLObject*> &object
         time = timeNode.text().toInt();
     }
 
-    return new GLDelete(obj,id,time);
+    return new GLDelete(objList,id,time);
 }

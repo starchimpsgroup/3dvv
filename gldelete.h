@@ -6,7 +6,6 @@
 #define GLDELETE_H
 
 #include "globject.h"
-// für mehrere objekte erweitern!!!
 
 //! The Delete class.
 /*!
@@ -18,19 +17,19 @@ public:
     //! Constructor of GLDelete.
     /*!
         Initialize an object to delete.
-        \param object Object to delete
+        \param objects Objects to delete
         \param objectID ID of this object
         \param time Time to draw this object
         \see GLObject
      */
-    GLDelete(GLObject * object, QString objectID, int time);
+    GLDelete(QList<GLObject *> objects, QString objectID, int time);
 
-    //! Return delete object.
+    //! Return delete objects.
     /*!
-        \return object to delete
+        \return objects to delete
         \see GLObject
      */
-    GLObject * object(){ return _object; }
+    QList<GLObject *> objects(){ return _objects; }
 
     //! The delete fromXML method is used to fetch specified tags from the XML-File.
     /*!
@@ -46,11 +45,11 @@ public:
     static GLDelete * fromXml(const QDomElement &object, QList<GLObject*> &objects);
 
 private:
-    GLObject * _object; //!< Object to delete
+    QList<GLObject *> _objects; //!< Objects to delete
 
 protected:
     //! Delete the object
-    virtual void glObject(){ if(_object != 0){ _object->setDraw(false); } }
+    virtual void glObject();
 };
 
 #endif // GLDELETE_H
