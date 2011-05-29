@@ -158,8 +158,11 @@ void MainWindow::updateIndex()
             GLDelete * vec = (GLDelete *)(_objects.at(_objectPos));
 
             qDebug("<object type=\"delete\" id=\"%s\">", qPrintable(vec->id()));
-                    if(vec->object() != 0)
-                    qDebug("\t<object id=\"%s\"/>", qPrintable(vec->object()->id()));
+                    if(!vec->objects().isEmpty())
+                    {
+                        foreach(GLObject * o,vec->objects())
+                            qDebug("\t<object id=\"%s\"/>", qPrintable(o->id()));
+                    }
                     qDebug("\t<time>%i</time>", vec->time());
             qDebug("</object>");
         }
