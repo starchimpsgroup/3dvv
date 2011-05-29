@@ -42,7 +42,7 @@ GLDelete * GLDelete::fromXml(const QDomElement &object, QList<GLObject*> &object
 
             foreach(GLObject * o, objects)
             {
-                if(o->id() == id && o->type() == GLObject::VECTOR_OBJECT)
+                if(o->id() == id)
                 {
                     obj = o;
                     break;
