@@ -37,7 +37,7 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>>- Vector (for display with peak) `*ready*`
 >>>- Plain `*ready*`
 >>>- Line `*ready*`
->>>- Angle `*work in progress*`
+>>>- Angle `*ready*`
 
 >>- Coordinates: `*ready*`
 
@@ -47,20 +47,20 @@ A Cartesian coordinate system is placed in this window.  In the window it should
 >>- Time parameters for film script `*ready*`
 >>- Delete object in the script `*ready*`
 
-- View: `*work in progress*`
+- View: `*ready*`
 
->- Coordinate axes (to infinity), perpendicular to each other `*work in progress*`
+>- Coordinate axes (to infinity), perpendicular to each other `*ready*`
 
 >>- Not on every tick a number `*ready*`
 
->- Camera control (mouse, keyboard) `*work in progress*`
+>- Camera control (mouse, keyboard) `*ready*`
 >- Objects highlight temporarily, which are displayed newly (in color or otherwise) `*ready*`
 >- Object labeling (automatic), font same color as object `*ready*`
->- Plain can be show (to infinity), semi-transparent `*work in progress*`
->- Line can be adjust to infinity `*work in progress*`
->- Display angels, between vectors (default, smaller angle) `*work in progress*`
+>- Plain can be show (to infinity), semi-transparent `*ready*`
+>- Line can be adjust to infinity `*ready*`
+>- Display angels, between vectors (default, smaller angle) `*ready*`
 
->>- Display angular size (degree / radian) `*work in progress*`
+>>- Display angular size (degree / radian) `*ready*`
 
 >- Color mapping for objects (RGB / Hex) (default color, if not specify) `*ready*`
 >- Show coordinates (start, end, middle) `*ready*`

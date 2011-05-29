@@ -117,7 +117,7 @@ private:
         \param angle Angle to rotate
         \see GLVector
      */
-    void drawCylinder( const GLVector &point, const GLVector &around, GLfloat angel );
+    void drawCylinder( const GLVector &point, const GLVector &around, GLfloat angle );
 
     //! Draw distance marker.
     /*!

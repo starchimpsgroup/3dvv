@@ -18,7 +18,7 @@ class GLAngle : public GLObject
 public:
     //! Constructor of the GLAngle class with two vectors.
     /*!
-        Initialize with the two vectors.
+        Initialize with the two vectors and validate the vectors for drawing an angle.
         \param vectorA Vector
         \param vectorB Vector
         \param color Object color
@@ -48,22 +48,23 @@ public:
         This method fetches a specified amount of tags, the most important being:
 
         -# The id.
-        -# Two points.
+        -# Two point.
         -# The color.
         -# The time in msec.
         \param object XML object
+        \param objects List of readed objects
         \return Pointer of new angle object
      */
     static GLAngle * fromXml(const QDomElement &object, QList<GLObject*> &objects);
 
 protected:
-    //! Draw the object.
+    //! Draw the object, if the vectors are valid.
     void glObject();
 
-    //! Draw the object id text.
+    //! Draw the object id text, if the vectors are valid.
     void glObjectId();
 
-    //! Draw the object coordinate text.
+    //! Draw the object coordinate text, if the vectors are valid.
     void glCoordinate();
 
 private:

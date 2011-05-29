@@ -57,9 +57,8 @@ void GLWidget::paintGL()
 
     GLText::setAngels(angleX, angleY);
 
-    /**
-      * clear both the color buffer and the depth buffer
-      **/
+    // clear both the color buffer and the depth buffer
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _coordinateAxes->draw();
@@ -233,6 +232,12 @@ void GLWidget::shiftSceneLeftRight ( double distance )
 void GLWidget::shiftSceneForwardBackward ( double distance )
 {
     _perspective->shiftSceneForwardBackward ( distance );
+}
+
+void GLWidget::mousePressEvent( QMouseEvent * me )
+{
+    _x = me->x();
+    _y = me->y();
 }
 
 void GLWidget::mouseMoveEvent ( QMouseEvent * me )

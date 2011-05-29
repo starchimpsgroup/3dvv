@@ -79,13 +79,52 @@ public:
      */
     void shiftSceneForwardBackward( double distance );
 
+    //! Set Camera.
+    /*!
+        Set the a new camera vector.
+        \param newValue Camera vector
+        \see GLVector
+     */
     void setCamera( const GLVector & newValue );
+
+    //! Set Center.
+    /*!
+        Set the a new center vector.
+        \param newValue Center vector
+        \see GLVector
+     */
     void setCenter( const GLVector & newValue );
+
+    //! Set Up.
+    /*!
+        Set the a new up vector.
+        \param newValue Up vector
+        \see GLVector
+     */
     void setUp    ( const GLVector & newValue );
 
+    //! Sets aspect to a new value
+    /*!
+        \param newValue Aspect value
+     */
     void setAspect( GLdouble newValue );
+
+    //! Sets far to a new value
+    /*!
+        \param newValue Far value
+     */
     void setFar   ( GLdouble newValue );
+
+    //! Sets fovy to a new value
+    /*!
+        \param newValue Fovy value
+     */
     void setFovy  ( GLdouble newValue );
+
+    //! Sets near to a new value
+    /*!
+        \param newValue Near value
+     */
     void setNear  ( GLdouble newValue );
 
     //! Sets viewport and adjusts _Aspect to new viewport
@@ -95,19 +134,39 @@ public:
      */
     void setViewport(int width, int height);
 
+    //! Return distance
+    /*!
+        \return The distance from the camera position to the center point.
+     */
     double distance()const{ return (_Camera - _Center).length(); }
+
+    //! Return camera
+    /*!
+        \return Vector of the camera position.
+        \see GLVector
+     */
     const GLVector * camera(){ return &_Camera; }const
+
+    //! Return camera
+    /*!
+        \return Vector of the camera position.
+        \see GLVector
+     */
     GLVector center(){ return _Center; }
 
+    //! Reset
+    /*!
+        Reset camera position and center point
+     */
     void reset(){ _Camera = 5.0 * v_XYZ; _Center = v_Zero; }
 protected:
-    GLVector _Camera;
-    GLVector _Center;
-    GLVector _Up;
+    GLVector _Camera; //!< Camera position
+    GLVector _Center; //!< Center position
+    GLVector _Up;     //!< Up vector
     GLdouble _Aspect;
-    GLdouble _Far;
-    GLdouble _Fovy;
-    GLdouble _Near;
+    GLdouble _Far;    //!< Biggest distance to an object, to see it
+    GLdouble _Fovy;   //!< Angle of the viewport
+    GLdouble _Near;   //!< Nearest distance to an object, to see it
     GLint    _Width;  //!< Viewport width
     GLint    _Height; //!< Viewport height
 };

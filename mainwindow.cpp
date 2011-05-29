@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
                                 _settings->showVectors(),
                                 this);
 
+    _view->setObjects(&_objects);
+
     _navigation  = new Navigation(this);
     _preferences = new Preferences(this);
 
@@ -55,13 +57,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mainToolBar->addWidget(_navigation);
     ui->mainToolBar->setVisible(false);
 
-    _timeMax = _time = _objectPos = 0;
-    _timeID  = -1;
+    _timeMax   = _time    = 0;
+    _objectPos = _timeID  = -1;
 
     GLObject::setHighlightColor(_settings->highlightColor());
     _highlightObjects = _settings->highlightObjects();
     _highlightTime    = _settings->highlightTime();
     _highlightRate    = _settings->highlightRate();
+
+    _navigation->setSliderMaximum(time());
 
     restoreGeometry(_settings->restoreGeometry());
 }
@@ -297,7 +301,6 @@ void MainWindow::on_actionOpen_object_file_triggered()
 
     _navigation->setSliderPosition(_time);
     _navigation->setSliderMaximum(time());
-    _view->setObjects(&_objects);
 
     updateIndex();
 }

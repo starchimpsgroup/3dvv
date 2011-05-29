@@ -9,7 +9,6 @@
 #include <cmath>
 
 #define LEN 0.2
-#define PARTS 20.0
 
 GLAngle::GLAngle( GLVector * vectorA, GLVector * vectorB, GLColor color, QString objectID, int time ) : GLObject(GLObject::ANGLE_OBJECT, color, objectID, time)
 {

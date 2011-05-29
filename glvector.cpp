@@ -209,9 +209,7 @@ void GLVector::glObject()
         glEnd ();
 #endif
 
-    /**
-      * Spitze
-      */
+    // Peak
 
     GLdouble len = ((this->length() - 0.3) /  this->length());
 

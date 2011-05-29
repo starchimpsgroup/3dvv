@@ -179,13 +179,13 @@ void GLCoordinateAxes::drawDistanceMarker()
     }
 }
 
-void GLCoordinateAxes::drawCylinder( const GLVector &point, const GLVector &around, GLfloat angel )
+void GLCoordinateAxes::drawCylinder( const GLVector &point, const GLVector &around, GLfloat angle )
 {
     glPushMatrix();
 
     glTranslatef(point.x(), point.y(), point.z());
 
-    glRotatef(angel, around.x(), around.y(), around.z());
+    glRotatef(angle, around.x(), around.y(), around.z());
     gluCylinder(gluNewQuadric(), 0.1, 0, CYLINDERHEIGHT, 16, 4);
 
     glRotatef(180, 1.0, 0.0, 0.0);
